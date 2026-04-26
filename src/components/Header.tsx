@@ -7,7 +7,13 @@ import { NAV_LINKS, SITE_PHONE_DISPLAY, SITE_PHONE_TEL } from "@/config/site";
 const springHeader = { type: "spring" as const, stiffness: 300, damping: 42, mass: 0.58 };
 const springPanel = { type: "spring" as const, stiffness: 400, damping: 32 };
 
-export function Header() {
+type HeaderProps = {
+  contactOpen?: boolean;
+  onOpenContact?: () => void;
+  onExitContact?: () => void;
+};
+
+export function Header({ contactOpen = false, onOpenContact, onExitContact }: HeaderProps) {
   const reduceMotion = useReducedMotion();
   const lastScrollY = useRef(0);
   const [concealed, setConcealed] = useState(false);
@@ -70,12 +76,16 @@ export function Header() {
     return () => window.removeEventListener("keydown", onKey);
   }, [closeAll]);
 
-  const headerY = reduceMotion ? 0 : concealed ? "-120%" : 0;
+  const headerY = reduceMotion || contactOpen ? 0 : concealed ? "-120%" : 0;
 
   return (
     <>
       <motion.header
-        className="fixed inset-x-0 top-0 z-50 border-b border-white/[0.06] bg-transparent backdrop-blur-[2px]"
+        className={
+          contactOpen
+            ? "fixed inset-x-0 top-0 z-50 border-b border-white/[0.08] bg-[#0a0a0a]"
+            : "fixed inset-x-0 top-0 z-50 border-b border-white/[0.06] bg-transparent backdrop-blur-[2px]"
+        }
         initial={false}
         animate={{ y: headerY }}
         transition={springHeader}
@@ -137,7 +147,13 @@ export function Header() {
           <a
             href="#top"
             className="pointer-events-auto absolute inset-y-0 left-1/2 z-10 flex min-w-0 -translate-x-1/2 items-center justify-center px-2"
-            onClick={closeAll}
+            onClick={(e) => {
+              closeAll();
+              if (contactOpen && onExitContact) {
+                e.preventDefault();
+                onExitContact();
+              }
+            }}
           >
             <motion.img
               src={logoWhite}
@@ -161,7 +177,14 @@ export function Header() {
               whileHover={reduceMotion ? undefined : { scale: 1.03, backgroundColor: "var(--color-sand-hover)" }}
               whileTap={reduceMotion ? undefined : { scale: 0.98 }}
               transition={{ type: "spring", stiffness: 500, damping: 32 }}
-              onClick={closeAll}
+              onClick={(e) => {
+                if (onOpenContact || onExitContact) {
+                  e.preventDefault();
+                  if (contactOpen && onExitContact) onExitContact();
+                  else onOpenContact?.();
+                }
+                closeAll();
+              }}
             >
               Contact
             </motion.a>
@@ -192,7 +215,14 @@ export function Header() {
                       initial={reduceMotion ? false : { opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ ...springPanel, delay: reduceMotion ? 0 : i * 0.035 }}
-                      onClick={() => setMegaOpen(false)}
+                      onClick={(e) => {
+                        if (item.id === "contact" && (onOpenContact || onExitContact)) {
+                          e.preventDefault();
+                          if (contactOpen && onExitContact) onExitContact();
+                          else onOpenContact?.();
+                        }
+                        setMegaOpen(false);
+                      }}
                     >
                       {item.label}
                     </motion.a>
@@ -240,7 +270,14 @@ export function Header() {
                   initial={reduceMotion ? false : { opacity: 0, y: 14 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ ...springPanel, delay: reduceMotion ? 0 : 0.06 + i * 0.045 }}
-                  onClick={() => setMenuOpen(false)}
+                  onClick={(e) => {
+                    if (item.id === "contact" && (onOpenContact || onExitContact)) {
+                      e.preventDefault();
+                      if (contactOpen && onExitContact) onExitContact();
+                      else onOpenContact?.();
+                    }
+                    setMenuOpen(false);
+                  }}
                 >
                   {item.label}
                 </motion.a>
@@ -261,7 +298,14 @@ export function Header() {
                 href="#contact"
                 className="mt-8 inline-flex min-w-[12rem] items-center justify-center rounded-full bg-sand px-8 py-4 text-sm font-semibold tracking-[0.14em] text-white uppercase sm:text-base"
                 whileTap={reduceMotion ? undefined : { scale: 0.98 }}
-                onClick={() => setMenuOpen(false)}
+                onClick={(e) => {
+                  if (onOpenContact || onExitContact) {
+                    e.preventDefault();
+                    if (contactOpen && onExitContact) onExitContact();
+                    else onOpenContact?.();
+                  }
+                  setMenuOpen(false);
+                }}
               >
                 Get in touch
               </motion.a>
