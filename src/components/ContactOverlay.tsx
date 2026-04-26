@@ -1,3 +1,4 @@
+import logoWhite from "@assets/logo/white.PNG";
 import { AnimatePresence, motion } from "motion/react";
 import { HEADER_BAR_PADDING, MIN_H_FIRST_SCREEN } from "@/config/layout";
 import {
@@ -66,16 +67,26 @@ function ContactDetails() {
           </div>
 
           <div>
-            <p className="text-xs font-medium tracking-[0.28em] text-copper uppercase sm:text-sm">Call</p>
+            <img
+              src={logoWhite}
+              alt="Stone Spaces"
+              className="h-12 w-auto max-w-[min(70vw,14rem)] object-contain object-left sm:h-14"
+            />
+            <p className="mt-8 sm:mt-10">
+              <span className="text-xs font-medium tracking-[0.28em] text-copper uppercase sm:text-sm">Phone</span>
+            </p>
             <a
               href={`tel:${SITE_PHONE_TEL}`}
               className="mt-2 block w-fit text-lg text-copper transition-colors hover:text-copper/85 sm:text-xl"
             >
               {SITE_PHONE_DISPLAY}
             </a>
+            <p className="mt-6">
+              <span className="text-xs font-medium tracking-[0.28em] text-copper uppercase sm:text-sm">Mail</span>
+            </p>
             <a
               href={SITE_EMAIL_HREF}
-              className="mt-1 block w-fit text-lg text-copper transition-colors hover:text-copper/85 sm:text-xl"
+              className="mt-2 block w-fit text-lg text-copper transition-colors hover:text-copper/85 sm:text-xl"
             >
               {SITE_EMAIL}
             </a>

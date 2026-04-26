@@ -2,8 +2,8 @@
 export const SITE_PHONE_DISPLAY = "(904) 660-2994";
 export const SITE_PHONE_TEL = "+19046602994";
 
-export const SITE_EMAIL = "info@stonespaces.com";
-export const SITE_EMAIL_HREF = "mailto:info@stonespaces.com";
+export const SITE_EMAIL = "sales@stonespaces.com";
+export const SITE_EMAIL_HREF = "mailto:sales@stonespaces.com";
 
 export const SITE_ADDRESS_LINES = [
   "Showroom & design studio",
