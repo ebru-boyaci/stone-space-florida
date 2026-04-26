@@ -63,7 +63,7 @@ export default function App() {
         onExitContact={closeContact}
       />
 
-      <main>
+      <main inert={contactOpen}>
         <HeroWithCollage>
           <p className="-mt-2 mb-8 max-w-2xl text-center text-xs font-medium tracking-[0.38em] text-white/40 uppercase sm:-mt-3 sm:mb-10 sm:text-sm">
             Stone Spaces · Florida
@@ -121,7 +121,10 @@ export default function App() {
         </section>
       </main>
 
-      <footer className="border-t border-white/[0.06] px-6 py-10 text-center text-xs text-white/40">
+      <footer
+        inert={contactOpen}
+        className="border-t border-white/[0.06] px-6 py-10 text-center text-xs text-white/40"
+      >
         © {new Date().getFullYear()} Stone Spaces. All rights reserved.
       </footer>
 

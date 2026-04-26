@@ -13,23 +13,23 @@ import {
 
 const easeOut = [0.22, 1, 0.36, 1] as const;
 
-/** 2× ölçek: etiket / adres / gövde / buton; accent #b89a7a */
+/** Contact sol sütun, accent #b89a7a */
 const contactLabelClass =
-  "text-[1.5rem] font-medium uppercase leading-none tracking-[0.1em] text-[#b89a7a] sm:text-[1.625rem] sm:leading-tight sm:tracking-[0.2em]";
+  "text-[1.15rem] font-medium uppercase leading-none tracking-[0.2em] text-[#b89a7a] sm:text-[1.25rem] sm:leading-tight sm:tracking-[0.22em]";
 
 const showMapButtonClass =
-  "mt-10 inline-flex items-center justify-center rounded-full bg-[#b89a7a] px-14 py-6 text-[1.375rem] font-semibold tracking-[0.1em] text-zinc-950 uppercase transition hover:opacity-90 sm:mt-12 sm:px-16 sm:py-7 sm:text-2xl sm:tracking-[0.1em]";
+  "mt-7 inline-flex items-center justify-center rounded-full bg-[#b89a7a] px-10 py-4 text-base font-semibold tracking-[0.15em] text-zinc-950 uppercase transition hover:opacity-90 sm:mt-9 sm:px-12 sm:py-5";
 
 const addressTextClass =
-  "mt-8 max-w-[min(100%,56rem)] text-pretty text-[min(4.5rem,11vw)] font-bold leading-[1.1] tracking-[-0.02em] text-white sm:mt-10 sm:text-[4.5rem] sm:leading-[1.08] lg:text-[5rem] xl:text-[5.25rem]";
+  "mt-6 max-w-2xl text-pretty text-[min(3.375rem,8.5vw)] font-bold leading-[1.1] tracking-[-0.02em] text-white sm:mt-7 sm:leading-[1.08] sm:text-[3.5rem] lg:text-[3.9rem] xl:text-[3.95rem]";
 
-const bodyValueWhite = "text-4xl font-medium leading-snug text-white sm:text-[2.5rem] sm:leading-[1.25]";
+const bodyValueWhite = "text-2xl font-medium leading-snug text-white sm:text-[1.9rem] sm:leading-[1.3]";
 
 const bodyValueEmailClass =
-  "text-4xl font-medium leading-snug text-[#b89a7a] sm:text-[2.5rem] sm:leading-[1.25] transition hover:opacity-80";
+  "text-2xl font-medium leading-snug text-[#b89a7a] sm:text-[1.9rem] sm:leading-[1.3] transition hover:opacity-80";
 
 function SocialIcon({ name }: { name: (typeof SITE_SOCIAL_LINKS)[number]["name"] }) {
-  const className = "h-14 w-14 text-current sm:h-16 sm:w-16";
+  const className = "h-10 w-10 text-current sm:h-12 sm:w-12";
   switch (name) {
     case "LinkedIn":
       return (
@@ -61,7 +61,7 @@ function ContactDetails() {
       aria-label="Location and contact details"
     >
       <div className="mx-auto grid w-full max-w-[min(100%,100rem)] grid-cols-1 items-stretch gap-16 sm:gap-24 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,1.22fr)] lg:items-center lg:gap-0">
-        <div className="flex min-w-0 flex-col justify-center gap-40 pt-24 sm:gap-48 sm:pt-40 lg:gap-48 lg:border-r lg:border-[#b89a7a]/15 lg:pt-0 lg:pb-0 lg:pe-8 xl:pe-12">
+        <div className="flex min-w-0 flex-col justify-center gap-[7.5rem] pt-[4.5rem] sm:gap-36 sm:pt-[5.6rem] lg:gap-36 lg:border-r lg:border-[#b89a7a]/15 lg:pt-0 lg:pb-0 lg:pe-8 xl:pe-12">
           <div>
             <p className={contactLabelClass}>Office</p>
             <p className={addressTextClass}>
@@ -87,27 +87,27 @@ function ContactDetails() {
             </p>
             <a
               href={`tel:${SITE_PHONE_TEL}`}
-              className={`mt-6 block w-fit ${bodyValueWhite}`}
+              className={`mt-4 block w-fit sm:mt-5 ${bodyValueWhite}`}
             >
               {SITE_PHONE_DISPLAY}
             </a>
-            <p className="mt-16 sm:mt-[4.5rem]">
+            <p className="mt-10 sm:mt-12">
               <span className={contactLabelClass}>Mail</span>
             </p>
             <a
               href={SITE_EMAIL_HREF}
-              className={`mt-6 block w-fit ${bodyValueEmailClass} underline-offset-4 hover:underline`}
+              className={`mt-4 block w-fit sm:mt-5 ${bodyValueEmailClass} underline-offset-3 hover:underline`}
             >
               {SITE_EMAIL}
             </a>
-            <ul className="mt-16 flex flex-wrap items-center gap-8 sm:mt-20 sm:gap-10" aria-label="Social media">
+            <ul className="mt-10 flex flex-wrap items-center gap-6 sm:mt-12 sm:gap-8" aria-label="Social media">
               {SITE_SOCIAL_LINKS.map((s) => (
                 <li key={s.name}>
                   <a
                     href={s.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex h-24 w-24 items-center justify-center rounded-full border-2 border-[#b89a7a]/50 text-white transition hover:border-[#b89a7a] sm:h-28 sm:w-28"
+                    className="flex h-18 w-18 items-center justify-center rounded-full border border-[#b89a7a]/50 text-white transition hover:border-[#b89a7a] sm:h-20 sm:w-20"
                     aria-label={s.name}
                   >
                     <SocialIcon name={s.name} />
@@ -152,7 +152,7 @@ function ContactOverlayContent() {
             get info
           </motion.h2>
           <motion.p
-            className="col-start-1 row-start-1 z-[1] mt-[clamp(8.5rem,22.5vw,16rem)] max-w-[min(94vw,64rem)] text-center font-hero-script text-[clamp(4.25rem,15.5vw,10.5rem)] lowercase leading-[0.82] text-white [text-shadow:0_2px_32px_rgba(0,0,0,0.6)] sm:mt-[clamp(9.5rem,24.5vw,18rem)] sm:text-[clamp(5.25rem,16.5vw,11.5rem)]"
+            className="col-start-1 row-start-1 z-[1] mt-[clamp(9.75rem,25vw,18.5rem)] max-w-[min(94vw,64rem)] text-center font-hero-script text-[clamp(4.25rem,15.5vw,10.5rem)] lowercase leading-[0.82] text-white [text-shadow:0_2px_32px_rgba(0,0,0,0.6)] sm:mt-[clamp(11rem,27vw,21.5rem)] sm:text-[clamp(5.25rem,16.5vw,11.5rem)]"
             initial={{ opacity: 0, y: 32 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3, duration: 0.8, ease: easeOut }}
