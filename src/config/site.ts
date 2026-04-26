@@ -6,12 +6,14 @@ export const SITE_EMAIL = "sales@stonespaces.com";
 export const SITE_EMAIL_HREF = "mailto:sales@stonespaces.com";
 
 export const SITE_ADDRESS_LINES = [
-  "Showroom & design studio",
-  "1234 Biscayne Boulevard, Suite 100",
-  "Miami, FL 33132",
+  "6000 Powers Avenue",
+  "Jacksonville, Florida",
+  "32217",
 ] as const;
 
-export const SITE_MAP_URL = "https://www.google.com/maps/search/?api=1&query=Miami%20FL";
+/** Opens Google Maps at the showroom address */
+export const SITE_MAP_URL =
+  "https://www.google.com/maps/search/?api=1&query=6000+Powers+Avenue%2C+Jacksonville%2C+FL+32217";
 
 /** Placeholder links — replace with real profiles. */
 export const SITE_SOCIAL_LINKS = [

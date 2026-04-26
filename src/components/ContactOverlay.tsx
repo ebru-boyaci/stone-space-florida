@@ -1,4 +1,4 @@
-import logoWhite from "@assets/logo/white.PNG";
+import mapImage from "@assets/map.png";
 import { AnimatePresence, motion } from "motion/react";
 import { HEADER_BAR_PADDING, MIN_H_FIRST_SCREEN } from "@/config/layout";
 import {
@@ -13,8 +13,23 @@ import {
 
 const easeOut = [0.22, 1, 0.36, 1] as const;
 
+/** Referans görsel: muted tan, ~12–14px etiketler, 36–42px adres, accent #b89a7a */
+const contactLabelClass =
+  "text-xs font-medium uppercase leading-none tracking-[0.2em] text-[#b89a7a] sm:text-[0.8125rem] sm:tracking-[0.22em]";
+
+const showMapButtonClass =
+  "mt-5 inline-flex items-center justify-center rounded-full bg-[#b89a7a] px-7 py-3 text-[0.6875rem] font-semibold tracking-[0.2em] text-zinc-950 uppercase transition hover:opacity-90 sm:mt-6 sm:px-8 sm:py-3.5 sm:text-sm";
+
+const addressTextClass =
+  "mt-4 max-w-lg text-pretty text-[2.25rem] leading-[1.1] font-bold tracking-[-0.02em] text-white sm:mt-5 sm:text-[2.5rem] sm:leading-[1.1] lg:text-[2.625rem]";
+
+const bodyValueWhite = "text-lg font-medium leading-snug text-white sm:text-[1.25rem] sm:leading-[1.35]";
+
+const bodyValueEmailClass =
+  "text-lg font-medium leading-snug text-[#b89a7a] sm:text-[1.25rem] sm:leading-[1.35] transition hover:opacity-80";
+
 function SocialIcon({ name }: { name: (typeof SITE_SOCIAL_LINKS)[number]["name"] }) {
-  const className = "h-[1.1rem] w-[1.1rem] text-current";
+  const className = "h-7 w-7 text-current sm:h-8 sm:w-8";
   switch (name) {
     case "LinkedIn":
       return (
@@ -42,14 +57,14 @@ function SocialIcon({ name }: { name: (typeof SITE_SOCIAL_LINKS)[number]["name"]
 function ContactDetails() {
   return (
     <section
-      className="w-full border-t border-white/[0.1] pt-12 pb-20 sm:pt-16 sm:pb-24 lg:pt-20"
+      className="w-full border-t border-white/[0.1] pt-20 pb-20 font-sans sm:pt-28 sm:pb-24 lg:pt-32"
       aria-label="Location and contact details"
     >
-      <div className="mx-auto grid w-full max-w-[min(100%,100rem)] grid-cols-1 items-stretch gap-12 sm:gap-16 lg:grid-cols-2 lg:gap-0">
-        <div className="flex min-w-0 flex-col gap-12 sm:gap-16 lg:border-r lg:border-copper/20 lg:pe-10 lg:pb-2 xl:pe-12">
+      <div className="mx-auto grid w-full max-w-[min(100%,100rem)] grid-cols-1 items-stretch gap-16 sm:gap-24 lg:grid-cols-2 lg:items-center lg:gap-0">
+        <div className="flex min-w-0 flex-col justify-center gap-20 pt-12 sm:gap-24 sm:pt-20 lg:gap-24 lg:border-r lg:border-[#b89a7a]/15 lg:pt-0 lg:pb-0 lg:pe-8 xl:pe-12">
           <div>
-            <p className="text-xs font-medium tracking-[0.28em] text-copper uppercase sm:text-sm">Office</p>
-            <p className="mt-3 max-w-full text-2xl leading-snug font-medium tracking-tight text-white sm:text-3xl">
+            <p className={contactLabelClass}>Office</p>
+            <p className={addressTextClass}>
               {SITE_ADDRESS_LINES[0]}
               <br />
               {SITE_ADDRESS_LINES[1]}
@@ -60,44 +75,39 @@ function ContactDetails() {
               href={SITE_MAP_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="mt-5 inline-flex items-center justify-center rounded-full bg-copper px-7 py-2.5 text-sm font-semibold tracking-wide text-zinc-950 transition-colors hover:bg-copper/90"
+              className={showMapButtonClass}
             >
               Show map
             </a>
           </div>
 
           <div>
-            <img
-              src={logoWhite}
-              alt="Stone Spaces"
-              className="h-12 w-auto max-w-[min(70vw,14rem)] object-contain object-left sm:h-14"
-            />
-            <p className="mt-8 sm:mt-10">
-              <span className="text-xs font-medium tracking-[0.28em] text-copper uppercase sm:text-sm">Phone</span>
+            <p>
+              <span className={contactLabelClass}>Phone</span>
             </p>
             <a
               href={`tel:${SITE_PHONE_TEL}`}
-              className="mt-2 block w-fit text-lg text-copper transition-colors hover:text-copper/85 sm:text-xl"
+              className={`mt-3 block w-fit ${bodyValueWhite}`}
             >
               {SITE_PHONE_DISPLAY}
             </a>
-            <p className="mt-6">
-              <span className="text-xs font-medium tracking-[0.28em] text-copper uppercase sm:text-sm">Mail</span>
+            <p className="mt-8 sm:mt-9">
+              <span className={contactLabelClass}>Mail</span>
             </p>
             <a
               href={SITE_EMAIL_HREF}
-              className="mt-2 block w-fit text-lg text-copper transition-colors hover:text-copper/85 sm:text-xl"
+              className={`mt-3 block w-fit ${bodyValueEmailClass} underline-offset-2 hover:underline`}
             >
               {SITE_EMAIL}
             </a>
-            <ul className="mt-5 flex flex-wrap items-center gap-3" aria-label="Social media">
+            <ul className="mt-8 flex flex-wrap items-center gap-4 sm:mt-9 sm:gap-5" aria-label="Social media">
               {SITE_SOCIAL_LINKS.map((s) => (
                 <li key={s.name}>
                   <a
                     href={s.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex h-10 w-10 items-center justify-center rounded-full border border-copper/35 text-copper/90 transition-colors hover:border-copper/60 hover:text-copper"
+                    className="flex h-12 w-12 items-center justify-center rounded-full border border-[#b89a7a]/50 text-white transition hover:border-[#b89a7a] sm:h-14 sm:w-14"
                     aria-label={s.name}
                   >
                     <SocialIcon name={s.name} />
@@ -108,10 +118,15 @@ function ContactDetails() {
           </div>
         </div>
 
-        <div
-          className="relative flex min-h-[min(50vh,26rem)] w-full min-w-0 items-center justify-center self-stretch overflow-hidden rounded-xl border border-dashed border-copper/25 bg-white/[0.02] lg:min-h-0 lg:pl-10 xl:pl-12"
-          aria-hidden
-        />
+        <figure className="relative m-0 flex min-h-[52rem] w-full min-w-0 flex-1 items-center justify-center self-stretch overflow-visible p-0 shadow-none sm:min-h-[56rem] lg:min-h-[min(74vh,64rem)] lg:h-full lg:shrink-0 xl:min-h-[min(78vh,70rem)]">
+          <img
+            src={mapImage}
+            alt="Map to 6000 Powers Avenue, Jacksonville, Florida"
+            className="h-full w-full max-w-full min-h-[min(78vh,44rem)] object-contain object-center shadow-none sm:min-h-[min(84vh,56rem)] lg:min-h-0"
+            loading="lazy"
+            decoding="async"
+          />
+        </figure>
       </div>
     </section>
   );
