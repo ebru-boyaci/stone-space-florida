@@ -53,64 +53,64 @@ const TILES: {
     fadeStart: 0.58,
     zClass: "z-[0]",
     imgClass:
-      "block h-auto w-auto max-w-[min(27vw,252px)] max-h-[min(80dvh,756px)] object-contain object-center sm:max-w-[min(25vw,268px)] sm:max-h-[min(84dvh,800px)]",
+      "block h-auto w-auto max-w-[min(33vw,308px)] max-h-[min(96dvh,908px)] object-contain object-center sm:max-w-[min(31vw,324px)] sm:max-h-[min(100dvh,960px)]",
   },
   {
     src: hera,
-    rest: { x: -0.24, y: -0.26 },
-    corner: { x: -0.4, y: -0.36 },
+    rest: { x: -0.3, y: -0.26 },
+    corner: { x: -0.46, y: -0.36 },
     spreadEnd: 0.44,
     exitBoost: 0.88,
     fadeStart: 0.52,
     zClass: "z-[0]",
     imgClass:
-      "block h-auto w-auto max-h-[min(21dvh,200px)] max-w-[min(58vw,520px)] object-contain object-center sm:max-h-[min(22.5dvh,216px)] sm:max-w-[min(54vw,560px)]",
+      "block h-auto w-auto max-h-[min(26dvh,240px)] max-w-[min(70vw,624px)] object-contain object-center sm:max-h-[min(27.5dvh,260px)] sm:max-w-[min(66vw,672px)]",
   },
   {
     src: lora,
-    rest: { x: -0.34, y: 0.02 },
-    corner: { x: -0.5, y: 0.09 },
+    rest: { x: -0.4, y: 0.02 },
+    corner: { x: -0.56, y: 0.09 },
     spreadEnd: 0.52,
     exitBoost: 1.1,
     fadeStart: 0.6,
     zClass: "z-[2]",
     imgClass:
-      "block h-auto max-h-[min(36dvh,336px)] w-auto max-w-[min(45vw,392px)] object-contain object-center sm:max-h-[min(39dvh,372px)] sm:max-w-[min(44vw,448px)] lg:max-h-[min(42dvh,400px)] lg:max-w-[min(42vw,472px)]",
+      "block h-auto max-h-[min(44dvh,408px)] w-auto max-w-[min(55vw,472px)] object-contain object-center sm:max-h-[min(47dvh,444px)] sm:max-w-[min(54vw,536px)] lg:max-h-[min(50dvh,480px)] lg:max-w-[min(50vw,568px)]",
     wrapClass: "hidden md:block",
   },
   {
     src: mona,
-    rest: { x: 0.34, y: -0.15 },
-    corner: { x: 0.5, y: -0.2 },
+    rest: { x: 0.4, y: -0.15 },
+    corner: { x: 0.56, y: -0.2 },
     spreadEnd: 0.46,
     exitBoost: 0.92,
     fadeStart: 0.55,
     zClass: "z-[2]",
     imgClass:
-      "block h-auto max-h-[min(36dvh,336px)] w-auto max-w-[min(45vw,392px)] object-contain object-center sm:max-h-[min(39dvh,372px)] sm:max-w-[min(44vw,448px)] lg:max-h-[min(42dvh,400px)] lg:max-w-[min(42vw,472px)]",
+      "block h-auto max-h-[min(44dvh,408px)] w-auto max-w-[min(55vw,472px)] object-contain object-center sm:max-h-[min(47dvh,444px)] sm:max-w-[min(54vw,536px)] lg:max-h-[min(50dvh,480px)] lg:max-w-[min(50vw,568px)]",
   },
   {
     src: marte,
-    rest: { x: -0.22, y: 0.31 },
-    corner: { x: -0.58, y: 0.545 },
+    rest: { x: -0.28, y: 0.31 },
+    corner: { x: -0.64, y: 0.545 },
     spreadEnd: 0.47,
     exitBoost: 1.16,
     fadeStart: 0.53,
     zClass: "z-[2]",
     imgClass:
-      "block h-auto max-h-[min(40dvh,372px)] w-auto max-w-[min(38vw,348px)] object-contain object-center sm:max-h-[min(44dvh,416px)] sm:max-w-[min(41vw,420px)] lg:max-h-[min(46dvh,448px)] lg:max-w-[min(39vw,444px)]",
+      "block h-auto max-h-[min(48dvh,444px)] w-auto max-w-[min(46vw,416px)] object-contain object-center sm:max-h-[min(52dvh,496px)] sm:max-w-[min(49vw,500px)] lg:max-h-[min(54dvh,536px)] lg:max-w-[min(47vw,532px)]",
     wrapClass: "hidden lg:block",
   },
   {
     src: vera,
-    rest: { x: 0.29, y: 0.23 },
-    corner: { x: 0.49, y: 0.43 },
+    rest: { x: 0.35, y: 0.23 },
+    corner: { x: 0.55, y: 0.43 },
     spreadEnd: 0.54,
     exitBoost: 0.98,
     fadeStart: 0.63,
     zClass: "z-[2]",
     imgClass:
-      "block h-auto max-h-[min(34dvh,308px)] w-auto max-w-[min(45vw,388px)] object-contain object-center sm:max-h-[min(38dvh,348px)] sm:max-w-[min(42vw,460px)] lg:max-h-[min(40dvh,384px)] lg:max-w-[min(44vw,516px)]",
+      "block h-auto max-h-[min(42dvh,372px)] w-auto max-w-[min(55vw,468px)] object-contain object-center sm:max-h-[min(46dvh,420px)] sm:max-w-[min(50vw,548px)] lg:max-h-[min(48dvh,464px)] lg:max-w-[min(52vw,620px)]",
   },
 ];
 
@@ -121,6 +121,7 @@ function useLockedHeroProgress(
   progress: MotionValue<number>,
   exitCompleteRef: MutableRefObject<boolean>,
   returningRef: MutableRefObject<boolean>,
+  heroHeaderConcealedRef: MutableRefObject<boolean>,
 ) {
   const reduceMotion = useReducedMotion();
 
@@ -128,6 +129,7 @@ function useLockedHeroProgress(
     if (reduceMotion === true) {
       progress.set(1);
       exitCompleteRef.current = true;
+      heroHeaderConcealedRef.current = true;
       emitHeroExit(1);
       document.documentElement.style.overflow = "";
       document.body.style.overflow = "";
@@ -151,6 +153,7 @@ function useLockedHeroProgress(
     };
 
     lock();
+    heroHeaderConcealedRef.current = false;
     emitHeroExit(0);
 
     let wheelAccum = 0;
@@ -226,7 +229,7 @@ function useLockedHeroProgress(
         document.body.style.overflow = "";
       }
     };
-  }, [progress, reduceMotion, exitCompleteRef, returningRef]);
+  }, [progress, reduceMotion, exitCompleteRef, returningRef, heroHeaderConcealedRef]);
 }
 
 function CollageTile({
@@ -237,6 +240,7 @@ function CollageTile({
   exitBoost,
   fadeStart,
   progress,
+  layoutUnit,
   zClass,
   imgClass,
   wrapClass = "",
@@ -248,12 +252,13 @@ function CollageTile({
   exitBoost: number;
   fadeStart: number;
   progress: MotionValue<number>;
+  layoutUnit: MotionValue<number>;
   zClass: string;
   imgClass: string;
   wrapClass?: string;
 }) {
-  const xPx = useTransform(progress, (t) => {
-    const u = Math.min(window.innerWidth, window.innerHeight);
+  const xPx = useTransform([progress, layoutUnit], (vals) => {
+    const [t, u] = vals as [number, number];
     const rx = rest.x * u;
     const cx = corner.x * u;
     if (t <= spreadEnd) {
@@ -265,8 +270,8 @@ function CollageTile({
     return cx + dir * exitBoost * k;
   });
 
-  const yPx = useTransform(progress, (t) => {
-    const u = Math.min(window.innerWidth, window.innerHeight);
+  const yPx = useTransform([progress, layoutUnit], (vals) => {
+    const [t, u] = vals as [number, number];
     const ry = rest.y * u;
     const cy = corner.y * u;
     if (t <= spreadEnd) {
@@ -312,18 +317,53 @@ export function HeroWithCollage({ children }: { children: ReactNode }) {
   const exitCompleteRef = useRef(false);
   const returningRef = useRef(false);
   const venturedRef = useRef(false);
+  const layoutUnit = useMotionValue(
+    typeof window !== "undefined" ? Math.min(window.innerWidth, window.innerHeight) : 512,
+  );
+  const heroEmitRaf = useRef<number | null>(null);
+  const pendingHeroP = useRef(0);
+  const lastHeroHeaderConcealed = useRef(false);
 
   const smoothProgress = useSpring(progress, {
-    stiffness: 210,
-    damping: 32,
-    mass: 0.38,
+    stiffness: 170,
+    damping: 40,
+    mass: 0.42,
+    restDelta: 0.001,
+    restSpeed: 0.012,
   });
 
-  useLockedHeroProgress(progress, exitCompleteRef, returningRef);
+  useLockedHeroProgress(progress, exitCompleteRef, returningRef, lastHeroHeaderConcealed);
+
+  useLayoutEffect(() => {
+    const sync = () => {
+      layoutUnit.set(Math.min(window.innerWidth, window.innerHeight));
+    };
+    sync();
+    window.addEventListener("resize", sync);
+    return () => window.removeEventListener("resize", sync);
+  }, [layoutUnit]);
 
   useMotionValueEvent(smoothProgress, "change", (v) => {
-    emitHeroExit(v);
+    pendingHeroP.current = v;
+    if (heroEmitRaf.current !== null) return;
+    heroEmitRaf.current = requestAnimationFrame(() => {
+      heroEmitRaf.current = null;
+      const p = pendingHeroP.current;
+      let next = lastHeroHeaderConcealed.current;
+      if (p > 0.1) next = true;
+      else if (p < 0.055) next = false;
+      if (next !== lastHeroHeaderConcealed.current) {
+        lastHeroHeaderConcealed.current = next;
+        emitHeroExit(p);
+      }
+    });
   });
+
+  useEffect(() => {
+    return () => {
+      if (heroEmitRaf.current !== null) cancelAnimationFrame(heroEmitRaf.current);
+    };
+  }, []);
 
   useEffect(() => {
     const onScroll = () => {
@@ -343,6 +383,7 @@ export function HeroWithCollage({ children }: { children: ReactNode }) {
             venturedRef.current = false;
             returningRef.current = false;
             progress.set(0);
+            lastHeroHeaderConcealed.current = false;
             emitHeroExit(0);
           },
         });
@@ -359,7 +400,7 @@ export function HeroWithCollage({ children }: { children: ReactNode }) {
       aria-label="Intro"
     >
       <div
-        className="pointer-events-none absolute inset-0 z-0 overflow-hidden brightness-[0.72] contrast-[0.98]"
+        className="pointer-events-none absolute inset-0 z-0 isolate overflow-hidden"
         aria-hidden
       >
         {TILES.map((tile, i) => (
@@ -372,15 +413,20 @@ export function HeroWithCollage({ children }: { children: ReactNode }) {
             exitBoost={tile.exitBoost}
             fadeStart={tile.fadeStart}
             progress={smoothProgress}
+            layoutUnit={layoutUnit}
             zClass={tile.zClass}
             imgClass={tile.imgClass}
             wrapClass={tile.wrapClass}
           />
         ))}
+        <div
+          className="pointer-events-none absolute inset-0 z-[3] bg-black/[0.26]"
+          aria-hidden
+        />
       </div>
 
       <div
-        className="pointer-events-none absolute inset-0 z-[4] bg-[radial-gradient(ellipse_92%_68%_at_50%_42%,rgba(0,0,0,0.52),rgba(0,0,0,0.26)_44%,rgba(0,0,0,0.4)_100%)]"
+        className="pointer-events-none absolute inset-0 z-[4] bg-[radial-gradient(ellipse_92%_68%_at_50%_42%,rgba(0,0,0,0.48),rgba(0,0,0,0.24)_44%,rgba(0,0,0,0.38)_100%)]"
         aria-hidden
       />
 

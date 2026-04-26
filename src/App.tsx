@@ -9,61 +9,61 @@ export default function App() {
       <main>
         <HeroWithCollage>
           <p className="-mt-2 mb-8 max-w-2xl text-center text-xs font-medium tracking-[0.38em] text-white/40 uppercase sm:-mt-3 sm:mb-10 sm:text-sm">
-            Stone Spaces · Miami
+            Stone Spaces · Florida
           </p>
-          <h1 className="relative mx-auto mt-0 grid w-full max-w-[min(98vw,88rem)] place-items-center px-1 sm:mt-1">
-            <span className="col-start-1 row-start-1 max-w-full -translate-y-1 text-center font-hero-serif text-[clamp(4.25rem,18vw,11.5rem)] font-medium leading-[0.9] tracking-[-0.03em] text-hero-serif [text-shadow:0_4px_48px_rgba(0,0,0,0.55)] sm:-translate-y-2">
+          <h1 className="relative mx-auto mt-0 grid w-full max-w-[min(98vw,96rem)] place-items-center px-1 sm:mt-1">
+            <span className="col-start-1 row-start-1 max-w-full -translate-y-1 text-center font-hero-serif text-[clamp(5rem,20.5vw,13.25rem)] font-medium leading-[0.9] tracking-[-0.03em] text-hero-serif [text-shadow:0_4px_48px_rgba(0,0,0,0.55)] sm:-translate-y-2">
               Surfaces
             </span>
-            <span className="col-start-1 row-start-1 z-[2] mt-[clamp(5.5rem,16vw,9.75rem)] ml-[clamp(-0.25rem,-1.5vw,0.75rem)] max-w-[min(96vw,56rem)] text-center font-hero-script text-[clamp(3.5rem,14.5vw,8.5rem)] leading-[0.85] text-white [text-shadow:0_2px_32px_rgba(0,0,0,0.65)]">
+            <span className="col-start-1 row-start-1 z-[2] mt-[clamp(6.25rem,17.5vw,11rem)] ml-[clamp(-0.25rem,-1.5vw,0.75rem)] max-w-[min(96vw,64rem)] text-center font-hero-script text-[clamp(4.1rem,16.25vw,9.75rem)] leading-[0.85] text-white [text-shadow:0_2px_32px_rgba(0,0,0,0.65)]">
               refined
             </span>
           </h1>
         </HeroWithCollage>
 
-        <section id="about" className="scroll-mt-64 border-t border-white/[0.06] px-6 py-24 sm:px-10">
+        <section id="about" className="scroll-mt-40 border-t border-white/[0.06] px-6 py-24 sm:px-10">
           <h2 className="text-2xl font-semibold tracking-tight">About Us</h2>
           <p className="mt-4 max-w-2xl text-white/55">
             Placeholder section—replace with Stone Spaces story, team, and showroom details.
           </p>
         </section>
 
-        <section id="products" className="scroll-mt-64 border-t border-white/[0.06] px-6 py-24 sm:px-10">
+        <section id="products" className="scroll-mt-40 border-t border-white/[0.06] px-6 py-24 sm:px-10">
           <h2 className="text-2xl font-semibold tracking-tight">Products</h2>
           <p className="mt-4 max-w-2xl text-white/55">Surfaces, slabs, and finishes will live here.</p>
         </section>
 
-        <section id="cabinets" className="scroll-mt-64 border-t border-white/[0.06] px-6 py-24 sm:px-10">
+        <section id="cabinets" className="scroll-mt-40 border-t border-white/[0.06] px-6 py-24 sm:px-10">
           <h2 className="text-2xl font-semibold tracking-tight text-copper">Cabinets</h2>
           <p className="mt-4 max-w-2xl text-white/55">Custom cabinetry for kitchens and baths.</p>
         </section>
 
-        <section id="turnkey" className="scroll-mt-64 border-t border-white/[0.06] px-6 py-24 sm:px-10">
+        <section id="turnkey" className="scroll-mt-40 border-t border-white/[0.06] px-6 py-24 sm:px-10">
           <h2 className="text-2xl font-semibold tracking-tight">Turn Key Projects</h2>
           <p className="mt-4 max-w-2xl text-white/55">End-to-end project stories and timelines.</p>
         </section>
 
-        <section id="services" className="scroll-mt-64 border-t border-white/[0.06] px-6 py-24 sm:px-10">
+        <section id="services" className="scroll-mt-40 border-t border-white/[0.06] px-6 py-24 sm:px-10">
           <h2 className="text-2xl font-semibold tracking-tight">Services</h2>
           <p className="mt-4 max-w-2xl text-white/55">Design, fabrication, install, and care.</p>
         </section>
 
-        <section id="reference" className="scroll-mt-64 border-t border-white/[0.06] px-6 py-24 sm:px-10">
+        <section id="reference" className="scroll-mt-40 border-t border-white/[0.06] px-6 py-24 sm:px-10">
           <h2 className="text-2xl font-semibold tracking-tight">Reference</h2>
           <p className="mt-4 max-w-2xl text-white/55">Selected installations and partners.</p>
         </section>
 
-        <section id="catalogue" className="scroll-mt-64 border-t border-white/[0.06] px-6 py-24 sm:px-10">
+        <section id="catalogue" className="scroll-mt-40 border-t border-white/[0.06] px-6 py-24 sm:px-10">
           <h2 className="text-2xl font-semibold tracking-tight">Catalogue</h2>
           <p className="mt-4 max-w-2xl text-white/55">Downloadable or browsable product catalogue.</p>
         </section>
 
-        <section id="blog" className="scroll-mt-64 border-t border-white/[0.06] px-6 py-24 sm:px-10">
+        <section id="blog" className="scroll-mt-40 border-t border-white/[0.06] px-6 py-24 sm:px-10">
           <h2 className="text-2xl font-semibold tracking-tight">Blog</h2>
           <p className="mt-4 max-w-2xl text-white/55">Ideas, trends, and project spotlights.</p>
         </section>
 
-        <section id="contact" className="scroll-mt-64 border-t border-white/[0.06] px-6 py-28 sm:px-10">
+        <section id="contact" className="scroll-mt-40 border-t border-white/[0.06] px-6 py-28 sm:px-10">
           <h2 className="text-2xl font-semibold tracking-tight">Contact Us</h2>
           <p className="mt-4 max-w-2xl text-white/55">
             Form and map can go here. Phone is also in the header for quick access.

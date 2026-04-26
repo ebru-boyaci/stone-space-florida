@@ -1,6 +1,6 @@
 /** Update phone and hrefs when content pages exist. */
-export const SITE_PHONE_DISPLAY = "+1 (305) 420-9235";
-export const SITE_PHONE_TEL = "+13054209235";
+export const SITE_PHONE_DISPLAY = "(904) 660-2994";
+export const SITE_PHONE_TEL = "+19046602994";
 
 export const NAV_LINKS = [
   { id: "home", label: "Home", href: "#top", accent: false },

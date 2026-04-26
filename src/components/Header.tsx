@@ -42,9 +42,12 @@ export function Header() {
     const onHeroExit = (e: Event) => {
       if (reduceMotion) return;
       const p = (e as CustomEvent<{ p: number }>).detail.p;
-      // Hero kolajı geri oturunca (p düşük) header da görünsün; çıkışta gizlensin
-      if (p > 0.085) setConcealed(true);
-      else setConcealed(false);
+      // Histerezis: spring p değeri eşik etrafında salınınca setState titremesini keser
+      setConcealed((prev) => {
+        if (p > 0.1) return true;
+        if (p < 0.055) return false;
+        return prev;
+      });
     };
     window.addEventListener(HERO_EXIT_EVENT, onHeroExit);
     return () => window.removeEventListener(HERO_EXIT_EVENT, onHeroExit);
@@ -78,7 +81,7 @@ export function Header() {
         transition={springHeader}
         style={{ willChange: "transform" }}
       >
-        <div className="relative mx-auto flex h-40 w-full max-w-full items-stretch px-2 sm:h-44 sm:px-3 lg:h-52 lg:px-5 xl:px-6">
+        <div className="relative mx-auto flex h-32 w-full max-w-full items-stretch px-2 sm:h-36 sm:px-3 lg:h-40 lg:px-5 xl:px-6">
           <div className="flex min-w-0 flex-1 basis-0 items-center justify-start gap-2 sm:gap-3 lg:gap-6">
             <button
               type="button"
@@ -139,7 +142,7 @@ export function Header() {
             <motion.img
               src={logoWhite}
               alt="Stone Spaces"
-              className="h-32 w-auto max-w-[min(58vw,22rem)] select-none object-contain object-center sm:h-40 sm:max-w-[min(52vw,30rem)] lg:h-48 lg:max-w-[min(46vw,40rem)]"
+              className="h-24 w-auto max-w-[min(58vw,18rem)] select-none object-contain object-center sm:h-28 sm:max-w-[min(52vw,24rem)] lg:h-32 lg:max-w-[min(46vw,32rem)]"
               whileHover={reduceMotion ? undefined : { scale: 1.03 }}
               transition={{ type: "spring", stiffness: 500, damping: 28 }}
             />
