@@ -8,11 +8,16 @@ export default function App() {
 
       <main>
         <HeroWithCollage>
-          <p className="max-w-2xl text-center text-base font-medium tracking-[0.32em] text-white/45 uppercase sm:text-lg">
-            Stone &amp; surfaces
+          <p className="-mt-2 mb-8 max-w-2xl text-center text-xs font-medium tracking-[0.38em] text-white/40 uppercase sm:-mt-3 sm:mb-10 sm:text-sm">
+            Stone Spaces · Miami
           </p>
-          <h1 className="mt-6 max-w-[min(92vw,56rem)] text-center text-5xl font-semibold tracking-tight text-white sm:mt-7 sm:text-6xl lg:mt-8 lg:text-7xl lg:leading-[1.05]">
-            Kitchens, materials, and spaces—reimagined.
+          <h1 className="relative mx-auto mt-0 grid w-full max-w-[min(98vw,88rem)] place-items-center px-1 sm:mt-1">
+            <span className="col-start-1 row-start-1 max-w-full -translate-y-1 text-center font-hero-serif text-[clamp(4.25rem,18vw,11.5rem)] font-medium leading-[0.9] tracking-[-0.03em] text-hero-serif [text-shadow:0_4px_48px_rgba(0,0,0,0.55)] sm:-translate-y-2">
+              Surfaces
+            </span>
+            <span className="col-start-1 row-start-1 z-[2] mt-[clamp(5.5rem,16vw,9.75rem)] ml-[clamp(-0.25rem,-1.5vw,0.75rem)] max-w-[min(96vw,56rem)] text-center font-hero-script text-[clamp(3.5rem,14.5vw,8.5rem)] leading-[0.85] text-white [text-shadow:0_2px_32px_rgba(0,0,0,0.65)]">
+              refined
+            </span>
           </h1>
         </HeroWithCollage>
 

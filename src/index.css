@@ -2,9 +2,12 @@
 
 @theme {
   --font-sans: "Outfit", ui-sans-serif, system-ui, sans-serif;
+  --font-hero-serif: "Cormorant Garamond", ui-serif, Georgia, serif;
+  --font-hero-script: "Great Vibes", cursive;
   --color-copper: #c47a4a;
   --color-sand: #b9a078;
   --color-sand-hover: #c9ae88;
+  --color-hero-serif: #c5a589;
 }
 
 html {

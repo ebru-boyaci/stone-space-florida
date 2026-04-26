@@ -53,29 +53,29 @@ const TILES: {
     fadeStart: 0.58,
     zClass: "z-[0]",
     imgClass:
-      "block h-auto w-auto max-w-[min(35vw,328px)] max-h-[min(78dvh,780px)] object-contain object-center sm:max-w-[min(33vw,348px)] sm:max-h-[min(82dvh,840px)]",
+      "block h-auto w-auto max-w-[min(27vw,252px)] max-h-[min(80dvh,756px)] object-contain object-center sm:max-w-[min(25vw,268px)] sm:max-h-[min(84dvh,800px)]",
   },
   {
     src: hera,
-    rest: { x: -0.24, y: -0.22 },
-    corner: { x: -0.4, y: -0.32 },
+    rest: { x: -0.24, y: -0.26 },
+    corner: { x: -0.4, y: -0.36 },
     spreadEnd: 0.44,
     exitBoost: 0.88,
     fadeStart: 0.52,
     zClass: "z-[0]",
     imgClass:
-      "block h-auto w-auto max-h-[min(25.5dvh,240px)] max-w-[min(60vw,476px)] object-contain object-center sm:max-h-[min(26.5dvh,250px)] sm:max-w-[min(56vw,496px)]",
+      "block h-auto w-auto max-h-[min(21dvh,200px)] max-w-[min(58vw,520px)] object-contain object-center sm:max-h-[min(22.5dvh,216px)] sm:max-w-[min(54vw,560px)]",
   },
   {
     src: lora,
-    rest: { x: -0.34, y: -0.02 },
-    corner: { x: -0.5, y: 0.04 },
+    rest: { x: -0.34, y: 0.02 },
+    corner: { x: -0.5, y: 0.09 },
     spreadEnd: 0.52,
     exitBoost: 1.1,
     fadeStart: 0.6,
     zClass: "z-[2]",
     imgClass:
-      "block h-auto max-h-[min(37dvh,342px)] w-auto max-w-[min(50vw,412px)] object-contain object-center sm:max-h-[min(41dvh,380px)] sm:max-w-[min(48vw,452px)] lg:max-h-[min(43dvh,428px)] lg:max-w-[min(46vw,476px)]",
+      "block h-auto max-h-[min(36dvh,336px)] w-auto max-w-[min(45vw,392px)] object-contain object-center sm:max-h-[min(39dvh,372px)] sm:max-w-[min(44vw,448px)] lg:max-h-[min(42dvh,400px)] lg:max-w-[min(42vw,472px)]",
     wrapClass: "hidden md:block",
   },
   {
@@ -87,30 +87,30 @@ const TILES: {
     fadeStart: 0.55,
     zClass: "z-[2]",
     imgClass:
-      "block h-auto max-h-[min(33dvh,308px)] w-auto max-w-[min(46vw,372px)] object-contain object-center sm:max-h-[min(37dvh,348px)] sm:max-w-[min(44vw,412px)] lg:max-h-[min(39dvh,392px)] lg:max-w-[min(42vw,436px)]",
+      "block h-auto max-h-[min(36dvh,336px)] w-auto max-w-[min(45vw,392px)] object-contain object-center sm:max-h-[min(39dvh,372px)] sm:max-w-[min(44vw,448px)] lg:max-h-[min(42dvh,400px)] lg:max-w-[min(42vw,472px)]",
   },
   {
     src: marte,
-    rest: { x: -0.1, y: 0.28 },
-    corner: { x: -0.46, y: 0.52 },
+    rest: { x: -0.22, y: 0.31 },
+    corner: { x: -0.58, y: 0.545 },
     spreadEnd: 0.47,
     exitBoost: 1.16,
     fadeStart: 0.53,
     zClass: "z-[2]",
     imgClass:
-      "block h-auto max-h-[min(39dvh,364px)] w-auto max-w-[min(44vw,364px)] object-contain object-center sm:max-h-[min(43dvh,408px)] sm:max-w-[min(41vw,428px)] lg:max-h-[min(46dvh,454px)] lg:max-w-[min(39vw,454px)]",
+      "block h-auto max-h-[min(40dvh,372px)] w-auto max-w-[min(38vw,348px)] object-contain object-center sm:max-h-[min(44dvh,416px)] sm:max-w-[min(41vw,420px)] lg:max-h-[min(46dvh,448px)] lg:max-w-[min(39vw,444px)]",
     wrapClass: "hidden lg:block",
   },
   {
     src: vera,
-    rest: { x: 0.29, y: 0.29 },
-    corner: { x: 0.49, y: 0.49 },
+    rest: { x: 0.29, y: 0.23 },
+    corner: { x: 0.49, y: 0.43 },
     spreadEnd: 0.54,
     exitBoost: 0.98,
     fadeStart: 0.63,
     zClass: "z-[2]",
     imgClass:
-      "block h-auto max-h-[min(33dvh,308px)] w-auto max-w-[min(48vw,392px)] object-contain object-center sm:max-h-[min(37dvh,348px)] sm:max-w-[min(46vw,432px)] lg:max-h-[min(39dvh,392px)] lg:max-w-[min(44vw,476px)]",
+      "block h-auto max-h-[min(34dvh,308px)] w-auto max-w-[min(45vw,388px)] object-contain object-center sm:max-h-[min(38dvh,348px)] sm:max-w-[min(42vw,460px)] lg:max-h-[min(40dvh,384px)] lg:max-w-[min(44vw,516px)]",
   },
 ];
 
@@ -355,11 +355,11 @@ export function HeroWithCollage({ children }: { children: ReactNode }) {
   return (
     <section
       ref={ref}
-      className="relative flex min-h-[100dvh] flex-col items-center justify-center overflow-hidden px-6 pt-44 pb-20 sm:pt-48 lg:pt-56 lg:pb-24"
+      className="relative flex min-h-[100dvh] flex-col items-center justify-center overflow-hidden px-6 pt-36 pb-20 sm:pt-40 lg:pt-48 lg:pb-24"
       aria-label="Intro"
     >
       <div
-        className="pointer-events-none absolute inset-0 z-0 overflow-hidden brightness-[0.76] contrast-[0.98]"
+        className="pointer-events-none absolute inset-0 z-0 overflow-hidden brightness-[0.72] contrast-[0.98]"
         aria-hidden
       >
         {TILES.map((tile, i) => (
@@ -379,13 +379,12 @@ export function HeroWithCollage({ children }: { children: ReactNode }) {
         ))}
       </div>
 
-      {/* Parlaklığı düşüren ton (opacity değil: üst üste hafif exposure düşüşü) */}
       <div
-        className="pointer-events-none absolute inset-0 z-[4] bg-[radial-gradient(ellipse_92%_68%_at_50%_44%,rgba(0,0,0,0.34),rgba(0,0,0,0.14)_48%,rgba(0,0,0,0.22)_100%)]"
+        className="pointer-events-none absolute inset-0 z-[4] bg-[radial-gradient(ellipse_92%_68%_at_50%_42%,rgba(0,0,0,0.52),rgba(0,0,0,0.26)_44%,rgba(0,0,0,0.4)_100%)]"
         aria-hidden
       />
 
-      <div className="relative z-10 flex flex-col items-center [text-shadow:0_2px_28px_rgba(0,0,0,0.88),0_0_48px_rgba(0,0,0,0.55)]">
+      <div className="relative z-10 flex -translate-y-5 flex-col items-center sm:-translate-y-7 lg:-translate-y-8">
         {children}
       </div>
     </section>
