@@ -60,7 +60,7 @@ function ContactDetails() {
       className="w-full border-t border-white/[0.1] pt-20 pb-20 font-sans sm:pt-28 sm:pb-24 lg:pt-32"
       aria-label="Location and contact details"
     >
-      <div className="mx-auto grid w-full max-w-[min(100%,100rem)] grid-cols-1 items-stretch gap-16 sm:gap-24 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,1.22fr)] lg:items-center lg:gap-0">
+      <div className="mx-auto grid w-full max-w-[min(100%,110rem)] grid-cols-1 items-stretch gap-16 sm:gap-24 lg:grid-cols-[minmax(0,0.82fr)_minmax(0,1.58fr)] lg:items-stretch lg:gap-0">
         <div className="flex min-w-0 flex-col justify-center gap-[7.5rem] pt-[4.5rem] sm:gap-36 sm:pt-[5.6rem] lg:gap-36 lg:border-r lg:border-[#b89a7a]/15 lg:pt-0 lg:pb-0 lg:pe-8 xl:pe-12">
           <div>
             <p className={contactLabelClass}>Office</p>
@@ -118,11 +118,11 @@ function ContactDetails() {
           </div>
         </div>
 
-        <figure className="relative m-0 flex min-h-[min(88vh,36rem)] w-full min-w-0 flex-1 flex-col self-stretch overflow-visible p-0 sm:min-h-[min(90vh,44rem)] lg:min-h-0 lg:h-full">
+        <figure className="relative m-0 flex min-h-[min(95vh,60rem)] w-full min-w-0 flex-1 flex-col self-stretch overflow-visible p-0 sm:min-h-[min(97vh,72rem)] lg:min-h-[min(78vh,58rem)] lg:h-full">
           <img
             src={mapImage}
             alt="Map to 6000 Powers Avenue, Jacksonville, Florida"
-            className="h-full w-full min-h-0 min-w-0 grow object-contain object-center"
+            className="h-full w-full min-h-0 min-w-0 grow object-contain object-center brightness-[0.86] saturate-[0.52] contrast-[0.97]"
             loading="lazy"
             decoding="async"
           />
