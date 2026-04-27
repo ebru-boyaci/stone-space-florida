@@ -16,10 +16,6 @@ import {
 import type { MutableRefObject, ReactNode } from "react";
 import { useEffect, useLayoutEffect, useRef } from "react";
 
-function easeOutCubic(t: number) {
-  return 1 - (1 - Math.min(1, Math.max(0, t))) ** 3;
-}
-
 function easeInCubic(t: number) {
   return Math.min(1, Math.max(0, t)) ** 3;
 }
@@ -115,6 +111,7 @@ function useLockedHeroProgress(
   exitCompleteRef: MutableRefObject<boolean>,
   returningRef: MutableRefObject<boolean>,
   firstGesturePendingRef: MutableRefObject<boolean>,
+  suppressWheelUntilRef: MutableRefObject<number>,
   onHeroFirstGesture?: () => void,
   onHeroUnlockDocument?: () => void,
 ) {
@@ -132,6 +129,7 @@ function useLockedHeroProgress(
 
     const bump = (delta: number) => {
       if (exitCompleteRef.current || returningRef.current) return;
+      if (Date.now() < suppressWheelUntilRef.current) return;
       if (firstGesturePendingRef.current && progress.get() < 1e-5) {
         firstGesturePendingRef.current = false;
         onHeroFirstGesture?.();
@@ -233,6 +231,7 @@ function useLockedHeroProgress(
     exitCompleteRef,
     returningRef,
     firstGesturePendingRef,
+    suppressWheelUntilRef,
     onHeroFirstGesture,
     onHeroUnlockDocument,
   ]);
@@ -276,13 +275,14 @@ function CollageTile({
 }) {
   const reduceMotion = useReducedMotion();
   const tileReveal = useMotionValue(reduceMotion === true ? 1 : 0);
-  /** Hafif zoom — asıl efekt clip-path dairesi */
+  /** Hafif zoom — asıl efekt clip-path dikdörtgeni */
   const tileScale = useTransform(tileReveal, (r) => 0.86 + 0.14 * r);
-  /** Ortadan genişleyen daire maskesi — bitişte köşeleri kesmesin diye %150 */
-  const tileCircleClip = useTransform(tileReveal, (r) => {
-    if (r >= 1) return "circle(150% at 50% 50%)";
-    const pct = Math.max(0, r * 96);
-    return `circle(${pct}% at 50% 50%)`;
+  /** Ortadan büyüyen dikdörtgen: `inset` her kareden eşit daralır → merkeze küçük rect, sonra tam alan */
+  const tileRectClip = useTransform(tileReveal, (r) => {
+    if (r >= 1) return "inset(0%)";
+    const p = (1 - r) * 50;
+    const q = Math.max(0, p);
+    return `inset(${q}% ${q}% ${q}% ${q}%)`;
   });
 
   useLayoutEffect(() => {
@@ -308,10 +308,10 @@ function CollageTile({
     const rx = rest.x * u;
     const cx = corner.x * u;
     if (t <= spreadEnd) {
-      const k = easeOutCubic(t / spreadEnd);
+      const k = t / spreadEnd;
       return rx + (cx - rx) * k;
     }
-    const k = easeInCubic((t - spreadEnd) / (1 - spreadEnd));
+    const k = (t - spreadEnd) / (1 - spreadEnd);
     const dir = cx - rx;
     return cx + dir * exitBoost * k;
   });
@@ -321,10 +321,10 @@ function CollageTile({
     const ry = rest.y * u;
     const cy = corner.y * u;
     if (t <= spreadEnd) {
-      const k = easeOutCubic(t / spreadEnd);
+      const k = t / spreadEnd;
       return ry + (cy - ry) * k;
     }
-    const k = easeInCubic((t - spreadEnd) / (1 - spreadEnd));
+    const k = (t - spreadEnd) / (1 - spreadEnd);
     const dir = cy - ry;
     return cy + dir * exitBoost * k;
   });
@@ -347,7 +347,7 @@ function CollageTile({
           y: yPx,
           opacity,
           scale: tileScale,
-          clipPath: tileCircleClip,
+          clipPath: tileRectClip,
         }}
       >
         <div className="overflow-hidden border border-white/[0.1] shadow-[0_28px_70px_rgba(0,0,0,0.55)]">
@@ -391,6 +391,8 @@ export function HeroWithCollage({
   );
   /** false = ilk jest tükendi, kolaj progress’i artıyor */
   const firstGesturePendingRef = useRef(true);
+  /** Hero reset / scroll-dönüş sonrası momentum wheel’in ilk jest sayılmaması için */
+  const suppressHeroWheelUntilRef = useRef(0);
 
   const smoothProgress = useSpring(progress, {
     stiffness: 260,
@@ -407,6 +409,7 @@ export function HeroWithCollage({
     exitCompleteRef,
     returningRef,
     firstGesturePendingRef,
+    suppressHeroWheelUntilRef,
     onHeroFirstGesture,
     onHeroUnlockDocument,
   );
@@ -422,6 +425,7 @@ export function HeroWithCollage({
     exitCompleteRef.current = false;
     venturedRef.current = false;
     returningRef.current = false;
+    suppressHeroWheelUntilRef.current = Date.now() + 520;
     firstGesturePendingRef.current = true;
     onHeroRest?.();
 
@@ -467,7 +471,9 @@ export function HeroWithCollage({
             venturedRef.current = false;
             returningRef.current = false;
             progress.set(0);
-            firstGesturePendingRef.current = true;
+            suppressHeroWheelUntilRef.current = Date.now() + 520;
+            /** Scroll ile hero’ya dönüşte “landing” ilk jestini tekrarlama — yoksa üstte kalan wheel header’ı tekrar gizler */
+            firstGesturePendingRef.current = false;
             onHeroRest?.();
           },
         });

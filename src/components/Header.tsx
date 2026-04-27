@@ -82,23 +82,6 @@ export function Header({
               </motion.span>
             </button>
 
-            <nav className="hidden items-center gap-7 lg:flex xl:gap-9" aria-label="Primary shortcuts">
-              <a
-                href="#about"
-                className="text-base font-semibold tracking-[0.12em] text-white/90 uppercase transition-colors hover:text-white lg:text-[1.0625rem] lg:tracking-[0.14em]"
-                onClick={() => setMegaOpen(false)}
-              >
-                About Us
-              </a>
-              <a
-                href="#services"
-                className="text-base font-semibold tracking-[0.12em] text-white/90 uppercase transition-colors hover:text-white lg:text-[1.0625rem] lg:tracking-[0.14em]"
-                onClick={() => setMegaOpen(false)}
-              >
-                Services
-              </a>
-            </nav>
-
             <button
               type="button"
               className="flex size-12 items-center justify-center rounded-md text-white lg:hidden"

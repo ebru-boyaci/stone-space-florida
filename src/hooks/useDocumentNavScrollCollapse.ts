@@ -3,7 +3,7 @@ import { useEffect, useRef } from "react";
 /**
  * Hero kolajı bittiğinde (`enabled`) çalışır: doküman scroll’una göre header üstten kayma.
  *
- * - Üst bantta (y küçük) header her zaman görünür — geri gelmeme sorunu.
+ * - Üst bantta (y küçük) header her zaman görünür — adres çubuğu / bounce ile y sıçramalarında delta>6 yanlış gizlemesin.
  * - Yukarı delta eşiği düşük — trackpad’de yavaş kaydırmada da header döner.
  * - rAF ile kare başına tek okuma; tekrarlayan rAF isteği tek kuyrukta birleşir (duraksama azaltır).
  */
@@ -24,7 +24,8 @@ export function useDocumentNavScrollCollapse(enabled: boolean, setCollapsed: (v:
       const delta = y - lastY.current;
       lastY.current = y;
 
-      if (y < 112) {
+      const topZonePx = 200;
+      if (y < topZonePx) {
         setCollapsed(false);
         return;
       }
