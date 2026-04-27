@@ -4,19 +4,23 @@
   --font-sans: "Outfit", ui-sans-serif, system-ui, sans-serif;
   --font-hero-serif: "Cormorant Garamond", ui-serif, Georgia, serif;
   --font-hero-script: "Great Vibes", cursive;
+  --font-contact-display: "Montserrat", ui-sans-serif, system-ui, sans-serif;
   --color-copper: #c47a4a;
   --color-sand: #b9a078;
   --color-sand-hover: #c9ae88;
   --color-hero-serif: #c5a589;
+  --color-contact-display: #9c7c5c;
 }
 
 html {
+  overflow-x: clip;
   scroll-behavior: smooth;
 }
 
 body {
   margin: 0;
   min-height: 100vh;
+  overflow-x: clip;
   font-family: var(--font-sans);
   background: #000;
   color: #fafafa;

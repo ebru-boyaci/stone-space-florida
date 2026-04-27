@@ -1,7 +1,7 @@
 import logoWhite from "@assets/logo/white.PNG";
-import { HERO_EXIT_EVENT } from "@/components/HeroCollage";
+import { useScrollLock } from "@/hooks/useScrollLock";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { NAV_LINKS, SITE_PHONE_DISPLAY, SITE_PHONE_TEL } from "@/config/site";
 
 const springHeader = { type: "spring" as const, stiffness: 300, damping: 42, mass: 0.58 };
@@ -9,64 +9,32 @@ const springPanel = { type: "spring" as const, stiffness: 400, damping: 32 };
 
 type HeaderProps = {
   contactOpen?: boolean;
+  /** App tek state: hero jesti + doküman scroll birleşik */
+  navCollapsed: boolean;
   onOpenContact?: () => void;
   onExitContact?: () => void;
 };
 
-export function Header({ contactOpen = false, onOpenContact, onExitContact }: HeaderProps) {
+export function Header({
+  contactOpen = false,
+  navCollapsed,
+  onOpenContact,
+  onExitContact,
+}: HeaderProps) {
   const reduceMotion = useReducedMotion();
-  const lastScrollY = useRef(0);
-  const [concealed, setConcealed] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [megaOpen, setMegaOpen] = useState(false);
+
+  useEffect(() => {
+    if (navCollapsed) setMegaOpen(false);
+  }, [navCollapsed]);
 
   const closeAll = useCallback(() => {
     setMenuOpen(false);
     setMegaOpen(false);
   }, []);
 
-  useEffect(() => {
-    const onScroll = () => {
-      if (reduceMotion) return;
-      const y = window.scrollY;
-      const delta = y - lastScrollY.current;
-      if (y < 32) {
-        setConcealed(false);
-      } else if (delta > 6) {
-        setConcealed(true);
-        setMegaOpen(false);
-      } else if (delta < -6) {
-        setConcealed(false);
-      }
-      lastScrollY.current = y;
-    };
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, [reduceMotion]);
-
-  useEffect(() => {
-    const onHeroExit = (e: Event) => {
-      if (reduceMotion) return;
-      const p = (e as CustomEvent<{ p: number }>).detail.p;
-      // Histerezis: spring p değeri eşik etrafında salınınca setState titremesini keser
-      setConcealed((prev) => {
-        if (p > 0.1) return true;
-        if (p < 0.055) return false;
-        return prev;
-      });
-    };
-    window.addEventListener(HERO_EXIT_EVENT, onHeroExit);
-    return () => window.removeEventListener(HERO_EXIT_EVENT, onHeroExit);
-  }, [reduceMotion]);
-
-  useEffect(() => {
-    if (!menuOpen) return;
-    const prev = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    return () => {
-      document.body.style.overflow = prev;
-    };
-  }, [menuOpen]);
+  useScrollLock(menuOpen);
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
@@ -76,15 +44,15 @@ export function Header({ contactOpen = false, onOpenContact, onExitContact }: He
     return () => window.removeEventListener("keydown", onKey);
   }, [closeAll]);
 
-  const headerY = reduceMotion || contactOpen ? 0 : concealed ? "-120%" : 0;
+  const headerY = reduceMotion || contactOpen ? 0 : navCollapsed ? "-120%" : 0;
 
   return (
     <>
       <motion.header
         className={
           contactOpen
-            ? "fixed inset-x-0 top-0 z-50 border-b border-white/[0.08] bg-[#0a0a0a]"
-            : "fixed inset-x-0 top-0 z-50 border-b border-white/[0.06] bg-transparent backdrop-blur-[2px]"
+            ? "fixed inset-x-0 top-0 z-50 max-w-[100vw] overflow-x-clip border-b border-white/[0.08] bg-[#0a0a0a]"
+            : "fixed inset-x-0 top-0 z-50 max-w-[100vw] overflow-x-clip border-b border-white/[0.06] bg-transparent"
         }
         initial={false}
         animate={{ y: headerY }}

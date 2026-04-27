@@ -144,7 +144,7 @@ function ContactOverlayContent() {
         <div className="relative grid w-full max-w-[min(98vw,80rem)] place-items-center">
           <motion.h2
             id="contact-heading"
-            className="col-start-1 row-start-1 max-w-[min(96vw,96rem)] text-center font-hero-serif text-[clamp(6.25rem,20vw,18rem)] font-medium lowercase leading-[0.88] tracking-[-0.03em] text-hero-serif [text-shadow:0_4px_48px_rgba(0,0,0,0.5)] sm:text-[clamp(8rem,21.5vw,19.5rem)] lg:text-[clamp(8.25rem,18vw,20.5rem)]"
+            className="col-start-1 row-start-1 max-w-[min(96vw,96rem)] text-center font-contact-display text-[clamp(6.85rem,21.5vw,19.5rem)] font-extralight lowercase leading-[0.88] tracking-[-0.055em] text-contact-display antialiased [text-shadow:0_4px_48px_rgba(0,0,0,0.45)] sm:text-[clamp(8.6rem,22.5vw,21rem)] lg:text-[clamp(9rem,19.5vw,22rem)]"
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.72, ease: easeOut }}
@@ -152,7 +152,7 @@ function ContactOverlayContent() {
             get info
           </motion.h2>
           <motion.p
-            className="col-start-1 row-start-1 z-[1] mt-[clamp(9.75rem,25vw,18.5rem)] max-w-[min(94vw,64rem)] text-center font-hero-script text-[clamp(4.25rem,15.5vw,10.5rem)] lowercase leading-[0.82] text-white [text-shadow:0_2px_32px_rgba(0,0,0,0.6)] sm:mt-[clamp(11rem,27vw,21.5rem)] sm:text-[clamp(5.25rem,16.5vw,11.5rem)]"
+            className="col-start-1 row-start-1 z-[1] mt-[clamp(10.35rem,26vw,19.25rem)] max-w-[min(94vw,64rem)] text-center font-hero-script text-[clamp(4.25rem,15.5vw,10.5rem)] lowercase leading-[0.82] text-white [text-shadow:0_2px_32px_rgba(0,0,0,0.6)] sm:mt-[clamp(11.65rem,28vw,22.25rem)] sm:text-[clamp(5.25rem,16.5vw,11.5rem)]"
             initial={{ opacity: 0, y: 32 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3, duration: 0.8, ease: easeOut }}
@@ -179,7 +179,7 @@ export function ContactOverlay({ open, mountKey }: { open: boolean; mountKey: nu
           role="region"
           aria-label="Contact"
           aria-labelledby="contact-heading"
-          className="fixed inset-0 z-[40] flex min-h-0 flex-col overflow-y-auto bg-[#0a0a0a]"
+          className="fixed inset-0 z-[40] flex min-h-0 flex-col overflow-y-auto overscroll-y-contain bg-[#0a0a0a]"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}

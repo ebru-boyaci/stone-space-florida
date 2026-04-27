@@ -8,7 +8,6 @@ import {
   animate,
   motion,
   useMotionValue,
-  useMotionValueEvent,
   useSpring,
   useTransform,
   useReducedMotion,
@@ -16,12 +15,6 @@ import {
 } from "motion/react";
 import type { MutableRefObject, ReactNode } from "react";
 import { useEffect, useLayoutEffect, useRef } from "react";
-
-export const HERO_EXIT_EVENT = "stone-hero-exit";
-
-function emitHeroExit(p: number) {
-  window.dispatchEvent(new CustomEvent(HERO_EXIT_EVENT, { detail: { p } }));
-}
 
 function easeOutCubic(t: number) {
   return 1 - (1 - Math.min(1, Math.max(0, t))) ** 3;
@@ -121,7 +114,9 @@ function useLockedHeroProgress(
   progress: MotionValue<number>,
   exitCompleteRef: MutableRefObject<boolean>,
   returningRef: MutableRefObject<boolean>,
-  heroHeaderConcealedRef: MutableRefObject<boolean>,
+  firstGesturePendingRef: MutableRefObject<boolean>,
+  onHeroFirstGesture?: () => void,
+  onHeroUnlockDocument?: () => void,
 ) {
   const reduceMotion = useReducedMotion();
 
@@ -129,8 +124,7 @@ function useLockedHeroProgress(
     if (reduceMotion === true) {
       progress.set(1);
       exitCompleteRef.current = true;
-      heroHeaderConcealedRef.current = true;
-      emitHeroExit(1);
+      onHeroUnlockDocument?.();
       document.documentElement.style.overflow = "";
       document.body.style.overflow = "";
       return;
@@ -138,10 +132,16 @@ function useLockedHeroProgress(
 
     const bump = (delta: number) => {
       if (exitCompleteRef.current || returningRef.current) return;
+      if (firstGesturePendingRef.current && progress.get() < 1e-5) {
+        firstGesturePendingRef.current = false;
+        onHeroFirstGesture?.();
+        return;
+      }
       const next = Math.min(1, Math.max(0, progress.get() + delta * WHEEL_SCALE));
       progress.set(next);
       if (next >= 1) {
         exitCompleteRef.current = true;
+        onHeroUnlockDocument?.();
         document.documentElement.style.overflow = "";
         document.body.style.overflow = "";
       }
@@ -153,8 +153,6 @@ function useLockedHeroProgress(
     };
 
     lock();
-    heroHeaderConcealedRef.current = false;
-    emitHeroExit(0);
 
     let wheelAccum = 0;
     let rafId = 0;
@@ -229,8 +227,21 @@ function useLockedHeroProgress(
         document.body.style.overflow = "";
       }
     };
-  }, [progress, reduceMotion, exitCompleteRef, returningRef, heroHeaderConcealedRef]);
+  }, [
+    progress,
+    reduceMotion,
+    exitCompleteRef,
+    returningRef,
+    firstGesturePendingRef,
+    onHeroFirstGesture,
+    onHeroUnlockDocument,
+  ]);
 }
+
+/** Sıralı gelişler arası (daha seyrek → daha “tek tek”) */
+const TILE_STAGGER_SEC = 0.118;
+/** Yuvarlak maskenin tam açılması — yavaş */
+const TILE_REVEAL_DURATION = 0.95;
 
 function CollageTile({
   src,
@@ -244,6 +255,8 @@ function CollageTile({
   zClass,
   imgClass,
   wrapClass = "",
+  tileIndex,
+  entranceCycle,
 }: {
   src: string;
   rest: { x: number; y: number };
@@ -256,7 +269,40 @@ function CollageTile({
   zClass: string;
   imgClass: string;
   wrapClass?: string;
+  /** Sıralı giriş gecikmesi (0 … N-1) */
+  tileIndex: number;
+  /** Artınca (ilk yükleme 0, contact dönüşü 1…) bu tile girişi yeniden oynar */
+  entranceCycle: number;
 }) {
+  const reduceMotion = useReducedMotion();
+  const tileReveal = useMotionValue(reduceMotion === true ? 1 : 0);
+  /** Hafif zoom — asıl efekt clip-path dairesi */
+  const tileScale = useTransform(tileReveal, (r) => 0.86 + 0.14 * r);
+  /** Ortadan genişleyen daire maskesi — bitişte köşeleri kesmesin diye %150 */
+  const tileCircleClip = useTransform(tileReveal, (r) => {
+    if (r >= 1) return "circle(150% at 50% 50%)";
+    const pct = Math.max(0, r * 96);
+    return `circle(${pct}% at 50% 50%)`;
+  });
+
+  useLayoutEffect(() => {
+    if (reduceMotion === true) {
+      tileReveal.set(1);
+      return;
+    }
+    tileReveal.set(0);
+  }, [entranceCycle, reduceMotion, tileReveal]);
+
+  useEffect(() => {
+    if (reduceMotion === true) return;
+    const ctrl = animate(tileReveal, 1, {
+      duration: TILE_REVEAL_DURATION,
+      delay: tileIndex * TILE_STAGGER_SEC,
+      ease: [0.26, 0.08, 0.12, 1],
+    });
+    return () => ctrl.stop();
+  }, [entranceCycle, tileIndex, reduceMotion, tileReveal]);
+
   const xPx = useTransform([progress, layoutUnit], (vals) => {
     const [t, u] = vals as [number, number];
     const rx = rest.x * u;
@@ -283,9 +329,11 @@ function CollageTile({
     return cy + dir * exitBoost * k;
   });
 
-  const opacity = useTransform(progress, (t) => {
-    if (t < fadeStart) return 1;
-    return Math.max(0, 1 - easeInCubic((t - fadeStart) / (1 - fadeStart)));
+  const opacity = useTransform([progress, tileReveal], (vals) => {
+    const [t, tr] = vals as [number, number];
+    const po =
+      t < fadeStart ? 1 : Math.max(0, 1 - easeInCubic((t - fadeStart) / (1 - fadeStart)));
+    return po * tr;
   });
 
   return (
@@ -293,8 +341,14 @@ function CollageTile({
       className={`pointer-events-none absolute left-1/2 top-1/2 ${zClass} -translate-x-1/2 -translate-y-1/2 ${wrapClass}`}
     >
       <motion.div
-        className="pointer-events-none transform-gpu will-change-[transform,opacity]"
-        style={{ x: xPx, y: yPx, opacity }}
+        className="pointer-events-none transform-gpu will-change-[transform,opacity,clip-path]"
+        style={{
+          x: xPx,
+          y: yPx,
+          opacity,
+          scale: tileScale,
+          clipPath: tileCircleClip,
+        }}
       >
         <div className="overflow-hidden border border-white/[0.1] shadow-[0_28px_70px_rgba(0,0,0,0.55)]">
           <img
@@ -311,7 +365,22 @@ function CollageTile({
   );
 }
 
-export function HeroWithCollage({ children }: { children: ReactNode }) {
+export function HeroWithCollage({
+  children,
+  homeEntranceKey = 0,
+  onHeroFirstGesture,
+  onHeroUnlockDocument,
+  onHeroRest,
+}: {
+  children: ReactNode;
+  /** Contact’tan dönüş vb. ana sayfa girişinde artırılır → kolaj sıfırlanır ve görseller stagger ile gelir */
+  homeEntranceKey?: number;
+  onHeroFirstGesture?: () => void;
+  onHeroUnlockDocument?: () => void;
+  /** Kolaj tekrar “dinlenme”da (progress→0): App scroll/hader fazını sıfırlar */
+  onHeroRest?: () => void;
+}) {
+  const reduceMotion = useReducedMotion();
   const ref = useRef<HTMLElement>(null);
   const progress = useMotionValue(0);
   const exitCompleteRef = useRef(false);
@@ -320,19 +389,56 @@ export function HeroWithCollage({ children }: { children: ReactNode }) {
   const layoutUnit = useMotionValue(
     typeof window !== "undefined" ? Math.min(window.innerWidth, window.innerHeight) : 512,
   );
-  const heroEmitRaf = useRef<number | null>(null);
-  const pendingHeroP = useRef(0);
-  const lastHeroHeaderConcealed = useRef(false);
+  /** false = ilk jest tükendi, kolaj progress’i artıyor */
+  const firstGesturePendingRef = useRef(true);
 
   const smoothProgress = useSpring(progress, {
-    stiffness: 170,
-    damping: 40,
-    mass: 0.42,
-    restDelta: 0.001,
-    restSpeed: 0.012,
+    stiffness: 260,
+    damping: 46,
+    mass: 0.38,
+    restDelta: 0.002,
+    restSpeed: 0.015,
   });
 
-  useLockedHeroProgress(progress, exitCompleteRef, returningRef, lastHeroHeaderConcealed);
+  const homeResetAnim = useRef<ReturnType<typeof animate> | null>(null);
+
+  useLockedHeroProgress(
+    progress,
+    exitCompleteRef,
+    returningRef,
+    firstGesturePendingRef,
+    onHeroFirstGesture,
+    onHeroUnlockDocument,
+  );
+
+  useLayoutEffect(() => {
+    if (homeEntranceKey === 0) return;
+    homeResetAnim.current?.stop();
+  }, [homeEntranceKey]);
+
+  useEffect(() => {
+    if (homeEntranceKey === 0 || reduceMotion === true) return;
+
+    exitCompleteRef.current = false;
+    venturedRef.current = false;
+    returningRef.current = false;
+    firstGesturePendingRef.current = true;
+    onHeroRest?.();
+
+    window.scrollTo(0, 0);
+    document.documentElement.style.overflow = "hidden";
+    document.body.style.overflow = "hidden";
+
+    homeResetAnim.current?.stop();
+    homeResetAnim.current = animate(progress, 0, {
+      duration: 0.14,
+      ease: [0.33, 1, 0.36, 1],
+    });
+
+    return () => {
+      homeResetAnim.current?.stop();
+    };
+  }, [homeEntranceKey, reduceMotion, progress, onHeroRest]);
 
   useLayoutEffect(() => {
     const sync = () => {
@@ -342,28 +448,6 @@ export function HeroWithCollage({ children }: { children: ReactNode }) {
     window.addEventListener("resize", sync);
     return () => window.removeEventListener("resize", sync);
   }, [layoutUnit]);
-
-  useMotionValueEvent(smoothProgress, "change", (v) => {
-    pendingHeroP.current = v;
-    if (heroEmitRaf.current !== null) return;
-    heroEmitRaf.current = requestAnimationFrame(() => {
-      heroEmitRaf.current = null;
-      const p = pendingHeroP.current;
-      let next = lastHeroHeaderConcealed.current;
-      if (p > 0.1) next = true;
-      else if (p < 0.055) next = false;
-      if (next !== lastHeroHeaderConcealed.current) {
-        lastHeroHeaderConcealed.current = next;
-        emitHeroExit(p);
-      }
-    });
-  });
-
-  useEffect(() => {
-    return () => {
-      if (heroEmitRaf.current !== null) cancelAnimationFrame(heroEmitRaf.current);
-    };
-  }, []);
 
   useEffect(() => {
     const onScroll = () => {
@@ -383,8 +467,8 @@ export function HeroWithCollage({ children }: { children: ReactNode }) {
             venturedRef.current = false;
             returningRef.current = false;
             progress.set(0);
-            lastHeroHeaderConcealed.current = false;
-            emitHeroExit(0);
+            firstGesturePendingRef.current = true;
+            onHeroRest?.();
           },
         });
       }
@@ -417,6 +501,8 @@ export function HeroWithCollage({ children }: { children: ReactNode }) {
             zClass={tile.zClass}
             imgClass={tile.imgClass}
             wrapClass={tile.wrapClass}
+            tileIndex={i}
+            entranceCycle={homeEntranceKey}
           />
         ))}
         <div

@@ -1,11 +1,37 @@
 import { ContactOverlay } from "@/components/ContactOverlay";
 import { Header } from "@/components/Header";
 import { HeroWithCollage } from "@/components/HeroCollage";
-import { useCallback, useEffect, useState } from "react";
+import { useDocumentNavScrollCollapse } from "@/hooks/useDocumentNavScrollCollapse";
+import { useScrollLock } from "@/hooks/useScrollLock";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 export default function App() {
   const [contactOpen, setContactOpen] = useState(false);
   const [contactMountKey, setContactMountKey] = useState(0);
+  const [homeEntranceKey, setHomeEntranceKey] = useState(0);
+  const wasContactOpen = useRef(false);
+
+  /** Kolaj bitti → sayfa scroll’u header’ı kontrol eder. Hero fazında false. */
+  const [heroDocumentMode, setHeroDocumentMode] = useState(false);
+  /** İlk tekerlek: sadece header kaybolur; doküman scroll ile karışmasın diye ayrı bayrak */
+  const [heroStripHidden, setHeroStripHidden] = useState(false);
+  /** Hero bittikten sonra window scroll ile */
+  const [scrollCollapsed, setScrollCollapsed] = useState(false);
+
+  const navCollapsed = heroStripHidden || scrollCollapsed;
+
+  const onHeroFirstGesture = useCallback(() => setHeroStripHidden(true), []);
+  const onHeroUnlockDocument = useCallback(() => {
+    setHeroDocumentMode(true);
+    setHeroStripHidden(false);
+  }, []);
+  const onHeroRest = useCallback(() => {
+    setHeroDocumentMode(false);
+    setHeroStripHidden(false);
+    setScrollCollapsed(false);
+  }, []);
+
+  useDocumentNavScrollCollapse(heroDocumentMode, setScrollCollapsed);
 
   const openContact = useCallback(() => {
     setContactOpen(true);
@@ -37,13 +63,13 @@ export default function App() {
     return () => window.removeEventListener("hashchange", onHash);
   }, []);
 
+  useScrollLock(contactOpen);
+
   useEffect(() => {
-    if (!contactOpen) return;
-    const prev = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    return () => {
-      document.body.style.overflow = prev;
-    };
+    if (wasContactOpen.current && !contactOpen) {
+      setHomeEntranceKey((k) => k + 1);
+    }
+    wasContactOpen.current = contactOpen;
   }, [contactOpen]);
 
   useEffect(() => {
@@ -56,15 +82,21 @@ export default function App() {
   }, [contactOpen, closeContact]);
 
   return (
-    <div id="top" className="min-h-screen bg-black text-zinc-100">
+    <div id="top" className="min-h-screen overflow-x-clip bg-black text-zinc-100">
       <Header
         contactOpen={contactOpen}
+        navCollapsed={navCollapsed}
         onOpenContact={openContact}
         onExitContact={closeContact}
       />
 
       <main inert={contactOpen}>
-        <HeroWithCollage>
+        <HeroWithCollage
+          homeEntranceKey={homeEntranceKey}
+          onHeroFirstGesture={onHeroFirstGesture}
+          onHeroUnlockDocument={onHeroUnlockDocument}
+          onHeroRest={onHeroRest}
+        >
           <p className="-mt-2 mb-8 max-w-2xl text-center text-xs font-medium tracking-[0.38em] text-white/40 uppercase sm:-mt-3 sm:mb-10 sm:text-sm">
             Stone Spaces · Florida
           </p>
