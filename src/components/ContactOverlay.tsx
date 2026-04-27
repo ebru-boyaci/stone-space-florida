@@ -122,7 +122,7 @@ function ContactDetails() {
           <img
             src={mapImage}
             alt="Map to 6000 Powers Avenue, Jacksonville, Florida"
-            className="h-full w-full min-h-0 min-w-0 grow object-contain object-center brightness-[0.86] saturate-[0.52] contrast-[0.97]"
+            className="h-full w-full min-h-0 min-w-0 grow object-contain object-center brightness-[0.70] saturate-[0.52] contrast-[0.97]"
             loading="lazy"
             decoding="async"
           />
