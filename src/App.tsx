@@ -2,6 +2,7 @@ import { ContactOverlay } from "@/components/ContactOverlay";
 import { Header } from "@/components/Header";
 import { HeroWithCollage } from "@/components/HeroCollage";
 import { ScrollGallery } from "@/components/ScrollGallery";
+import { ScrollRevealTextSection } from "@/components/ScrollRevealTextSection";
 import { useDocumentNavScrollCollapse } from "@/hooks/useDocumentNavScrollCollapse";
 import { useScrollLock } from "@/hooks/useScrollLock";
 import { useCallback, useEffect, useRef, useState } from "react";
@@ -112,6 +113,7 @@ export default function App() {
         </HeroWithCollage>
 
         <ScrollGallery />
+        <ScrollRevealTextSection />
       </main>
 
       <ContactOverlay open={contactOpen} mountKey={contactMountKey} />
