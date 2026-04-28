@@ -4,8 +4,8 @@ import kitchen3 from "@assets/kitchen3.jpg";
 import kitchen4 from "@assets/kitchen4.jpg";
 import kitchen5 from "@assets/kitchen 5.jpg";
 import kitchen6 from "@assets/kitchen6.jpg";
-import { motion, useScroll, useSpring, useTime, useTransform, type MotionValue } from "motion/react";
-import { useMemo, useRef } from "react";
+import { motion, useReducedMotion, useScroll, useTransform, type MotionValue } from "motion/react";
+import { useRef } from "react";
 
 const COPY_LINES = [
   "Precision Design",
@@ -17,6 +17,8 @@ const COPY_LINES = [
   "Trusted Guidance",
 ] as const;
 
+const TICKER_DURATION_S = 11.8;
+
 type Tile = {
   src: string;
   cls: string;
@@ -24,10 +26,6 @@ type Tile = {
   driftY: [number, number];
   imgCls?: string;
 };
-
-function clamp01(v: number) {
-  return Math.max(0, Math.min(1, v));
-}
 
 const TILES: readonly Tile[] = [
   { src: kitchen1, cls: "left-[-1%] top-[12%] w-[29vw] max-w-[19rem] aspect-[1.65/1]", driftX: [-12, 10], driftY: [10, -12] },
@@ -50,17 +48,15 @@ const TILES: readonly Tile[] = [
   },
 ] as const;
 
+/** Scroll ile drift: tek useTransform / döşeme (yay yok = scroll bitince ekstra kare yok). */
 function ScrollTile({ tile, progress }: { tile: Tile; progress: MotionValue<number> }) {
   const x = useTransform(progress, [0, 1], tile.driftX);
   const y = useTransform(progress, [0, 1], tile.driftY);
-  // Subpixel jitter (moire/shimmer) azaltmak için hareketi piksel ızgarasına sabitle.
-  const xSnapped = useTransform(x, (v) => Math.round(v));
-  const ySnapped = useTransform(y, (v) => Math.round(v));
 
   return (
     <motion.figure
-      className={`absolute z-20 overflow-hidden [transform:translateZ(0)] [backface-visibility:hidden] will-change-transform ${tile.cls}`}
-      style={{ x: xSnapped, y: ySnapped }}
+      className={`absolute z-20 overflow-hidden [transform:translateZ(0)] [backface-visibility:hidden] ${tile.cls}`}
+      style={{ x, y }}
     >
       <img
         src={tile.src}
@@ -68,62 +64,73 @@ function ScrollTile({ tile, progress }: { tile: Tile; progress: MotionValue<numb
         className={`h-full w-full object-cover [transform:translateZ(0)] [backface-visibility:hidden] ${tile.imgCls ?? ""}`}
         loading="lazy"
         decoding="async"
+        sizes="(max-width: 768px) 40vw, 18rem"
       />
     </motion.figure>
   );
 }
 
-function TickerLine({
-  line,
-  index,
-  tickerY,
-  lineStep,
-  loopHeight,
-}: {
-  line: string;
-  index: number;
-  tickerY: MotionValue<number>;
-  lineStep: number;
-  loopHeight: number;
-}) {
-  /**
-   * Merkez bandına yaklaşırken beyazlaşır, merkezden uzaklaşıp yukarı kayarken tekrar solar.
-   * Böylece "aşağıdan ortaya beyazlaşma, yukarıda eski tona dönme" akışı oluşur.
-   */
-  const opacity = useTransform(tickerY, (y) => {
-    const focusY = lineStep * 2.45;
-    const raw = index * lineStep + y;
-    const wrapped = ((raw % loopHeight) + loopHeight) % loopHeight;
-    const distance = Math.min(Math.abs(wrapped - focusY), loopHeight - Math.abs(wrapped - focusY));
-    const whiten = clamp01(1 - distance / (lineStep * 1.55));
-    return 0.28 + whiten * 0.72;
-  });
+function TickerStatic() {
+  return (
+    <div className="flex flex-col items-center justify-center text-center">
+      {COPY_LINES.map((line) => (
+        <p
+          key={line}
+          className="h-[92px] whitespace-nowrap text-white"
+          style={{ fontFamily: '"Inter", "Helvetica Neue", Helvetica, Arial, sans-serif' }}
+        >
+          {line}
+        </p>
+      ))}
+    </div>
+  );
+}
+
+function TickerAnimated() {
+  const phaseStep = TICKER_DURATION_S / COPY_LINES.length;
 
   return (
-    <motion.p className="h-[92px] whitespace-nowrap text-white" style={{ opacity }}>
-      {line}
-    </motion.p>
+    <div
+      className="craft-ticker-track flex flex-col text-center"
+      style={{ fontFamily: '"Inter", "Helvetica Neue", Helvetica, Arial, sans-serif' }}
+    >
+      {COPY_LINES.map((line, i) => (
+        <p
+          key={`a-${line}`}
+          className="craft-ticker-line h-[92px] whitespace-nowrap text-white"
+          style={{
+            animationDelay: `${-i * phaseStep}s`,
+          }}
+        >
+          {line}
+        </p>
+      ))}
+      {COPY_LINES.map((line, i) => (
+        <p
+          key={`b-${line}`}
+          className="craft-ticker-line h-[92px] whitespace-nowrap text-white"
+          style={{
+            animationDelay: `${-i * phaseStep}s`,
+          }}
+        >
+          {line}
+        </p>
+      ))}
+    </div>
   );
 }
 
 export function CraftShowcaseSection() {
   const sectionRef = useRef<HTMLElement>(null);
-  const time = useTime();
+  const reduceMotion = useReducedMotion();
 
   const { scrollYProgress } = useScroll({
     target: sectionRef,
     offset: ["start end", "end start"],
   });
 
-  const softProgress = useSpring(scrollYProgress, { stiffness: 120, damping: 24, mass: 0.25 });
-
-  // Referanstaki gibi sadece scroll ile hareket: grup hafif aşağı inerken yatayda küçük sapmalar alır.
-  const clusterY = useTransform(softProgress, [0, 1], [-14, 28]);
-  // Metin scroll'dan bağımsız sürekli döner (yatay silindir / X ekseni hissi).
-  const LINE_STEP = 92;
-  const LOOP_HEIGHT = COPY_LINES.length * LINE_STEP;
-  const tickerY = useTransform(time, (t) => -((t * 0.055) % LOOP_HEIGHT));
-  const tickerLines = useMemo(() => [...COPY_LINES, ...COPY_LINES, ...COPY_LINES], []);
+  /** useSpring kaldırıldı — scroll ile birebir, süzülme nedeniyle ekstra frame yok */
+  const clusterY = useTransform(scrollYProgress, [0, 1], [-14, 28]);
 
   return (
     <section
@@ -138,29 +145,14 @@ export function CraftShowcaseSection() {
 
       <motion.div className="relative mx-auto h-[clamp(42rem,82vh,58rem)] w-full max-w-[min(97vw,88rem)]" style={{ y: clusterY }}>
         {TILES.map((tile) => (
-          <ScrollTile key={tile.src + tile.cls} tile={tile} progress={softProgress} />
+          <ScrollTile key={tile.src + tile.cls} tile={tile} progress={scrollYProgress} />
         ))}
 
         <div className="pointer-events-none absolute inset-0 z-10 flex items-center justify-center">
           <div className="relative h-[clamp(20rem,36vh,25rem)] overflow-hidden text-center [mask-image:linear-gradient(to_bottom,transparent_0%,black_16%,black_84%,transparent_100%)]">
-            <motion.div
-              className="text-[clamp(2.45rem,8.2vw,5.3rem)] font-light leading-[1.03] tracking-[-0.028em]"
-              style={{
-                y: tickerY,
-                fontFamily: "\"Inter\", \"Helvetica Neue\", Helvetica, Arial, sans-serif",
-              }}
-            >
-              {tickerLines.map((line, i) => (
-                <TickerLine
-                  key={`${line}-${i}`}
-                  line={line}
-                  index={i}
-                  tickerY={tickerY}
-                  lineStep={LINE_STEP}
-                  loopHeight={LOOP_HEIGHT}
-                />
-              ))}
-            </motion.div>
+            <div className="text-[clamp(2.45rem,8.2vw,5.3rem)] font-light leading-[1.03] tracking-[-0.028em]">
+              {reduceMotion ? <TickerStatic /> : <TickerAnimated />}
+            </div>
           </div>
         </div>
       </motion.div>

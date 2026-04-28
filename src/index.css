@@ -48,3 +48,45 @@ body {
     animation: none;
   }
 }
+
+/* Craft showcase: sürekli useTime/useTransform yerine GPU transform (arka plan JS yok). */
+@keyframes craft-ticker-y {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+
+  to {
+    transform: translate3d(0, -50%, 0);
+  }
+}
+
+@keyframes craft-line-focus {
+  0%,
+  100% {
+    opacity: 0.34;
+  }
+
+  50% {
+    opacity: 1;
+  }
+}
+
+.craft-ticker-track {
+  animation: craft-ticker-y 11.8s linear infinite;
+  will-change: transform;
+}
+
+.craft-ticker-line {
+  animation: craft-line-focus 11.8s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .craft-ticker-track,
+  .craft-ticker-line {
+    animation: none;
+  }
+
+  .craft-ticker-line {
+    opacity: 1;
+  }
+}
