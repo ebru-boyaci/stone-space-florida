@@ -1,15 +1,21 @@
 import { ContactOverlay } from "@/components/ContactOverlay";
 import { Header } from "@/components/Header";
 import { HomeSections } from "@/pages/HomeSections";
+import { PebblesCatalogPage } from "@/pages/PebblesCatalogPage";
 import { QuartzCatalogPage } from "@/pages/QuartzCatalogPage";
 import { useDocumentNavScrollCollapse } from "@/hooks/useDocumentNavScrollCollapse";
 import { useScrollLock } from "@/hooks/useScrollLock";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 import { Route, Routes, useLocation } from "react-router-dom";
 
 export default function App() {
   const location = useLocation();
   const isHome = location.pathname === "/";
+
+  /** SPA’da route değişince tarayıcı scroll’u sıfırlamaz; katalog açılınca üstte başlasın. */
+  useLayoutEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+  }, [location.pathname]);
 
   const [contactOpen, setContactOpen] = useState(false);
   const [contactMountKey, setContactMountKey] = useState(0);
@@ -118,6 +124,14 @@ export default function App() {
           element={
             <main inert={contactOpen}>
               <QuartzCatalogPage />
+            </main>
+          }
+        />
+        <Route
+          path="/catalog/pebbles"
+          element={
+            <main inert={contactOpen}>
+              <PebblesCatalogPage />
             </main>
           }
         />

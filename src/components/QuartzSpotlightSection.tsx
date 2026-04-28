@@ -13,7 +13,7 @@ const CARDS = [
     body: "Enhance your spaces with our premium quartz selection—perfect for countertops, backsplashes, and elegant interiors!",
   },
   {
-    catalogHref: null,
+    catalogHref: "/catalog/pebbles" as const,
     image: coverB,
     title: "Pebbles",
     subtitle: "Discover the Beauty of Pebbles",
@@ -106,11 +106,16 @@ export function QuartzSpotlightSection() {
           );
 
           if (card.catalogHref) {
+            const catalogAria =
+              card.title === "Quartz"
+                ? "Quartz surfaces — browse full catalog"
+                : "Pebbles and gravel — browse full catalog";
+
             return (
               <Link
                 key={card.title}
                 to={card.catalogHref}
-                aria-label="Quartz surfaces — browse full catalog"
+                aria-label={catalogAria}
                 className="group block rounded-[0.42rem] focus-visible:outline focus-visible:outline-offset-4 focus-visible:outline-[#a88d70]"
               >
                 {article}

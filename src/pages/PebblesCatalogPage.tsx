@@ -1,8 +1,8 @@
 import { useMemo } from "react";
-import { getQuartzCatalogItems } from "@/data/quartzCatalog";
+import { getPebblesCatalogItems } from "@/data/pebblesCatalog";
 
-export function QuartzCatalogPage() {
-  const items = useMemo(() => getQuartzCatalogItems(), []);
+export function PebblesCatalogPage() {
+  const items = useMemo(() => getPebblesCatalogItems(), []);
 
   return (
     <div className="min-h-screen bg-[#0c0c0c] pb-24 pt-[calc(12.5rem+env(safe-area-inset-top))] text-zinc-100">
@@ -10,11 +10,28 @@ export function QuartzCatalogPage() {
         <header className="border-b border-white/[0.08] pb-8 sm:pb-10">
           <p className="text-xs font-semibold tracking-[0.28em] text-[#b9a086] uppercase sm:text-sm">Catalog</p>
           <h1 className="mt-2 font-serif text-[clamp(2rem,4vw,2.85rem)] font-medium tracking-[-0.02em] text-white">
-            Quartz surfaces
+            Pebble &amp; gravel
           </h1>
-          <p className="mt-3 max-w-2xl text-pretty text-base leading-relaxed text-zinc-400 sm:text-[1.0625rem]">
-            Browse named varieties from our collection. Imagery reflects material character; slabs may vary in person.
+          <p className="mt-3 max-w-2xl text-pretty text-base leading-relaxed text-zinc-300 sm:text-[1.0625rem]">
+            Transform your garden, patio, or driveway with our premium landscaping pebbles.
           </p>
+          <ul
+            className="mt-8 max-w-2xl space-y-3 text-pretty text-[0.975rem] leading-relaxed text-zinc-400 sm:text-[1.02rem]"
+            aria-label="Why choose our pebbles"
+          >
+            {[
+              "Natural, high-quality pebbles",
+              "Wide variety of sizes and colors to match any landscape",
+              "Durable and long-lasting",
+              "Environmentally friendly",
+              "Imported from Europe",
+            ].map((line) => (
+              <li key={line} className="flex gap-3">
+                <span className="mt-[0.35em] h-1.5 w-1.5 shrink-0 rounded-full bg-[#b9a086]" aria-hidden />
+                <span>{line}</span>
+              </li>
+            ))}
+          </ul>
         </header>
 
         <ul className="mt-12 grid grid-cols-1 gap-x-8 gap-y-14 sm:grid-cols-2 lg:grid-cols-3" role="list">
