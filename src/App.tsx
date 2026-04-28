@@ -4,6 +4,7 @@ import { Header } from "@/components/Header";
 import { FeatureValueGrid } from "@/components/FeatureValueGrid";
 import { HeroWithCollage } from "@/components/HeroCollage";
 import { QuartzSpotlightSection } from "@/components/QuartzSpotlightSection";
+import { ServicesJourneySection } from "@/components/ServicesJourneySection";
 import { ScrollGallery } from "@/components/ScrollGallery";
 import { ScrollRevealTextSection } from "@/components/ScrollRevealTextSection";
 import { StoneSpacesMarquee } from "@/components/StoneSpacesMarquee";
@@ -122,6 +123,7 @@ export default function App() {
         <FeatureValueGrid />
         <CraftShowcaseSection />
         <QuartzSpotlightSection />
+        <ServicesJourneySection />
       </main>
 
       <ContactOverlay open={contactOpen} mountKey={contactMountKey} />
