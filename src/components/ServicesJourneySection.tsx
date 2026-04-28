@@ -2,31 +2,38 @@ import bg from "@assets/bg.png";
 import kitchen3 from "@assets/kitchen3.jpg";
 import kitchen4 from "@assets/kitchen4.jpg";
 import kitchen6 from "@assets/kitchen6.jpg";
-import { motion, useMotionTemplate, useScroll, useTransform } from "motion/react";
+import { motion, useMotionTemplate, useReducedMotion, useScroll, useSpring, useTransform } from "motion/react";
 import { useRef } from "react";
 
 export function ServicesJourneySection() {
   const sectionRef = useRef<HTMLElement>(null);
+  const reduceMotion = useReducedMotion();
+
   const { scrollYProgress } = useScroll({
     target: sectionRef,
     // Section ekrana girerken radius yüksek, section yerleşince düzleşsin.
     offset: ["start end", "start start"],
   });
 
-  // Merkez sabit, kenarlar yukarı çıkıp düz çizgiye yaklaşır (yalnızca üst sınırda, alt componentin başında).
-  const edgeY = useTransform(scrollYProgress, [0, 0.7], [88, 0]);
+  const edgeRaw = useTransform(scrollYProgress, [0, 0.7], [88, 0]);
+  // Hızlı scroll’da her kare SVG path güncellenmesi main thread’i zorlar; yay ile ara değer yumuşatılır (jank/az).
+  const edgeY = useSpring(edgeRaw, {
+    stiffness: reduceMotion ? 9000 : 320,
+    damping: reduceMotion ? 130 : 36,
+    mass: reduceMotion ? 0.1 : 0.2,
+  });
   // SVG yüksekliği -top ile aynı olmalı; aksi halde kavis ile içerik (img) arasında düz şerit kalır.
   const curvePath = useMotionTemplate`M0 ${edgeY} Q500 0 1000 ${edgeY} L1000 180 L0 180 Z`;
 
   return (
     <section
       ref={sectionRef}
-      className="relative h-[190vh] overflow-visible bg-[#343434]"
+      className="relative h-[190vh] overflow-visible bg-[#343434] [contain:layout_paint]"
       aria-label="Services background"
     >
       {/* Kavis iki component sınırında durur; içerik alanının içine girmez. */}
       <motion.svg
-        className="pointer-events-none absolute left-0 -top-[180px] z-[30] w-full"
+        className="pointer-events-none absolute left-0 -top-[180px] z-[30] w-full will-change-transform [transform:translateZ(0)]"
         viewBox="0 0 1000 180"
         preserveAspectRatio="none"
         style={{ height: 180 }}

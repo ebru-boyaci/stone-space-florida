@@ -1,8 +1,9 @@
 import logoWhite from "@assets/logo/white.PNG";
 import { useScrollLock } from "@/hooks/useScrollLock";
+import { NAV_LINKS, SITE_PHONE_DISPLAY, SITE_PHONE_TEL } from "@/config/site";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { useCallback, useEffect, useState } from "react";
-import { NAV_LINKS, SITE_PHONE_DISPLAY, SITE_PHONE_TEL } from "@/config/site";
+import { Link } from "react-router-dom";
 
 const springHeader = { type: "spring" as const, stiffness: 300, damping: 42, mass: 0.58 };
 const springPanel = { type: "spring" as const, stiffness: 400, damping: 32 };
@@ -95,8 +96,8 @@ export function Header({
             </button>
           </div>
 
-          <a
-            href="#top"
+          <Link
+            to="/"
             className="pointer-events-auto absolute inset-y-0 left-1/2 z-10 flex min-w-0 -translate-x-1/2 items-center justify-center px-2"
             onClick={(e) => {
               closeAll();
@@ -113,7 +114,7 @@ export function Header({
               whileHover={reduceMotion ? undefined : { scale: 1.03 }}
               transition={{ type: "spring", stiffness: 500, damping: 28 }}
             />
-          </a>
+          </Link>
 
           <div className="flex min-w-0 flex-1 basis-0 items-center justify-end gap-2 sm:gap-3 lg:gap-6">
             <a

@@ -1,31 +1,26 @@
 import { ContactOverlay } from "@/components/ContactOverlay";
-import { CraftShowcaseSection } from "@/components/CraftShowcaseSection";
 import { Header } from "@/components/Header";
-import { FeatureValueGrid } from "@/components/FeatureValueGrid";
-import { HeroWithCollage } from "@/components/HeroCollage";
-import { QuartzSpotlightSection } from "@/components/QuartzSpotlightSection";
-import { ServicesJourneySection } from "@/components/ServicesJourneySection";
-import { ScrollGallery } from "@/components/ScrollGallery";
-import { ScrollRevealTextSection } from "@/components/ScrollRevealTextSection";
-import { StoneSpacesMarquee } from "@/components/StoneSpacesMarquee";
+import { HomeSections } from "@/pages/HomeSections";
+import { QuartzCatalogPage } from "@/pages/QuartzCatalogPage";
 import { useDocumentNavScrollCollapse } from "@/hooks/useDocumentNavScrollCollapse";
 import { useScrollLock } from "@/hooks/useScrollLock";
 import { useCallback, useEffect, useRef, useState } from "react";
+import { Route, Routes, useLocation } from "react-router-dom";
 
 export default function App() {
+  const location = useLocation();
+  const isHome = location.pathname === "/";
+
   const [contactOpen, setContactOpen] = useState(false);
   const [contactMountKey, setContactMountKey] = useState(0);
   const [homeEntranceKey, setHomeEntranceKey] = useState(0);
   const wasContactOpen = useRef(false);
 
-  /** Kolaj bitti → sayfa scroll’u header’ı kontrol eder. Hero fazında false. */
   const [heroDocumentMode, setHeroDocumentMode] = useState(false);
-  /** İlk tekerlek: sadece header kaybolur; doküman scroll ile karışmasın diye ayrı bayrak */
   const [heroStripHidden, setHeroStripHidden] = useState(false);
-  /** Hero bittikten sonra window scroll ile */
   const [scrollCollapsed, setScrollCollapsed] = useState(false);
 
-  const navCollapsed = heroStripHidden || scrollCollapsed;
+  const navCollapsed = isHome ? heroStripHidden || scrollCollapsed : false;
 
   const onHeroFirstGesture = useCallback(() => setHeroStripHidden(true), []);
   const onHeroUnlockDocument = useCallback(() => {
@@ -38,7 +33,14 @@ export default function App() {
     setScrollCollapsed(false);
   }, []);
 
-  useDocumentNavScrollCollapse(heroDocumentMode, setScrollCollapsed);
+  useDocumentNavScrollCollapse(heroDocumentMode && isHome, setScrollCollapsed);
+
+  useEffect(() => {
+    if (!isHome) {
+      setScrollCollapsed(false);
+      setHeroStripHidden(false);
+    }
+  }, [isHome]);
 
   const openContact = useCallback(() => {
     setContactOpen(true);
@@ -97,34 +99,29 @@ export default function App() {
         onExitContact={closeContact}
       />
 
-      <main inert={contactOpen}>
-        <HeroWithCollage
-          homeEntranceKey={homeEntranceKey}
-          onHeroFirstGesture={onHeroFirstGesture}
-          onHeroUnlockDocument={onHeroUnlockDocument}
-          onHeroRest={onHeroRest}
-        >
-          <p className="-mt-2 mb-8 max-w-2xl text-center text-base font-medium tracking-[0.38em] text-white/40 uppercase sm:-mt-3 sm:mb-10 sm:text-lg">
-            Stone Spaces · Florida
-          </p>
-          <h1 className="relative mx-auto mt-0 grid w-full max-w-[min(98vw,96rem)] place-items-center px-1 sm:mt-1">
-            <span className="col-start-1 row-start-1 max-w-full -translate-y-1 text-center font-hero-serif text-[clamp(6.45rem,26.5vw,17.25rem)] font-medium leading-[0.9] tracking-[-0.03em] text-hero-serif [text-shadow:0_4px_48px_rgba(0,0,0,0.55)] sm:-translate-y-2">
-              Surfaces
-            </span>
-            <span className="col-start-1 row-start-1 z-[2] mt-[clamp(9.25rem,23.5vw,15.5rem)] ml-[clamp(-0.25rem,-1.5vw,0.75rem)] max-w-[min(96vw,64rem)] text-center font-hero-script text-[clamp(5.45rem,20.5vw,13rem)] leading-[0.85] text-white [text-shadow:0_2px_32px_rgba(0,0,0,0.65)]">
-              refined
-            </span>
-          </h1>
-        </HeroWithCollage>
-
-        <ScrollGallery />
-        <ScrollRevealTextSection />
-        <StoneSpacesMarquee />
-        <FeatureValueGrid />
-        <CraftShowcaseSection />
-        <QuartzSpotlightSection />
-        <ServicesJourneySection />
-      </main>
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <main inert={contactOpen}>
+              <HomeSections
+                homeEntranceKey={homeEntranceKey}
+                onHeroFirstGesture={onHeroFirstGesture}
+                onHeroUnlockDocument={onHeroUnlockDocument}
+                onHeroRest={onHeroRest}
+              />
+            </main>
+          }
+        />
+        <Route
+          path="/catalog/quartz"
+          element={
+            <main inert={contactOpen}>
+              <QuartzCatalogPage />
+            </main>
+          }
+        />
+      </Routes>
 
       <ContactOverlay open={contactOpen} mountKey={contactMountKey} />
     </div>
