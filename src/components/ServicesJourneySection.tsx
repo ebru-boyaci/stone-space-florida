@@ -68,20 +68,20 @@ export function ServicesJourneySection() {
           </p>
         </div>
 
-        <div className="relative z-10 mx-auto mt-[clamp(18rem,34vh,28rem)] grid w-full max-w-[min(96vw,95rem)] grid-cols-1 gap-6 px-6 sm:px-10 lg:grid-cols-3 lg:gap-8">
-          <article className="relative aspect-square overflow-hidden bg-[#2b2b2b]">
-            <img src={kitchen6} alt="" className="h-full w-full scale-[1.5] object-cover" loading="lazy" decoding="async" />
+        <div className="relative z-10 mx-auto mt-[clamp(18rem,34vh,28rem)] grid w-full max-w-[min(96vw,95rem)] grid-cols-1 gap-6 px-6 sm:px-10 lg:block lg:h-[76rem] lg:max-w-[94rem] lg:px-8">
+          <article className="relative aspect-square overflow-hidden bg-[#2b2b2b] lg:absolute lg:left-0 lg:top-[3.5rem] lg:w-[45%] lg:-translate-x-[64%]">
+            <img src={kitchen6} alt="" className="h-full w-full scale-[3.2] object-cover" loading="lazy" decoding="async" />
             <div className="absolute inset-0 bg-black/38" />
-            <div className="absolute left-5 top-6 flex h-8 w-8 items-center justify-center rounded-full border border-white/30 text-xs text-white/80">
+            <div className="absolute left-5 top-6 flex h-8 w-8 items-center justify-center rounded-full border border-white/30 text-xs text-white/80 lg:left-[42%]">
               1
             </div>
-            <p className="absolute left-5 right-5 top-20 text-pretty text-[clamp(1.05rem,2.1vw,1.35rem)] font-medium leading-[1.32] text-white">
+            <p className="absolute left-5 right-5 top-20 text-pretty text-[clamp(1.05rem,2.1vw,1.35rem)] font-medium leading-[1.32] text-white lg:left-[42%] lg:right-6">
               Whether it&apos;s a residential or commercial project, our talented designers will create customized interiors that reflect your style
             </p>
           </article>
 
-          <article className="relative aspect-square overflow-hidden bg-[#2b2b2b]">
-            <img src={kitchen4} alt="" className="h-full w-full scale-[1.5] object-cover" loading="lazy" decoding="async" />
+          <article className="relative aspect-square overflow-hidden bg-[#2b2b2b] lg:absolute lg:left-1/2 lg:top-0 lg:w-[45%] lg:-translate-x-1/2">
+            <img src={kitchen4} alt="" className="h-full w-full scale-[3.2] object-cover" loading="lazy" decoding="async" />
             <div className="absolute inset-0 bg-black/42" />
             <div className="absolute left-6 top-6 flex h-8 w-8 items-center justify-center rounded-full border border-white/30 text-xs text-white/80">
               2
@@ -91,13 +91,13 @@ export function ServicesJourneySection() {
             </p>
           </article>
 
-          <article className="relative aspect-square overflow-hidden bg-[#2b2b2b]">
-            <img src={kitchen3} alt="" className="h-full w-full scale-[1.5] object-cover" loading="lazy" decoding="async" />
+          <article className="relative aspect-square overflow-hidden bg-[#2b2b2b] lg:absolute lg:right-0 lg:top-[7rem] lg:w-[45%] lg:translate-x-[64%]">
+            <img src={kitchen3} alt="" className="h-full w-full scale-[3.2] object-cover" loading="lazy" decoding="async" />
             <div className="absolute inset-0 bg-black/38" />
-            <div className="absolute left-5 top-6 flex h-8 w-8 items-center justify-center rounded-full border border-white/30 text-xs text-white/80">
+            <div className="absolute left-5 top-6 flex h-8 w-8 items-center justify-center rounded-full border border-white/30 text-xs text-white/80 lg:right-[42%] lg:left-auto">
               3
             </div>
-            <p className="absolute left-5 right-5 top-20 text-pretty text-[clamp(1.05rem,2.1vw,1.35rem)] font-medium leading-[1.32] text-white">
+            <p className="absolute left-5 right-5 top-20 text-pretty text-[clamp(1.05rem,2.1vw,1.35rem)] font-medium leading-[1.32] text-white lg:right-[42%] lg:left-6">
               Whether it&apos;s a residential or commercial project, our talented designers will create customized interiors that reflect your style
             </p>
           </article>
