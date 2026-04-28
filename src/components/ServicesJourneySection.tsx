@@ -25,19 +25,39 @@ const CARD_NUM_CLASS =
 type PitchAlign = "left" | "center" | "right";
 
 const pitchTitle =
-  "text-pretty font-sans text-[clamp(1.45rem,3.55vw,1.95rem)] font-semibold leading-[1.18] tracking-[-0.02em] text-zinc-50 [text-shadow:0_2px_28px_rgba(0,0,0,0.62),0_1px_0_rgba(0,0,0,0.2)]";
+  "text-pretty font-sans text-[clamp(1.45rem,3.55vw,1.95rem)] font-medium leading-[1.2] tracking-[-0.018em] text-zinc-100/92 [text-shadow:0_2px_26px_rgba(0,0,0,0.55)]";
 
-function ServiceCardPitch({ alignment, title }: { alignment: PitchAlign; title: string }) {
+const ctaButton =
+  "mt-5 inline-flex w-fit items-center gap-2.5 rounded-full bg-sand px-7 py-3.5 text-[0.8125rem] font-semibold uppercase tracking-[0.14em] text-white shadow-[0_10px_32px_rgba(0,0,0,0.42),0_0_0_1px_rgba(255,255,255,0.08)] transition-[background-color,transform,color,box-shadow] duration-300 hover:bg-sand-hover hover:shadow-[0_12px_36px_rgba(0,0,0,0.48)] focus-visible:outline focus-visible:outline-offset-4 focus-visible:outline-white/40 sm:text-[0.875rem] sm:tracking-[0.15em]";
+
+function ServiceCardPitch({
+  alignment,
+  title,
+  ctaLabel = "Read more",
+}: {
+  alignment: PitchAlign;
+  title: string;
+  /** Card CTA; varsayılan İngilizce "Read more". */
+  ctaLabel?: string;
+}) {
   const wrapper =
     alignment === "center"
       ? "items-center text-center"
       : alignment === "right"
         ? "items-end text-right"
         : "items-start text-left";
+  const ctaAlign =
+    alignment === "center" ? "mx-auto" : alignment === "right" ? "ml-auto" : "";
 
   return (
-    <div className={`flex max-w-[min(92vw,26rem)] flex-col ${wrapper}`}>
+    <div className={`flex max-w-[min(92vw,26rem)] flex-col gap-1 ${wrapper}`}>
       <h3 className={pitchTitle}>{title}</h3>
+      <a href="#contact" className={`${ctaButton} ${ctaAlign}`}>
+        {ctaLabel}
+        <span aria-hidden className="text-[1.08em] font-medium text-white/95">
+          →
+        </span>
+      </a>
     </div>
   );
 }
