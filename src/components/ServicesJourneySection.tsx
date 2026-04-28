@@ -16,9 +16,9 @@ const cardBody =
   "Whether it's a residential or commercial project, our talented designers will create customized interiors that reflect your style";
 
 const CARD_TEXT_CLASS =
-  "max-w-[18.5rem] text-pretty text-[1.25rem] font-normal leading-[1.55] tracking-[-0.01em] text-white sm:text-[1.3125rem]";
+  "max-w-[20rem] text-pretty text-[1.375rem] font-normal leading-[1.52] tracking-[-0.02em] text-white sm:text-[1.4375rem]";
 const CARD_NUM_CLASS =
-  "flex size-[2.625rem] shrink-0 items-center justify-center rounded-full border border-white/65 text-[0.875rem] font-normal text-white";
+  "flex size-[2.875rem] shrink-0 items-center justify-center rounded-full border border-white/65 text-[0.9375rem] font-normal text-white";
 
 export function ServicesJourneySection() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -124,7 +124,7 @@ export function ServicesJourneySection() {
             />
             <div className="absolute inset-0 bg-black/38" />
             <div className="absolute inset-0 flex flex-col justify-center items-end p-5 sm:p-6 lg:pl-[28%] lg:pr-7 lg:py-8">
-              <div className="flex w-full max-w-[18.5rem] flex-col gap-[0.875rem] items-end text-right">
+              <div className="flex w-full max-w-[20rem] flex-col gap-[0.875rem] items-end text-right">
                 <div className={CARD_NUM_CLASS} aria-hidden>
                   1
                 </div>
@@ -147,7 +147,7 @@ export function ServicesJourneySection() {
             />
             <div className="absolute inset-0 bg-black/42" />
             <div className="absolute inset-0 flex flex-col items-center justify-center p-5 sm:p-6 lg:px-8">
-              <div className="flex max-w-[18.5rem] flex-col gap-[0.875rem] items-center text-center">
+              <div className="flex max-w-[20rem] flex-col gap-[0.875rem] items-center text-center">
                 <div className={CARD_NUM_CLASS} aria-hidden>
                   2
                 </div>
@@ -170,7 +170,7 @@ export function ServicesJourneySection() {
             />
             <div className="absolute inset-0 bg-black/38" />
             <div className="absolute inset-0 flex flex-col justify-center p-5 sm:p-6 lg:justify-center lg:pl-7 lg:pr-[30%] lg:pt-4">
-              <div className="flex w-full max-w-[18.5rem] flex-col gap-[0.875rem]">
+              <div className="flex w-full max-w-[20rem] flex-col gap-[0.875rem]">
                 <div className={CARD_NUM_CLASS} aria-hidden>
                   3
                 </div>

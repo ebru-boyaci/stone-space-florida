@@ -9,15 +9,17 @@ const bgImage = moodBg;
 const LINE_PRIMARY = "Nature's";
 const LINE_REVEAL = "Finest Stones, Elevating Your Space!";
 
-/** Scroll'un hangi aralığında tüm harf dizisi boyanıyor (0–1 global progress). */
-const LETTER_SCROLL_START = 0.07;
-const LETTER_SCROLL_END = 0.78;
+/** Scroll'un hangi aralığında tüm harf dizisi boyanıyor (0–1 global progress).
+ * Dar aralıkta bitecek şekilde (daha az scroll).
+ */
+const LETTER_SCROLL_START = 0.05;
+const LETTER_SCROLL_END = 0.52;
 
 function letterFadeRange(index: number, total: number): [number, number] {
   if (total <= 0) return [LETTER_SCROLL_START, LETTER_SCROLL_END];
   const span = LETTER_SCROLL_END - LETTER_SCROLL_START;
   const slice = span / total;
-  const overlap = slice * 0.42;
+  const overlap = slice * 0.38;
   const start = LETTER_SCROLL_START + index * slice - overlap;
   const end = LETTER_SCROLL_START + (index + 1) * slice;
   return [Math.max(LETTER_SCROLL_START - 0.02, start), Math.min(LETTER_SCROLL_END + 0.02, end)];
@@ -110,7 +112,7 @@ export function ScrollRevealTextSection() {
 
   return (
     <section ref={sectionRef} className="relative bg-black">
-      <div className="relative min-h-[260vh]">
+      <div className="relative min-h-[150vh]">
         <div className="sticky top-0 flex h-[min(100dvh,1080px)] max-h-[100dvh] w-full items-center justify-center overflow-hidden">
           <img
             src={bgImage}
