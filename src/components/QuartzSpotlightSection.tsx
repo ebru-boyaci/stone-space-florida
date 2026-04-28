@@ -11,9 +11,9 @@ const CARDS = [
   },
   {
     image: coverB,
-    title: "Quartz",
-    subtitle: "Discover the Elegance of Quartz",
-    body: "Enhance your spaces with our premium quartz selection—perfect for countertops, backsplashes, and elegant interiors!",
+    title: "Pebbles",
+    subtitle: "Discover the Beauty of Pebbles",
+    body: "Transform your garden, patio, or driveway with our premium landscaping pebbles.",
   },
 ] as const;
 
