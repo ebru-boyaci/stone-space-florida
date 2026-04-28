@@ -3,6 +3,7 @@ import { CraftShowcaseSection } from "@/components/CraftShowcaseSection";
 import { Header } from "@/components/Header";
 import { FeatureValueGrid } from "@/components/FeatureValueGrid";
 import { HeroWithCollage } from "@/components/HeroCollage";
+import { QuartzSpotlightSection } from "@/components/QuartzSpotlightSection";
 import { ScrollGallery } from "@/components/ScrollGallery";
 import { ScrollRevealTextSection } from "@/components/ScrollRevealTextSection";
 import { StoneSpacesMarquee } from "@/components/StoneSpacesMarquee";
@@ -120,6 +121,7 @@ export default function App() {
         <StoneSpacesMarquee />
         <FeatureValueGrid />
         <CraftShowcaseSection />
+        <QuartzSpotlightSection />
       </main>
 
       <ContactOverlay open={contactOpen} mountKey={contactMountKey} />

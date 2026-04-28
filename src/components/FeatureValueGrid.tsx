@@ -68,7 +68,10 @@ function FeatureIcon({ icon }: { icon: ValueItem["icon"] }) {
 
 export function FeatureValueGrid() {
   return (
-    <section className="relative bg-black px-6 py-18 sm:px-10 sm:py-24 md:py-28" aria-label="Stone Spaces values">
+    <section
+      className="relative flex min-h-[clamp(42rem,82vh,58rem)] items-center bg-black px-6 py-18 sm:px-10 sm:py-24 md:py-28"
+      aria-label="Stone Spaces values"
+    >
       <div
         className="pointer-events-none absolute inset-x-0 top-0 h-36 bg-[radial-gradient(ellipse_60%_90%_at_50%_0%,rgba(183,154,123,0.18),rgba(0,0,0,0)_72%)]"
         aria-hidden
