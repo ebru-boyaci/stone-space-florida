@@ -15,7 +15,8 @@ export function ServicesJourneySection() {
 
   // Merkez sabit, kenarlar yukarı çıkıp düz çizgiye yaklaşır (yalnızca üst sınırda, alt componentin başında).
   const edgeY = useTransform(scrollYProgress, [0, 0.7], [88, 0]);
-  const curvePath = useMotionTemplate`M0 ${edgeY} Q500 0 1000 ${edgeY} L1000 96 L0 96 Z`;
+  // SVG yüksekliği -top ile aynı olmalı; aksi halde kavis ile içerik (img) arasında düz şerit kalır.
+  const curvePath = useMotionTemplate`M0 ${edgeY} Q500 0 1000 ${edgeY} L1000 180 L0 180 Z`;
 
   return (
     <section
@@ -26,23 +27,24 @@ export function ServicesJourneySection() {
       {/* Kavis iki component sınırında durur; içerik alanının içine girmez. */}
       <motion.svg
         className="pointer-events-none absolute left-0 -top-[180px] z-[30] w-full"
-        viewBox="0 0 1000 96"
+        viewBox="0 0 1000 180"
         preserveAspectRatio="none"
-        style={{ height: 96 }}
+        style={{ height: 180 }}
         aria-hidden
       >
         <motion.path d={curvePath} fill="#343434" />
       </motion.svg>
 
-      <div className="relative h-full overflow-hidden">
+      {/* Arka plan rengi: lazy img yüklenmeden önce siyah yerine dolgu (root bg-black sızmasın). */}
+      <div className="relative h-full overflow-hidden bg-[#343434]">
         <img
           src={bg}
           alt=""
           className="absolute inset-0 h-full w-full object-cover opacity-100"
-          loading="lazy"
+          fetchPriority="high"
           decoding="async"
         />
-      <div className="absolute inset-0 bg-[#343434]/35" />
+        <div className="absolute inset-0 bg-[#343434]/35" />
 
         <div className="relative z-10 mx-auto mt-[clamp(12rem,27vh,18rem)] flex w-full max-w-[min(94vw,58rem)] flex-col items-center px-6 text-center sm:px-10">
           <h2
@@ -60,7 +62,7 @@ export function ServicesJourneySection() {
         </div>
 
         <div className="relative z-10 mx-auto mt-[clamp(18rem,34vh,28rem)] grid w-full max-w-[min(96vw,95rem)] grid-cols-1 gap-6 px-6 sm:px-10 lg:grid-cols-3 lg:gap-8">
-          <article className="relative aspect-square overflow-hidden bg-black/78">
+          <article className="relative aspect-square overflow-hidden bg-[#2b2b2b]">
             <img src={kitchen6} alt="" className="h-full w-full scale-[1.5] object-cover" loading="lazy" decoding="async" />
             <div className="absolute inset-0 bg-black/38" />
             <div className="absolute left-5 top-6 flex h-8 w-8 items-center justify-center rounded-full border border-white/30 text-xs text-white/80">
@@ -71,7 +73,7 @@ export function ServicesJourneySection() {
             </p>
           </article>
 
-          <article className="relative aspect-square overflow-hidden bg-black/78">
+          <article className="relative aspect-square overflow-hidden bg-[#2b2b2b]">
             <img src={kitchen4} alt="" className="h-full w-full scale-[1.5] object-cover" loading="lazy" decoding="async" />
             <div className="absolute inset-0 bg-black/42" />
             <div className="absolute left-6 top-6 flex h-8 w-8 items-center justify-center rounded-full border border-white/30 text-xs text-white/80">
@@ -82,7 +84,7 @@ export function ServicesJourneySection() {
             </p>
           </article>
 
-          <article className="relative aspect-square overflow-hidden bg-black/78">
+          <article className="relative aspect-square overflow-hidden bg-[#2b2b2b]">
             <img src={kitchen3} alt="" className="h-full w-full scale-[1.5] object-cover" loading="lazy" decoding="async" />
             <div className="absolute inset-0 bg-black/38" />
             <div className="absolute left-5 top-6 flex h-8 w-8 items-center justify-center rounded-full border border-white/30 text-xs text-white/80">
