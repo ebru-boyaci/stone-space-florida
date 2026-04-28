@@ -39,7 +39,7 @@ body {
 .marquee-x-track {
   display: flex;
   width: max-content;
-  animation: marquee-x 105s linear infinite;
+  animation: marquee-x 240s linear infinite;
   will-change: transform;
 }
 

@@ -1,5 +1,6 @@
 import { ContactOverlay } from "@/components/ContactOverlay";
 import { Header } from "@/components/Header";
+import { FeatureValueGrid } from "@/components/FeatureValueGrid";
 import { HeroWithCollage } from "@/components/HeroCollage";
 import { ScrollGallery } from "@/components/ScrollGallery";
 import { ScrollRevealTextSection } from "@/components/ScrollRevealTextSection";
@@ -116,6 +117,7 @@ export default function App() {
         <ScrollGallery />
         <ScrollRevealTextSection />
         <StoneSpacesMarquee />
+        <FeatureValueGrid />
       </main>
 
       <ContactOverlay open={contactOpen} mountKey={contactMountKey} />
