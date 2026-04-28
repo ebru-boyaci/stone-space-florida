@@ -25,7 +25,7 @@ const CARD_NUM_CLASS =
 type PitchAlign = "left" | "center" | "right";
 
 const pitchTitle =
-  "text-pretty font-sans text-[clamp(1.45rem,3.55vw,1.95rem)] font-medium leading-[1.2] tracking-[-0.018em] text-zinc-100/92 [text-shadow:0_2px_26px_rgba(0,0,0,0.55)]";
+  "text-pretty font-sans text-[clamp(1.55rem,3.75vw,2.12rem)] font-medium leading-[1.18] tracking-[-0.028em] text-zinc-100/92 [text-shadow:0_2px_26px_rgba(0,0,0,0.55)]";
 
 const ctaButton =
   "mt-5 inline-flex w-fit items-center gap-2.5 rounded-full bg-sand px-7 py-3.5 text-[0.8125rem] font-semibold uppercase tracking-[0.14em] text-white shadow-[0_10px_32px_rgba(0,0,0,0.42),0_0_0_1px_rgba(255,255,255,0.08)] transition-[background-color,transform,color,box-shadow] duration-300 hover:bg-sand-hover hover:shadow-[0_12px_36px_rgba(0,0,0,0.48)] focus-visible:outline focus-visible:outline-offset-4 focus-visible:outline-white/40 sm:text-[0.875rem] sm:tracking-[0.15em]";
@@ -109,7 +109,7 @@ export function ServicesJourneySection() {
   return (
     <section
       ref={sectionRef}
-      className="relative min-h-[210vh] overflow-visible bg-[#343434] lg:h-[220vh]"
+      className="relative min-h-[155vh] overflow-visible bg-[#343434] lg:min-h-0 lg:h-[165vh]"
       aria-label="Services background"
     >
       {/* path morph sadece reduceMotion kapalıyken — aksi sabit SVG ( sıfır layout thrash ). */}
@@ -145,9 +145,9 @@ export function ServicesJourneySection() {
         />
         <div className="absolute inset-0 bg-[#343434]/35" />
 
-        <div className="relative z-10 mx-auto mt-[clamp(7rem,14vh,11rem)] flex w-full max-w-[min(94vw,58rem)] flex-col items-center px-6 text-center sm:px-10">
+        <div className="relative z-10 mx-auto mt-[clamp(4.75rem,10vh,8.5rem)] flex w-full max-w-[min(94vw,58rem)] flex-col items-center px-6 pb-2 text-center sm:px-10">
           <h2
-            className="font-hero-script text-[clamp(4rem,10.5vw,8.8rem)] leading-[0.93] text-[#f2f0ec] [text-shadow:0_2px_26px_rgba(0,0,0,0.45)]"
+            className="font-hero-script text-[clamp(4.35rem,10.75vw,9.85rem)] leading-[0.92] tracking-[-0.032em] text-[#f2f0ec] [text-shadow:0_2px_26px_rgba(0,0,0,0.45)]"
             style={{
               fontFamily: '"IBM Plex Sans", "Helvetica Neue", Helvetica, Arial, sans-serif',
               fontWeight: 300,
@@ -157,16 +157,16 @@ export function ServicesJourneySection() {
             <br />
             services
           </h2>
-          <p className="mt-8 max-w-2xl text-pretty text-[1.05rem] leading-[1.72] text-[#e3dfd8]/90 [text-shadow:0_1px_16px_rgba(0,0,0,0.35)] sm:text-[1.18rem]">
+          <p className="mt-5 max-w-2xl text-pretty text-[1.02rem] leading-[1.65] text-[#e3dfd8]/90 [text-shadow:0_1px_16px_rgba(0,0,0,0.35)] sm:mt-6 sm:text-[1.08rem]">
             From material selection to final detailing, we craft spaces that feel refined, functional,
             and uniquely yours.
           </p>
         </div>
 
-        <div className="relative z-10 mx-auto mt-[clamp(14rem,28vh,24rem)] grid w-full max-w-[min(96vw,95rem)] grid-cols-1 gap-6 px-6 sm:px-10 lg:mt-[clamp(16rem,22vh,24rem)] lg:block lg:h-[118rem] lg:max-w-[94rem] lg:px-8">
+        <div className="relative z-10 mx-auto mt-[clamp(8rem,13vh,15rem)] grid w-full max-w-[min(96vw,95rem)] grid-cols-1 gap-5 px-6 sm:px-10 lg:mt-[clamp(8rem,11vh,12rem)] lg:block lg:h-[76rem] lg:max-w-[94rem] lg:px-8">
           <motion.article
             style={{ y: cardYL, willChange: "transform" }}
-            className="relative aspect-square overflow-hidden bg-[#2b2b2b] [transform:translateZ(0)] lg:absolute lg:left-0 lg:top-[12rem] lg:w-[42%] lg:-translate-x-[62%]"
+            className="relative aspect-square overflow-hidden bg-[#2b2b2b] [transform:translateZ(0)] lg:absolute lg:left-0 lg:top-[4rem] lg:w-[42%] lg:-translate-x-[62%]"
           >
             <img
               src={serviceBg1}
@@ -190,7 +190,7 @@ export function ServicesJourneySection() {
 
           <motion.article
             style={{ y: cardYC, willChange: "transform" }}
-            className="relative aspect-square overflow-hidden bg-[#2b2b2b] [transform:translateZ(0)] lg:absolute lg:left-1/2 lg:top-[22rem] lg:w-[49%] lg:-translate-x-1/2"
+            className="relative aspect-square overflow-hidden bg-[#2b2b2b] [transform:translateZ(0)] lg:absolute lg:left-1/2 lg:top-[14rem] lg:w-[49%] lg:-translate-x-1/2"
           >
             <img
               src={serviceBg2}
@@ -214,7 +214,7 @@ export function ServicesJourneySection() {
 
           <motion.article
             style={{ y: cardYR, willChange: "transform" }}
-            className="relative aspect-square overflow-hidden bg-[#2b2b2b] [transform:translateZ(0)] lg:absolute lg:right-0 lg:top-[37rem] lg:w-[42%] lg:translate-x-[62%]"
+            className="relative aspect-square overflow-hidden bg-[#2b2b2b] [transform:translateZ(0)] lg:absolute lg:right-0 lg:top-[26rem] lg:w-[42%] lg:translate-x-[62%]"
           >
             <img
               src={serviceBg3}
