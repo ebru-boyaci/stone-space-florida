@@ -12,23 +12,12 @@ import {
 import { useMemo, useRef } from "react";
 
 const CABINET_TITLE = "Transform Your Kitchen with Cabinets";
-const CABINET_BODY =
-  "Kitchen cabinets are the ideal choice for creating a stylish, functional kitchen tailored to your space. Whether you're remodeling your current kitchen or building a new one, our cabinet line provides flexibility and versatility to fit your exact needs.";
 
 /** Kart 2 — ücretsiz danışmanlık / iletişim */
 const CONSULT_HEADLINE = "Contact us & unlock your complimentary stone consultation";
-const CONSULT_PARAGRAPHS = [
-  "Finding the right stone should feel exciting, not overwhelming. Reach out and we’ll open with a free, no-pressure consult: we listen, narrow the field, and point you toward surfaces that balance beauty, wear, and budget.",
-  "From rare natural slabs to refined engineered options, we curate materials that elevate homes and commercial spaces alike—so you walk away with clarity, confidence, and something worth showing off.",
-] as const;
 
 /** Kart 3 — ücretsiz danışmanlık hizmeti */
 const FREE_CONSULT_TITLE = "Free Consultation Service";
-const FREE_CONSULT_LEAD = "Take the first step toward the space you've been dreaming of — with us beside you.";
-const FREE_CONSULT_PARAGRAPHS = [
-  "Our team starts with your story: how you move through a room, how light hits a counter, what “finished” really means for your project. Then we translate that into stone directions that feel tailored — not picked from a generic menu.",
-  "You get candid guidance on material performance, tonal pairings, and scope — so timelines and budgets stay honest. Reach out today: the consultation is on us; the payoff is knowing your next move before you swipe a credit card.",
-] as const;
 
 const CARD_NUM_CLASS =
   "flex size-[2.875rem] shrink-0 items-center justify-center rounded-full bg-white/[0.18] text-[0.9375rem] font-normal text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.12)] backdrop-blur-[3px]";
@@ -36,56 +25,19 @@ const CARD_NUM_CLASS =
 type PitchAlign = "left" | "center" | "right";
 
 const pitchTitle =
-  "text-pretty font-sans text-[clamp(1.34rem,3.35vw,1.78rem)] font-semibold leading-[1.16] tracking-[-0.02em] text-zinc-50 [text-shadow:0_2px_28px_rgba(0,0,0,0.62),0_1px_0_rgba(0,0,0,0.2)]";
-const pitchLead =
-  "max-w-[25rem] text-pretty font-sans text-[1.02rem] font-medium italic leading-[1.5] tracking-[0.01em] text-[#ece6dc]/95 sm:text-[1.085rem] [text-shadow:0_1px_20px_rgba(0,0,0,0.52)]";
-const pitchBody =
-  "max-w-[25rem] text-pretty font-sans font-normal text-[1.035rem] leading-[1.66] tracking-[0.01em] text-zinc-100/95 sm:text-[1.11rem] sm:leading-[1.6] [text-shadow:0_1px_22px_rgba(0,0,0,0.55)]";
+  "text-pretty font-sans text-[clamp(1.45rem,3.55vw,1.95rem)] font-semibold leading-[1.18] tracking-[-0.02em] text-zinc-50 [text-shadow:0_2px_28px_rgba(0,0,0,0.62),0_1px_0_rgba(0,0,0,0.2)]";
 
-function ServiceCardPitch({
-  alignment,
-  title,
-  lead,
-  paragraphs,
-  ctaLabel,
-}: {
-  alignment: PitchAlign;
-  title: string;
-  lead?: string;
-  paragraphs: readonly string[];
-  ctaLabel?: string;
-}) {
+function ServiceCardPitch({ alignment, title }: { alignment: PitchAlign; title: string }) {
   const wrapper =
     alignment === "center"
       ? "items-center text-center"
       : alignment === "right"
         ? "items-end text-right"
         : "items-start text-left";
-  const ctaAlign =
-    alignment === "center" ? "mx-auto" : alignment === "right" ? "ml-auto" : "";
-
-  const label = ctaLabel ?? "Contact us";
 
   return (
-    <div className={`flex max-w-[min(94vw,28rem)] flex-col gap-3.5 sm:gap-[1.15rem] ${wrapper}`}>
+    <div className={`flex max-w-[min(92vw,26rem)] flex-col ${wrapper}`}>
       <h3 className={pitchTitle}>{title}</h3>
-      {lead ? <p className={pitchLead}>{lead}</p> : null}
-      <div className={`flex flex-col gap-3.5 ${alignment === "center" ? "items-center" : ""}`}>
-        {paragraphs.map((block, i) => (
-          <p key={i} className={pitchBody}>
-            {block}
-          </p>
-        ))}
-      </div>
-      <a
-        href="#contact"
-        className={`mt-0.5 inline-flex w-fit items-center gap-2 rounded-md bg-black/[0.54] px-6 py-3 text-[0.8125rem] font-semibold uppercase tracking-[0.16em] text-[#ece6dc] shadow-[0_12px_36px_rgba(0,0,0,0.45)] backdrop-blur-[3px] transition-[background-color,color,transform] duration-300 hover:bg-[#b9a086]/38 hover:text-white focus-visible:outline focus-visible:outline-offset-4 focus-visible:outline-[#b9a086] sm:text-[0.875rem] ${ctaAlign}`}
-      >
-        {label}
-        <span aria-hidden className="text-[1.05em] font-light opacity-95">
-          →
-        </span>
-      </a>
     </div>
   );
 }
@@ -137,7 +89,7 @@ export function ServicesJourneySection() {
   return (
     <section
       ref={sectionRef}
-      className="relative h-[190vh] overflow-visible bg-[#343434]"
+      className="relative min-h-[210vh] overflow-visible bg-[#343434] lg:h-[220vh]"
       aria-label="Services background"
     >
       {/* path morph sadece reduceMotion kapalıyken — aksi sabit SVG ( sıfır layout thrash ). */}
@@ -191,10 +143,10 @@ export function ServicesJourneySection() {
           </p>
         </div>
 
-        <div className="relative z-10 mx-auto mt-[clamp(6rem,12vh,10rem)] grid w-full max-w-[min(96vw,95rem)] grid-cols-1 gap-6 px-6 sm:px-10 lg:mt-[clamp(5rem,9vh,8.5rem)] lg:block lg:h-[90rem] lg:max-w-[94rem] lg:px-8">
+        <div className="relative z-10 mx-auto mt-[clamp(14rem,28vh,24rem)] grid w-full max-w-[min(96vw,95rem)] grid-cols-1 gap-6 px-6 sm:px-10 lg:mt-[clamp(16rem,22vh,24rem)] lg:block lg:h-[118rem] lg:max-w-[94rem] lg:px-8">
           <motion.article
             style={{ y: cardYL, willChange: "transform" }}
-            className="relative aspect-square overflow-hidden bg-[#2b2b2b] [transform:translateZ(0)] lg:absolute lg:left-0 lg:top-0 lg:w-[42%] lg:-translate-x-[62%]"
+            className="relative aspect-square overflow-hidden bg-[#2b2b2b] [transform:translateZ(0)] lg:absolute lg:left-0 lg:top-[12rem] lg:w-[42%] lg:-translate-x-[62%]"
           >
             <img
               src={serviceBg1}
@@ -211,19 +163,14 @@ export function ServicesJourneySection() {
                 <div className={CARD_NUM_CLASS} aria-hidden>
                   1
                 </div>
-                <ServiceCardPitch
-                  alignment="right"
-                  title={CABINET_TITLE}
-                  paragraphs={[CABINET_BODY]}
-                  ctaLabel="Read more"
-                />
+                <ServiceCardPitch alignment="right" title={CABINET_TITLE} />
               </div>
             </div>
           </motion.article>
 
           <motion.article
             style={{ y: cardYC, willChange: "transform" }}
-            className="relative aspect-square overflow-hidden bg-[#2b2b2b] [transform:translateZ(0)] lg:absolute lg:left-1/2 lg:top-[9rem] lg:w-[49%] lg:-translate-x-1/2"
+            className="relative aspect-square overflow-hidden bg-[#2b2b2b] [transform:translateZ(0)] lg:absolute lg:left-1/2 lg:top-[22rem] lg:w-[49%] lg:-translate-x-1/2"
           >
             <img
               src={serviceBg2}
@@ -240,19 +187,14 @@ export function ServicesJourneySection() {
                 <div className={CARD_NUM_CLASS} aria-hidden>
                   2
                 </div>
-                <ServiceCardPitch
-                  alignment="center"
-                  title={CONSULT_HEADLINE}
-                  paragraphs={CONSULT_PARAGRAPHS}
-                  ctaLabel="Book free consultation"
-                />
+                <ServiceCardPitch alignment="center" title={CONSULT_HEADLINE} />
               </div>
             </div>
           </motion.article>
 
           <motion.article
             style={{ y: cardYR, willChange: "transform" }}
-            className="relative aspect-square overflow-hidden bg-[#2b2b2b] [transform:translateZ(0)] lg:absolute lg:right-0 lg:top-[22rem] lg:w-[42%] lg:translate-x-[62%]"
+            className="relative aspect-square overflow-hidden bg-[#2b2b2b] [transform:translateZ(0)] lg:absolute lg:right-0 lg:top-[37rem] lg:w-[42%] lg:translate-x-[62%]"
           >
             <img
               src={serviceBg3}
@@ -269,13 +211,7 @@ export function ServicesJourneySection() {
                 <div className={CARD_NUM_CLASS} aria-hidden>
                   3
                 </div>
-                <ServiceCardPitch
-                  alignment="left"
-                  title={FREE_CONSULT_TITLE}
-                  lead={FREE_CONSULT_LEAD}
-                  paragraphs={FREE_CONSULT_PARAGRAPHS}
-                  ctaLabel="Get started"
-                />
+                <ServiceCardPitch alignment="left" title={FREE_CONSULT_TITLE} />
               </div>
             </div>
           </motion.article>
