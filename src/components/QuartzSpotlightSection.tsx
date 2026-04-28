@@ -20,7 +20,7 @@ const CARDS = [
 export function QuartzSpotlightSection() {
   return (
     <section
-      className="relative isolate flex min-h-screen items-center overflow-hidden bg-black px-6 py-20 sm:px-10 sm:py-24"
+      className="relative isolate flex min-h-[140vh] items-center overflow-hidden bg-black px-6 py-20 sm:min-h-[150vh] sm:px-10 sm:py-24"
       aria-label="Quartz spotlight"
     >
       <img
