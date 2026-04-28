@@ -25,7 +25,7 @@ const CARD_NUM_CLASS =
 type PitchAlign = "left" | "center" | "right";
 
 const pitchTitle =
-  "text-pretty font-sans text-[clamp(1.55rem,3.75vw,2.12rem)] font-medium leading-[1.18] tracking-[-0.028em] text-zinc-100/92 [text-shadow:0_2px_26px_rgba(0,0,0,0.55)]";
+  "text-pretty font-sans text-[clamp(1.62rem,3.85vw,2.22rem)] font-medium leading-[1.16] tracking-[-0.028em] text-zinc-100/92 [text-shadow:0_2px_26px_rgba(0,0,0,0.55)]";
 
 const ctaButton =
   "mt-5 inline-flex w-fit items-center gap-2.5 rounded-full bg-sand px-7 py-3.5 text-[0.8125rem] font-semibold uppercase tracking-[0.14em] text-white shadow-[0_10px_32px_rgba(0,0,0,0.42),0_0_0_1px_rgba(255,255,255,0.08)] transition-[background-color,transform,color,box-shadow] duration-300 hover:bg-sand-hover hover:shadow-[0_12px_36px_rgba(0,0,0,0.48)] focus-visible:outline focus-visible:outline-offset-4 focus-visible:outline-white/40 sm:text-[0.875rem] sm:tracking-[0.15em]";
@@ -147,7 +147,7 @@ export function ServicesJourneySection() {
 
         <div className="relative z-10 mx-auto mt-[clamp(4.75rem,10vh,8.5rem)] flex w-full max-w-[min(94vw,58rem)] flex-col items-center px-6 pb-2 text-center sm:px-10">
           <h2
-            className="font-hero-script text-[clamp(4.35rem,10.75vw,9.85rem)] leading-[0.92] tracking-[-0.032em] text-[#f2f0ec] [text-shadow:0_2px_26px_rgba(0,0,0,0.45)]"
+            className="font-hero-script text-[clamp(4.5rem,11.1vw,10.15rem)] leading-[0.91] tracking-[-0.032em] text-[#f2f0ec] [text-shadow:0_2px_26px_rgba(0,0,0,0.45)]"
             style={{
               fontFamily: '"IBM Plex Sans", "Helvetica Neue", Helvetica, Arial, sans-serif',
               fontWeight: 300,
