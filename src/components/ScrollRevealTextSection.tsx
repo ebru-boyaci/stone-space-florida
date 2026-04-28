@@ -9,90 +9,76 @@ const bgImage = moodBg;
 const LINE_PRIMARY = "Nature's";
 const LINE_REVEAL = "Finest Stones, Elevating Your Space!";
 
-/** Scroll'un hangi aralığında tüm harf dizisi boyanıyor (0–1 global progress).
- * Dar aralıkta bitecek şekilde (daha az scroll).
- */
-const LETTER_SCROLL_START = 0.05;
-const LETTER_SCROLL_END = 0.52;
+const LINE_PRIMARY_WORDS = LINE_PRIMARY.trim().split(/\s+/).filter(Boolean);
+const LINE_REVEAL_WORDS = LINE_REVEAL.trim().split(/\s+/).filter(Boolean);
+const TOTAL_WORDS = LINE_PRIMARY_WORDS.length + LINE_REVEAL_WORDS.length;
 
-function letterFadeRange(index: number, total: number): [number, number] {
-  if (total <= 0) return [LETTER_SCROLL_START, LETTER_SCROLL_END];
-  const span = LETTER_SCROLL_END - LETTER_SCROLL_START;
+/** Scroll (0–1) içinde kelime reveal aralığı — harf başına değil kelime başına = çok daha az Motion aboneliği. */
+const REVEAL_SCROLL_START = 0.05;
+const REVEAL_SCROLL_END = 0.52;
+
+function wordFadeRange(index: number, total: number): [number, number] {
+  if (total <= 0) return [REVEAL_SCROLL_START, REVEAL_SCROLL_END];
+  const span = REVEAL_SCROLL_END - REVEAL_SCROLL_START;
   const slice = span / total;
   const overlap = slice * 0.38;
-  const start = LETTER_SCROLL_START + index * slice - overlap;
-  const end = LETTER_SCROLL_START + (index + 1) * slice;
-  return [Math.max(LETTER_SCROLL_START - 0.02, start), Math.min(LETTER_SCROLL_END + 0.02, end)];
+  const start = REVEAL_SCROLL_START + index * slice - overlap;
+  const end = REVEAL_SCROLL_START + (index + 1) * slice;
+  return [Math.max(REVEAL_SCROLL_START - 0.02, start), Math.min(REVEAL_SCROLL_END + 0.02, end)];
 }
 
-const ScrollLetter = memo(function ScrollLetter({
-  char,
+const ScrollWord = memo(function ScrollWord({
+  word,
   index,
   total,
   scrollYProgress,
+  className,
 }: {
-  char: string;
+  word: string;
   index: number;
   total: number;
   scrollYProgress: MotionValue<number>;
+  className?: string;
 }) {
-  const [from, to] = letterFadeRange(index, total);
+  const [from, to] = wordFadeRange(index, total);
   const whiteOpacity = useTransform(scrollYProgress, [from, to], [0, 1], { clamp: true });
 
-  const display = char === " " ? "\u00A0" : char;
-
   return (
-    <span className="relative inline-block align-baseline">
+    <span className={`relative inline-block align-baseline whitespace-nowrap ${className ?? ""}`}>
       <span className="text-zinc-700" aria-hidden="true">
-        {display}
+        {word}
       </span>
       <motion.span className="absolute left-0 top-0 text-white" style={{ opacity: whiteOpacity }}>
-        {display}
+        {word}
       </motion.span>
     </span>
   );
 });
 
-function AnimatedWordsLine({
-  line,
-  baseCharIndex,
-  totalChars,
+function AnimatedWordLine({
+  words,
+  baseWordIndex,
+  totalWords,
   scrollYProgress,
   lineKey,
 }: {
-  line: string;
-  baseCharIndex: number;
-  totalChars: number;
+  words: string[];
+  baseWordIndex: number;
+  totalWords: number;
   scrollYProgress: MotionValue<number>;
   lineKey: string;
 }) {
-  const words = line.trim().split(/\s+/).filter(Boolean);
-  let idx = baseCharIndex;
-
   return (
     <>
       {words.map((word, wi) => (
-        <span key={`${lineKey}-tok-${wi}`} className="inline-block max-w-full align-baseline">
-          {wi > 0 ? (
-            <ScrollLetter
-              key={`${lineKey}-sp-${wi}`}
-              char=" "
-              index={idx++}
-              total={totalChars}
-              scrollYProgress={scrollYProgress}
-            />
-          ) : null}
-          <span className="inline-block whitespace-nowrap align-baseline">
-            {[...word].map((char, ci) => (
-              <ScrollLetter
-                key={`${lineKey}-ch-${wi}-${ci}`}
-                char={char}
-                index={idx++}
-                total={totalChars}
-                scrollYProgress={scrollYProgress}
-              />
-            ))}
-          </span>
+        <span key={`${lineKey}-w-${wi}`} className="inline-block">
+          {wi > 0 ? <span className="inline-block w-[0.3em] sm:w-[0.35em]" aria-hidden /> : null}
+          <ScrollWord
+            word={word}
+            index={baseWordIndex + wi}
+            total={totalWords}
+            scrollYProgress={scrollYProgress}
+          />
         </span>
       ))}
     </>
@@ -108,8 +94,6 @@ export function ScrollRevealTextSection() {
     offset: ["start end", "end start"],
   });
 
-  const totalCharCount = LINE_PRIMARY.length + LINE_REVEAL.length;
-
   return (
     <section ref={sectionRef} className="relative bg-black">
       <div className="relative min-h-[150vh]">
@@ -120,15 +104,14 @@ export function ScrollRevealTextSection() {
             className="absolute inset-0 h-full w-full object-cover brightness-[0.46] saturate-[0.74] contrast-[1.05] sm:brightness-[0.5]"
             aria-hidden
             decoding="async"
+            fetchPriority="high"
           />
 
-          {/* Üst koyu → alta doğru görünürlük artar */}
           <div
             className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_bottom,rgba(0,0,0,0.93)_0%,rgba(0,0,0,0.72)_18%,rgba(0,0,0,0.38)_42%,rgba(0,0,0,0.12)_68%,rgba(0,0,0,0)_100%)]"
             aria-hidden
           />
 
-          {/* Hafif yan köşe kararması */}
           <div
             className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_95%_85%_at_50%_48%,transparent_35%,rgba(0,0,0,0.38)_88%,rgba(0,0,0,0.55)_100%)]"
             aria-hidden
@@ -144,19 +127,19 @@ export function ScrollRevealTextSection() {
               ) : (
                 <>
                   <span className="block">
-                    <AnimatedWordsLine
-                      line={LINE_PRIMARY}
-                      baseCharIndex={0}
-                      totalChars={totalCharCount}
+                    <AnimatedWordLine
+                      words={LINE_PRIMARY_WORDS}
+                      baseWordIndex={0}
+                      totalWords={TOTAL_WORDS}
                       scrollYProgress={scrollYProgress}
                       lineKey="p"
                     />
                   </span>
                   <span className="mt-5 block sm:mt-6">
-                    <AnimatedWordsLine
-                      line={LINE_REVEAL}
-                      baseCharIndex={LINE_PRIMARY.length}
-                      totalChars={totalCharCount}
+                    <AnimatedWordLine
+                      words={LINE_REVEAL_WORDS}
+                      baseWordIndex={LINE_PRIMARY_WORDS.length}
+                      totalWords={TOTAL_WORDS}
                       scrollYProgress={scrollYProgress}
                       lineKey="r"
                     />

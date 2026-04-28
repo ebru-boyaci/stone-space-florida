@@ -7,7 +7,6 @@ import {
   useMotionTemplate,
   useReducedMotion,
   useScroll,
-  useSpring,
   useTransform,
 } from "motion/react";
 import { useMemo, useRef } from "react";
@@ -20,29 +19,32 @@ const CARD_TEXT_CLASS =
 const CARD_NUM_CLASS =
   "flex size-[2.875rem] shrink-0 items-center justify-center rounded-full border border-white/65 text-[0.9375rem] font-normal text-white";
 
+/** Kavis `d` güncellemesini hafif kısaltır (yarım birim adımla daha az string üretimi). */
+const CURVE_PATH_STATIC =
+  "M0 0 Q500 0 1000 0 L1000 180 L0 180 Z";
+
 export function ServicesJourneySection() {
   const sectionRef = useRef<HTMLElement>(null);
   const reduceMotion = useReducedMotion();
 
-  const { scrollYProgress: curveProgress } = useScroll({
-    target: sectionRef,
-    offset: ["start end", "start start"],
-  });
-
-  /** Tüm kart satırının section içinde olduğu süreç (sayfa kayarken farklı hızlarda hareket / hizayı “kilit” yok). */
-  const { scrollYProgress: cardsParallaxProgress } = useScroll({
+  /**
+   * Tek useScroll: iki ayrı offset ile çift scroll dinleyicisi + çift layout maliyetini kaldırır.
+   * Kavis + kart parallax aynı progress’ten türetilir (offset: start end → end start).
+   */
+  const { scrollYProgress } = useScroll({
     target: sectionRef,
     offset: ["start end", "end start"],
   });
 
-  const edgeRaw = useTransform(curveProgress, [0, 0.7], [88, 0]);
-  const edgeY = useSpring(edgeRaw, {
-    stiffness: reduceMotion ? 9000 : 320,
-    damping: reduceMotion ? 130 : 36,
-    mass: reduceMotion ? 0.1 : 0.2,
-  });
+  /**
+   * Eski curveProgress (start start) daha “erken” bitiyordu; unified progress’in ilk bandına map’liyoruz.
+   * useSpring KALDIRILDI: her karede yay integrasyonu + path morph birleşince ana thread’i boğuyordu.
+   */
+  const curveDrive = useTransform(scrollYProgress, [0, 0.3], [0, 1], { clamp: true });
+  const edgeRaw = useTransform(curveDrive, [0, 0.82], [88, 0], { clamp: true });
+  const edgeRounded = useTransform(edgeRaw, (v) => Math.round(v * 2) / 2);
 
-  const curvePath = useMotionTemplate`M0 ${edgeY} Q500 0 1000 ${edgeY} L1000 180 L0 180 Z`;
+  const curvePath = useMotionTemplate`M0 ${edgeRounded} Q500 0 1000 ${edgeRounded} L1000 180 L0 180 Z`;
 
   const yLeftRange = useMemo<[number, number]>(
     () => (reduceMotion ? [0, 0] : [36, -12]),
@@ -57,13 +59,9 @@ export function ServicesJourneySection() {
     [reduceMotion],
   );
 
-  const cardYLeft = useTransform(cardsParallaxProgress, [0.12, 0.88], yLeftRange);
-  const cardYCenter = useTransform(cardsParallaxProgress, [0.12, 0.88], yCenterRange);
-  const cardYRight = useTransform(cardsParallaxProgress, [0.12, 0.88], yRightRange);
-
-  const cardYL = useSpring(cardYLeft, { stiffness: 120, damping: 28 });
-  const cardYC = useSpring(cardYCenter, { stiffness: 120, damping: 28 });
-  const cardYR = useSpring(cardYRight, { stiffness: 120, damping: 28 });
+  const cardYL = useTransform(scrollYProgress, [0.12, 0.88], yLeftRange);
+  const cardYC = useTransform(scrollYProgress, [0.12, 0.88], yCenterRange);
+  const cardYR = useTransform(scrollYProgress, [0.12, 0.88], yRightRange);
 
   return (
     <section
@@ -71,15 +69,28 @@ export function ServicesJourneySection() {
       className="relative h-[190vh] overflow-visible bg-[#343434]"
       aria-label="Services background"
     >
-      <motion.svg
-        className="pointer-events-none absolute left-0 -top-[180px] z-[30] w-full will-change-transform [transform:translateZ(0)]"
-        viewBox="0 0 1000 180"
-        preserveAspectRatio="none"
-        style={{ height: 180 }}
-        aria-hidden
-      >
-        <motion.path d={curvePath} fill="#343434" />
-      </motion.svg>
+      {/* path morph sadece reduceMotion kapalıyken — aksi sabit SVG ( sıfır layout thrash ). */}
+      {reduceMotion ? (
+        <svg
+          className="pointer-events-none absolute left-0 -top-[180px] z-[30] w-full"
+          viewBox="0 0 1000 180"
+          preserveAspectRatio="none"
+          style={{ height: 180 }}
+          aria-hidden
+        >
+          <path d={CURVE_PATH_STATIC} fill="#343434" />
+        </svg>
+      ) : (
+        <motion.svg
+          className="pointer-events-none absolute left-0 -top-[180px] z-[30] w-full [transform:translateZ(0)]"
+          viewBox="0 0 1000 180"
+          preserveAspectRatio="none"
+          style={{ height: 180 }}
+          aria-hidden
+        >
+          <motion.path d={curvePath} fill="#343434" />
+        </motion.svg>
+      )}
 
       <div className="relative h-full overflow-hidden bg-[#343434]">
         <img
@@ -110,17 +121,18 @@ export function ServicesJourneySection() {
         </div>
 
         <div className="relative z-10 mx-auto mt-[clamp(6rem,12vh,10rem)] grid w-full max-w-[min(96vw,95rem)] grid-cols-1 gap-6 px-6 sm:px-10 lg:mt-[clamp(5rem,9vh,8.5rem)] lg:block lg:h-[90rem] lg:max-w-[94rem] lg:px-8">
-          {/* Sol: üst-sol köşeye yakın + soldan taşan; yazı sol-alt (ref görsel). */}
           <motion.article
-            style={{ y: cardYL }}
-            className="relative aspect-square overflow-hidden bg-[#2b2b2b] lg:absolute lg:left-0 lg:top-0 lg:w-[42%] lg:-translate-x-[62%]"
+            style={{ y: cardYL, willChange: "transform" }}
+            className="relative aspect-square overflow-hidden bg-[#2b2b2b] [transform:translateZ(0)] lg:absolute lg:left-0 lg:top-0 lg:w-[42%] lg:-translate-x-[62%]"
           >
             <img
               src={kitchen6}
               alt=""
-              className="h-full w-full scale-[3.2] object-cover"
+              className="h-full w-full scale-[2.65] object-cover [transform:translateZ(0)]"
               loading="lazy"
               decoding="async"
+              fetchPriority="low"
+              sizes="(max-width: 1024px) 92vw, 45vw"
             />
             <div className="absolute inset-0 bg-black/38" />
             <div className="absolute inset-0 flex flex-col justify-center items-end p-5 sm:p-6 lg:pl-[28%] lg:pr-7 lg:py-8">
@@ -133,17 +145,18 @@ export function ServicesJourneySection() {
             </div>
           </motion.article>
 
-          {/* Orta: merkeze hizalı, soldan biraz daha aşağıda ve bir miktar daha geniş (ref). yazı sol üst */}
           <motion.article
-            style={{ y: cardYC }}
-            className="relative aspect-square overflow-hidden bg-[#2b2b2b] lg:absolute lg:left-1/2 lg:top-[9rem] lg:w-[49%] lg:-translate-x-1/2"
+            style={{ y: cardYC, willChange: "transform" }}
+            className="relative aspect-square overflow-hidden bg-[#2b2b2b] [transform:translateZ(0)] lg:absolute lg:left-1/2 lg:top-[9rem] lg:w-[49%] lg:-translate-x-1/2"
           >
             <img
               src={kitchen4}
               alt=""
-              className="h-full w-full scale-[3.2] object-cover"
+              className="h-full w-full scale-[2.65] object-cover [transform:translateZ(0)]"
               loading="lazy"
               decoding="async"
+              fetchPriority="low"
+              sizes="(max-width: 1024px) 92vw, 49vw"
             />
             <div className="absolute inset-0 bg-black/42" />
             <div className="absolute inset-0 flex flex-col items-center justify-center p-5 sm:p-6 lg:px-8">
@@ -156,17 +169,18 @@ export function ServicesJourneySection() {
             </div>
           </motion.article>
 
-          {/* Sağ: en altta-ağır; sağdan taşan; yazı sol-orta (ref). */}
           <motion.article
-            style={{ y: cardYR }}
-            className="relative aspect-square overflow-hidden bg-[#2b2b2b] lg:absolute lg:right-0 lg:top-[22rem] lg:w-[42%] lg:translate-x-[62%]"
+            style={{ y: cardYR, willChange: "transform" }}
+            className="relative aspect-square overflow-hidden bg-[#2b2b2b] [transform:translateZ(0)] lg:absolute lg:right-0 lg:top-[22rem] lg:w-[42%] lg:translate-x-[62%]"
           >
             <img
               src={kitchen3}
               alt=""
-              className="h-full w-full scale-[3.2] object-cover"
+              className="h-full w-full scale-[2.65] object-cover [transform:translateZ(0)]"
               loading="lazy"
               decoding="async"
+              fetchPriority="low"
+              sizes="(max-width: 1024px) 92vw, 45vw"
             />
             <div className="absolute inset-0 bg-black/38" />
             <div className="absolute inset-0 flex flex-col justify-center p-5 sm:p-6 lg:justify-center lg:pl-7 lg:pr-[30%] lg:pt-4">
