@@ -28,7 +28,7 @@ export function ServicesJourneySection() {
   return (
     <section
       ref={sectionRef}
-      className="relative h-[190vh] overflow-visible bg-[#343434] [contain:layout_paint]"
+      className="relative h-[190vh] overflow-visible bg-[#343434]"
       aria-label="Services background"
     >
       {/* Kavis iki component sınırında durur; içerik alanının içine girmez. */}

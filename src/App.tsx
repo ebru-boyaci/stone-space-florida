@@ -20,7 +20,7 @@ export default function App() {
   const [heroStripHidden, setHeroStripHidden] = useState(false);
   const [scrollCollapsed, setScrollCollapsed] = useState(false);
 
-  const navCollapsed = isHome ? heroStripHidden || scrollCollapsed : false;
+  const navCollapsed = isHome ? heroStripHidden || scrollCollapsed : scrollCollapsed;
 
   const onHeroFirstGesture = useCallback(() => setHeroStripHidden(true), []);
   const onHeroUnlockDocument = useCallback(() => {
@@ -33,12 +33,12 @@ export default function App() {
     setScrollCollapsed(false);
   }, []);
 
-  useDocumentNavScrollCollapse(heroDocumentMode && isHome, setScrollCollapsed);
+  useDocumentNavScrollCollapse(isHome ? heroDocumentMode : true, setScrollCollapsed);
 
   useEffect(() => {
     if (!isHome) {
-      setScrollCollapsed(false);
       setHeroStripHidden(false);
+      setHeroDocumentMode(false);
     }
   }, [isHome]);
 
