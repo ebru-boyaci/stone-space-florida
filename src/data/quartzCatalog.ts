@@ -1,5 +1,5 @@
 /** Vite glob: path relative to this file (`src/data` → repo `assets`). */
-const quartzModules = import.meta.glob("../../assets/quartz/*.avif", {
+const quartzModules = import.meta.glob("../../assets/quartz/*.{avif,jpg,jpeg,png,webp}", {
   eager: true,
 }) as Record<string, { default: string }>;
 
@@ -19,6 +19,16 @@ function slugToLabel(slug: string): string {
     .join(" ");
 }
 
+function toSlug(fileBaseName: string): string {
+  return fileBaseName
+    .replace(/\.[^.]+$/, "")
+    .trim()
+    .toLowerCase()
+    .replace(/\s*-\s*/g, "-")
+    .replace(/\s+/g, "-")
+    .replace(/-+/g, "-");
+}
+
 let cached: QuartzCatalogItem[] | undefined;
 
 /** assets/quartz içindeki tüm yüzeyler (isim sıralı). */
@@ -27,7 +37,7 @@ export function getQuartzCatalogItems(): QuartzCatalogItem[] {
   cached = Object.entries(quartzModules)
     .map(([path, mod]) => {
       const base = path.split("/").pop() ?? "";
-      const slug = base.replace(/\.[^.]+$/, "");
+      const slug = toSlug(base);
       return {
         slug,
         label: slugToLabel(slug),
