@@ -12,9 +12,20 @@
   --color-contact-display: #9c7c5c;
 }
 
+/**
+ * Geliştirme sırasında tarayıcı zoom’u ~%67 ile yapıldıysa, %100 zoom’da aynı CSS
+ * görsel olarak ~1,49× daha büyük görünür (1 / 0.67). Tailwind’in rem tabanlı
+ * spacing ve tipografisi kök font-size ile birlikte küçülür; böylece “%100 zoom”da
+ * yakın bir yoğunluk elde edilir.
+ *
+ * Uzun vadede: zoom’u %100’de tutarak tasarım yapmak ve bu satırı kaldırmak daha doğru;
+ * vw ile yazılmış clamp’ler rem kadar küçülmez — gerekirse ilgili bileşenlerde vw terimi elle sıkılır.
+ * Erişilebilirlik: kullanıcı tarayıcı zoom’unu artırınca yine ölçeklenir.
+ */
 html {
   overflow-x: clip;
   scroll-behavior: smooth;
+  font-size: 67%;
 }
 
 body {
