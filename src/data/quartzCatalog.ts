@@ -29,12 +29,9 @@ function toSlug(fileBaseName: string): string {
     .replace(/-+/g, "-");
 }
 
-let cached: QuartzCatalogItem[] | undefined;
-
 /** assets/quartz içindeki tüm yüzeyler (isim sıralı). */
 export function getQuartzCatalogItems(): QuartzCatalogItem[] {
-  if (cached) return cached;
-  cached = Object.entries(quartzModules)
+  return Object.entries(quartzModules)
     .map(([path, mod]) => {
       const base = path.split("/").pop() ?? "";
       const slug = toSlug(base);
@@ -45,5 +42,4 @@ export function getQuartzCatalogItems(): QuartzCatalogItem[] {
       };
     })
     .sort((a, b) => a.label.localeCompare(b.label, "en", { sensitivity: "base" }));
-  return cached;
 }
