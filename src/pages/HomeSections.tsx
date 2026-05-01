@@ -42,12 +42,12 @@ export function HomeSections({
       </HeroWithCollage>
 
       <ScrollGallery />
-      <ScrollRevealTextSection />
-      <StoneSpacesMarquee />
-      <FeatureValueGrid />
-      <CraftShowcaseSection />
       <QuartzSpotlightSection />
       <ServicesJourneySection />
+      <FeatureValueGrid />
+      <CraftShowcaseSection />
+      <ScrollRevealTextSection />
+      <StoneSpacesMarquee />
     </>
   );
 }
