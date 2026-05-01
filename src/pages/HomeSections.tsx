@@ -1,9 +1,11 @@
 import { CraftShowcaseSection } from "@/components/CraftShowcaseSection";
 import { FeatureValueGrid } from "@/components/FeatureValueGrid";
+import { GalleryToServicesBridge } from "@/components/GalleryToServicesBridge";
 import { HeroWithCollage } from "@/components/HeroCollage";
 import { QuartzSpotlightSection } from "@/components/QuartzSpotlightSection";
 import { ScrollGallery } from "@/components/ScrollGallery";
 import { ScrollRevealTextSection } from "@/components/ScrollRevealTextSection";
+import { ServicesMarqueeBand } from "@/components/ServicesMarqueeBand";
 import { ServicesJourneySection } from "@/components/ServicesJourneySection";
 import { StoneSpacesMarquee } from "@/components/StoneSpacesMarquee";
 
@@ -42,9 +44,11 @@ export function HomeSections({
       </HeroWithCollage>
 
       <ScrollGallery />
+      <GalleryToServicesBridge />
+      <ServicesMarqueeBand />
+      <FeatureValueGrid />
       <QuartzSpotlightSection />
       <ServicesJourneySection />
-      <FeatureValueGrid />
       <CraftShowcaseSection />
       <ScrollRevealTextSection />
       <StoneSpacesMarquee />

@@ -103,13 +103,13 @@ export function ScrollGallery() {
 
       <section
         ref={gallerySectionRef}
-        className="relative bg-black pb-40 sm:pb-48 md:pb-60"
+        className="relative bg-black pb-0"
       >
         <div className="relative min-h-[320vh]">
           <div className="sticky top-0 flex h-[100dvh] max-h-[100dvh] w-full min-h-0 flex-col overflow-x-clip bg-black">
             <div
               ref={wrapRef}
-              className="relative flex min-h-0 w-full min-w-0 flex-1 flex-col overflow-x-clip pb-10 pt-10 sm:pb-14 sm:pt-14 md:pb-16 md:pt-16"
+              className="relative flex min-h-0 w-full min-w-0 flex-1 flex-col overflow-x-clip pb-6 pt-10 sm:pb-8 sm:pt-14 md:pb-10 md:pt-16"
             >
               <motion.div
                 ref={trackRef}

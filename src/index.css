@@ -54,6 +54,10 @@ body {
   will-change: transform;
 }
 
+.marquee-x-track--services {
+  animation-duration: 95s;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .marquee-x-track {
     animation: none;
