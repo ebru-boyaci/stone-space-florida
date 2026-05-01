@@ -29,10 +29,7 @@ function MarqueeSegment() {
 /** Geçiş köprüsü ile servis kartları arasında: ince çizgiler + yatay Services marquee */
 export function ServicesMarqueeBand() {
   return (
-    <section
-      className="relative z-[2] overflow-hidden bg-[#262626]"
-      aria-labelledby="services-marquee-heading"
-    >
+    <section className="relative overflow-hidden bg-[#343434]" aria-labelledby="services-marquee-heading">
       <h2 id="services-marquee-heading" className="sr-only">
         Services
       </h2>

@@ -66,7 +66,7 @@ function IconBuilding() {
 export function FeatureValueGrid() {
   return (
     <section
-      className="relative z-[1] bg-[#262626] px-5 pb-20 pt-4 sm:px-8 sm:pb-24 sm:pt-5 md:px-10 md:pb-28"
+      className="relative bg-[#343434] px-5 pb-20 pt-6 sm:px-8 sm:pb-24 sm:pt-8 md:px-10 md:pb-28"
       aria-label="Stone Spaces services"
     >
       <div className="mx-auto grid w-full max-w-[min(96vw,95rem)] grid-cols-1 gap-5 sm:grid-cols-2 sm:gap-6 xl:grid-cols-4">
