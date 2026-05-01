@@ -26,15 +26,18 @@ function MarqueeSegment() {
   );
 }
 
-/** Geçiş köprüsü ile servis kartları arasında: ince çizgiler + yatay Services marquee */
+/** Discover services (gri) ile kartlar arası: ince çizgiler + yatay Services marquee */
 export function ServicesMarqueeBand() {
   return (
-    <section className="relative overflow-hidden bg-[#343434]" aria-labelledby="services-marquee-heading">
+    <section
+      className="relative overflow-hidden bg-[#343434] pt-6 sm:pt-8 md:pt-10"
+      aria-labelledby="services-marquee-heading"
+    >
       <h2 id="services-marquee-heading" className="sr-only">
         Services
       </h2>
       <div className="border-y border-white/[0.1]">
-        <div className="relative flex items-center overflow-hidden py-9 sm:py-11 md:py-12">
+        <div className="relative flex items-center overflow-hidden pt-12 pb-9 sm:pt-14 sm:pb-10 md:pt-16 md:pb-11">
           <div className="marquee-x-track marquee-x-track--services flex w-max">
             <MarqueeSegment />
             <MarqueeSegment />
