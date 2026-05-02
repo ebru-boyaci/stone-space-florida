@@ -56,7 +56,7 @@ body {
 }
 
 .marquee-x-track--services {
-  animation-duration: 95s;
+  animation-duration: 420s;
 }
 
 @media (prefers-reduced-motion: reduce) {

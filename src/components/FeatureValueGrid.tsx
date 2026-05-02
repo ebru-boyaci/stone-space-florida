@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { motion } from "motion/react";
 
 import imgCabinet from "@assets/services/cabinet-installation.png";
@@ -108,6 +108,63 @@ function IconArrowUpRight({ className }: { className?: string }) {
   );
 }
 
+function IconChevronLeft({ className }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" className={className} aria-hidden>
+      <path d="M18 5 L8 12 L18 19" stroke="currentColor" strokeWidth="1.1" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
+function IconChevronRight({ className }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" className={className} aria-hidden>
+      <path d="M6 5 L16 12 L6 19" stroke="currentColor" strokeWidth="1.1" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
+function ServiceScrollNavButton({
+  direction,
+  onClick,
+}: {
+  direction: "prev" | "next";
+  onClick: () => void;
+}) {
+  const label = direction === "prev" ? "Previous service" : "Next service";
+
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      aria-label={label}
+      className="group relative inline-flex size-12 shrink-0 items-center justify-center rounded-full text-white outline-none transition-colors hover:text-white focus-visible:ring-2 focus-visible:ring-white/35 sm:size-14"
+    >
+      <span aria-hidden className="pointer-events-none absolute inset-0 rounded-full border border-white/[0.14]" />
+      <svg viewBox="0 0 36 36" className="pointer-events-none absolute inset-0 size-full text-white" aria-hidden>
+        <g transform="rotate(-90 18 18)">
+          <circle
+            cx={18}
+            cy={18}
+            r={16.5}
+            fill="none"
+            stroke="currentColor"
+            strokeWidth={1}
+            pathLength={1}
+            strokeDasharray={1}
+            className="transition-[stroke-dashoffset] duration-[700ms] ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none motion-reduce:group-hover:[stroke-dashoffset:0] [stroke-dashoffset:1] group-hover:[stroke-dashoffset:0] group-focus-visible:[stroke-dashoffset:0]"
+          />
+        </g>
+      </svg>
+      {direction === "prev" ? (
+        <IconChevronLeft className="relative z-10 h-5 w-5 sm:h-[1.35rem] sm:w-[1.35rem]" />
+      ) : (
+        <IconChevronRight className="relative z-10 h-5 w-5 sm:h-[1.35rem] sm:w-[1.35rem]" />
+      )}
+    </button>
+  );
+}
+
 function ServiceCardItem({ item }: { item: ServiceCard }) {
   const [hovered, setHovered] = useState(false);
 
@@ -189,14 +246,27 @@ function ServiceCardItem({ item }: { item: ServiceCard }) {
 }
 
 export function FeatureValueGrid() {
+  const listRef = useRef<HTMLUListElement>(null);
+
+  function scrollServices(dir: -1 | 1) {
+    const ul = listRef.current;
+    if (!ul) return;
+    const first = ul.firstElementChild as HTMLElement | null;
+    if (!first) return;
+    const gap = parseFloat(getComputedStyle(ul).columnGap || getComputedStyle(ul).gap || "20") || 20;
+    const step = first.getBoundingClientRect().width + gap;
+    ul.scrollBy({ left: dir * step, behavior: "smooth" });
+  }
+
   return (
     <section
-      className="relative overflow-x-clip bg-[#343434] px-5 pb-20 pt-6 sm:px-8 sm:pb-24 sm:pt-8 md:px-10 md:pb-28"
+      className="relative overflow-x-clip bg-[#343434] px-5 pb-32 pt-6 sm:px-8 sm:pb-40 sm:pt-8 md:px-10 md:pb-48"
       aria-label="Stone Spaces services"
     >
       <p className="sr-only">Swipe horizontally to browse all services.</p>
       <ul
-        className="-mx-5 flex snap-x snap-mandatory touch-pan-x gap-5 overflow-x-auto overscroll-x-contain bg-[#343434] pb-4 pl-8 pr-4 [-ms-overflow-style:none] [scrollbar-width:none] sm:-mx-8 sm:gap-6 sm:pl-10 sm:pr-6 md:-mx-10 md:gap-7 md:pl-12 md:pr-8 [&::-webkit-scrollbar]:hidden"
+        ref={listRef}
+        className="-mx-5 flex snap-x snap-mandatory touch-pan-x gap-5 overflow-x-auto overscroll-x-contain bg-[#343434] pb-4 pl-12 pr-5 [-ms-overflow-style:none] [scrollbar-width:none] [scroll-padding-inline-start:3rem] sm:-mx-8 sm:gap-6 sm:pl-16 sm:pr-8 sm:[scroll-padding-inline-start:4rem] md:-mx-10 md:gap-7 md:pl-20 md:pr-10 md:[scroll-padding-inline-start:5rem] [&::-webkit-scrollbar]:hidden"
         role="list"
       >
         {SERVICES.map((item) => (
@@ -206,6 +276,10 @@ export function FeatureValueGrid() {
       <p className="mt-3 text-center text-xs text-zinc-500 sm:hidden" aria-hidden>
         ← Swipe for more →
       </p>
+      <div className="mt-10 flex justify-center gap-8 pb-4 sm:mt-14 sm:gap-10 md:mt-16">
+        <ServiceScrollNavButton direction="prev" onClick={() => scrollServices(-1)} />
+        <ServiceScrollNavButton direction="next" onClick={() => scrollServices(1)} />
+      </div>
     </section>
   );
 }
