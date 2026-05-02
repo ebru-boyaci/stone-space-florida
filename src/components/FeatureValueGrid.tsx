@@ -17,6 +17,9 @@ type ServiceCard = {
   alt: string;
 };
 
+/** `true`: Arrow.svg varsayılan → sağa bakar (geri için çevir). `false`: varsayılan ← sola (ileri için çevir). */
+const WEBFLOW_ARROW_POINTS_RIGHT = false;
+
 const SERVICES: ServiceCard[] = [
   {
     category: "Design",
@@ -108,18 +111,30 @@ function IconArrowUpRight({ className }: { className?: string }) {
   );
 }
 
-function IconChevronLeft({ className }: { className?: string }) {
+/** Webflow Arrow.svg — `flip` ile yatay çevir (hangi butonda gerektiği `WEBFLOW_ARROW_POINTS_RIGHT` ile seçilir). */
+function ServiceNavArrowIcon({
+  className,
+  flip,
+}: {
+  className?: string;
+  flip: boolean;
+}) {
   return (
-    <svg viewBox="0 0 24 24" fill="none" className={className} aria-hidden>
-      <path d="M18 5 L8 12 L18 19" stroke="currentColor" strokeWidth="1.1" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-  );
-}
-
-function IconChevronRight({ className }: { className?: string }) {
-  return (
-    <svg viewBox="0 0 24 24" fill="none" className={className} aria-hidden>
-      <path d="M6 5 L16 12 L6 19" stroke="currentColor" strokeWidth="1.1" strokeLinecap="round" strokeLinejoin="round" />
+    <svg
+      viewBox="0 0 36 8"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      className={className}
+      aria-hidden
+      style={{
+        transform: flip ? "scaleX(-1)" : "none",
+        transformOrigin: "center",
+      }}
+    >
+      <path
+        d="M0.902584 3.41988C0.707321 3.61515 0.707321 3.93173 0.902584 4.12699L4.08456 7.30897C4.27983 7.50423 4.59641 7.50423 4.79167 7.30897C4.98693 7.11371 4.98693 6.79713 4.79167 6.60186L1.96325 3.77344L4.79167 0.94501C4.98693 0.749748 4.98693 0.433166 4.79167 0.237904C4.59641 0.0426414 4.27983 0.0426414 4.08456 0.237904L0.902584 3.41988ZM35.1973 3.27344L1.25614 3.27344V4.27344L35.1973 4.27344V3.27344Z"
+        fill="currentColor"
+      />
     </svg>
   );
 }
@@ -138,10 +153,17 @@ function ServiceScrollNavButton({
       type="button"
       onClick={onClick}
       aria-label={label}
-      className="group relative inline-flex size-12 shrink-0 items-center justify-center rounded-full text-white outline-none transition-colors hover:text-white focus-visible:ring-2 focus-visible:ring-white/35 sm:size-14"
+      className="group relative inline-flex size-28 shrink-0 items-center justify-center rounded-full text-[#a88d70] outline-none transition-colors hover:text-[#c4a882] focus-visible:ring-2 focus-visible:ring-[#a88d70]/45 sm:size-32 md:size-36"
     >
-      <span aria-hidden className="pointer-events-none absolute inset-0 rounded-full border border-white/[0.14]" />
-      <svg viewBox="0 0 36 36" className="pointer-events-none absolute inset-0 size-full text-white" aria-hidden>
+      <span
+        aria-hidden
+        className="pointer-events-none absolute inset-0 rounded-full border border-[#a88d70]/22"
+      />
+      <svg
+        viewBox="0 0 36 36"
+        className="pointer-events-none absolute inset-0 size-full text-[#a88d70] group-hover:text-[#c4a882]"
+        aria-hidden
+      >
         <g transform="rotate(-90 18 18)">
           <circle
             cx={18}
@@ -156,11 +178,12 @@ function ServiceScrollNavButton({
           />
         </g>
       </svg>
-      {direction === "prev" ? (
-        <IconChevronLeft className="relative z-10 h-5 w-5 sm:h-[1.35rem] sm:w-[1.35rem]" />
-      ) : (
-        <IconChevronRight className="relative z-10 h-5 w-5 sm:h-[1.35rem] sm:w-[1.35rem]" />
-      )}
+      <ServiceNavArrowIcon
+        flip={
+          WEBFLOW_ARROW_POINTS_RIGHT ? direction === "prev" : direction === "next"
+        }
+        className="relative z-10 h-[6px] w-[27px] max-w-[55%] text-white group-hover:text-white sm:h-[7px] sm:w-[31px] md:h-[8px] md:w-[36px]"
+      />
     </button>
   );
 }
@@ -276,7 +299,10 @@ export function FeatureValueGrid() {
       <p className="mt-3 text-center text-xs text-zinc-500 sm:hidden" aria-hidden>
         ← Swipe for more →
       </p>
-      <div className="mt-10 flex justify-center gap-8 pb-4 sm:mt-14 sm:gap-10 md:mt-16">
+      <div
+        className="mt-10 flex flex-row justify-center gap-8 pb-4 sm:mt-14 sm:gap-12 md:mt-16 md:gap-14"
+        dir="ltr"
+      >
         <ServiceScrollNavButton direction="prev" onClick={() => scrollServices(-1)} />
         <ServiceScrollNavButton direction="next" onClick={() => scrollServices(1)} />
       </div>
