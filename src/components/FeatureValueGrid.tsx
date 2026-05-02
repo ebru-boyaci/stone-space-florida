@@ -95,7 +95,7 @@ function IconArrowUpRight({ className }: { className?: string }) {
   return (
     <svg viewBox="0 0 24 24" fill="none" className={className} aria-hidden>
       <path
-        d="M7 17 17 7M17 7H9.5M17 7v7.5"
+        d="M7 17 L17 7M17 7H9.5M17 7V14.5"
         stroke="currentColor"
         strokeWidth="1.65"
         strokeLinecap="round"
@@ -144,9 +144,9 @@ export function FeatureValueGrid() {
                   aria-hidden
                 >
                   <div
-                    className="flex h-[4.25rem] w-[4.25rem] scale-[0.1] items-center justify-center rounded-full bg-[#a88d70] opacity-0 shadow-lg transition-all duration-[420ms] ease-[cubic-bezier(0.22,1,0.36,1)] will-change-transform group-hover:scale-100 group-hover:opacity-100 sm:h-[4.75rem] sm:w-[4.75rem] md:h-24 md:w-24"
+                    className="flex h-[6rem] w-[6rem] scale-[0.08] transform-gpu items-center justify-center rounded-full bg-[#a88d70] opacity-0 shadow-xl transition-[transform,opacity] duration-[780ms] ease-[cubic-bezier(0.22,1,0.45,1)] will-change-transform group-hover:scale-100 group-hover:opacity-100 motion-reduce:duration-0 sm:h-[6.75rem] sm:w-[6.75rem] md:h-[7.5rem] md:w-[7.5rem]"
                   >
-                    <IconArrowUpRight className="h-6 w-6 translate-x-3 -translate-y-3 scale-[0.35] text-white opacity-0 transition-all duration-300 ease-out delay-75 group-hover:translate-x-0 group-hover:translate-y-0 group-hover:scale-100 group-hover:opacity-100 sm:h-7 sm:w-7" />
+                    <IconArrowUpRight className="h-8 w-8 translate-x-6 -translate-y-6 scale-[0.15] text-white opacity-0 transition-[transform,opacity] delay-[220ms] duration-[620ms] ease-[cubic-bezier(0.2,0.85,0.25,1)] group-hover:translate-x-0 group-hover:translate-y-0 group-hover:scale-100 group-hover:opacity-100 motion-reduce:delay-0 motion-reduce:duration-0 sm:h-9 sm:w-9 md:h-10 md:w-10" />
                   </div>
                 </div>
               </div>
