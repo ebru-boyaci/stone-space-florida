@@ -1,6 +1,7 @@
 import { useRef, useState } from "react";
 import { motion } from "motion/react";
 
+import { WebflowArrowIcon, webflowNavFlip } from "@/components/WebflowArrowIcon";
 import imgCabinet from "@assets/services/cabinet-installation.png";
 import imgCountertops from "@assets/services/countertop-installation.png";
 import imgKitchenDesign from "@assets/services/3D-kitchen-design.png";
@@ -16,9 +17,6 @@ type ServiceCard = {
   src: string;
   alt: string;
 };
-
-/** `true`: Arrow.svg varsayılan → sağa bakar (geri için çevir). `false`: varsayılan ← sola (ileri için çevir). */
-const WEBFLOW_ARROW_POINTS_RIGHT = false;
 
 const SERVICES: ServiceCard[] = [
   {
@@ -111,34 +109,6 @@ function IconArrowUpRight({ className }: { className?: string }) {
   );
 }
 
-/** Webflow Arrow.svg — `flip` ile yatay çevir (hangi butonda gerektiği `WEBFLOW_ARROW_POINTS_RIGHT` ile seçilir). */
-function ServiceNavArrowIcon({
-  className,
-  flip,
-}: {
-  className?: string;
-  flip: boolean;
-}) {
-  return (
-    <svg
-      viewBox="0 0 36 8"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      className={className}
-      aria-hidden
-      style={{
-        transform: flip ? "scaleX(-1)" : "none",
-        transformOrigin: "center",
-      }}
-    >
-      <path
-        d="M0.902584 3.41988C0.707321 3.61515 0.707321 3.93173 0.902584 4.12699L4.08456 7.30897C4.27983 7.50423 4.59641 7.50423 4.79167 7.30897C4.98693 7.11371 4.98693 6.79713 4.79167 6.60186L1.96325 3.77344L4.79167 0.94501C4.98693 0.749748 4.98693 0.433166 4.79167 0.237904C4.59641 0.0426414 4.27983 0.0426414 4.08456 0.237904L0.902584 3.41988ZM35.1973 3.27344L1.25614 3.27344V4.27344L35.1973 4.27344V3.27344Z"
-        fill="currentColor"
-      />
-    </svg>
-  );
-}
-
 function ServiceScrollNavButton({
   direction,
   onClick,
@@ -178,10 +148,8 @@ function ServiceScrollNavButton({
           />
         </g>
       </svg>
-      <ServiceNavArrowIcon
-        flip={
-          WEBFLOW_ARROW_POINTS_RIGHT ? direction === "prev" : direction === "next"
-        }
+      <WebflowArrowIcon
+        flip={webflowNavFlip(direction)}
         className="relative z-10 h-[6px] w-[27px] max-w-[55%] text-white group-hover:text-white sm:h-[7px] sm:w-[31px] md:h-[8px] md:w-[36px]"
       />
     </button>

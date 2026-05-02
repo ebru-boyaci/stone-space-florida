@@ -1,3 +1,5 @@
+import { WebflowArrowIcon, webflowForwardFlip } from "@/components/WebflowArrowIcon";
+
 import bg from "@assets/bg.png";
 import serviceBg1 from "@assets/bg1.png";
 import serviceBg2 from "@assets/bg2.png";
@@ -54,9 +56,10 @@ function ServiceCardPitch({
       <h3 className={pitchTitle}>{title}</h3>
       <a href="#contact" className={`${ctaButton} ${ctaAlign}`}>
         {ctaLabel}
-        <span aria-hidden className="text-[1.08em] font-medium text-white/95">
-          →
-        </span>
+        <WebflowArrowIcon
+          flip={webflowForwardFlip()}
+          className="relative top-[0.06em] inline-block h-[0.85em] w-auto shrink-0 text-white/95 sm:h-[0.82em]"
+        />
       </a>
     </div>
   );
