@@ -12,7 +12,6 @@ import { Link } from "react-router-dom";
 type ProductSpotlight = {
   id: string;
   label: string;
-  styleLine?: string;
   title: string;
   description: string;
   image: string;
@@ -24,9 +23,8 @@ const PRODUCTS: ProductSpotlight[] = [
   {
     id: "porcelain",
     label: "PORCELAIN",
-    title: "Refined Porcelain Surfaces",
-    description:
-      "Durable, low-maintenance porcelain ideal for countertops, walls, and high-traffic areas with a polished, modern finish.",
+    title: "Porcelain surfaces",
+    description: "Tough, easy-care slabs for kitchens and baths.",
     image: imgPorcelain,
     to: "/#contact",
     linkAriaLabel: "Porcelain surfaces — contact us",
@@ -34,9 +32,8 @@ const PRODUCTS: ProductSpotlight[] = [
   {
     id: "quartz",
     label: "QUARTZ",
-    title: "Discover the Elegance of Quartz",
-    description:
-      "Enhance your spaces with our premium quartz selection—perfect for countertops, backsplashes, and elegant interiors!",
+    title: "Premium quartz",
+    description: "Full catalog: colors and finishes for every space.",
     image: coverQuartz,
     to: "/catalog/quartz",
     linkAriaLabel: "Quartz surfaces — browse full catalog",
@@ -44,10 +41,8 @@ const PRODUCTS: ProductSpotlight[] = [
   {
     id: "cabinets",
     label: "CABINETS",
-    styleLine: "SHAKER / SLIM SHAKER / EUROPEAN CABINETS",
-    title: "Cabinetry Built Around You",
-    description:
-      "From layout to finish, we deliver kitchens and baths with cabinetry tailored to your style and storage needs.",
+    title: "Custom cabinets",
+    description: "Kitchens and baths planned around your storage and style.",
     image: imgCabinets,
     to: "/#contact",
     linkAriaLabel: "Cabinets — contact us",
@@ -55,9 +50,8 @@ const PRODUCTS: ProductSpotlight[] = [
   {
     id: "vinyl-flooring",
     label: "VINYL FLOORING",
-    title: "Vinyl Flooring, Everyday Tough",
-    description:
-      "Water-resistant, comfortable underfoot vinyl—great for busy homes that need beauty without the upkeep.",
+    title: "Vinyl flooring",
+    description: "Water-smart and soft underfoot for busy homes.",
     image: imgVinyl,
     to: "/#contact",
     linkAriaLabel: "Vinyl flooring — contact us",
@@ -65,9 +59,8 @@ const PRODUCTS: ProductSpotlight[] = [
   {
     id: "porcelain-tile-flooring",
     label: "PORCELAIN TILE FLOORING",
-    title: "Porcelain Tile Underfoot",
-    description:
-      "Large-format and classic tile layouts that stand up to moisture and wear while elevating every room.",
+    title: "Porcelain tile",
+    description: "Floor layouts that handle moisture and daily wear.",
     image: imgTileFloor,
     to: "/#contact",
     linkAriaLabel: "Porcelain tile flooring — contact us",
@@ -75,9 +68,8 @@ const PRODUCTS: ProductSpotlight[] = [
   {
     id: "deck",
     label: "DECK",
-    title: "Outdoor Living, Built to Last",
-    description:
-      "Decks designed for Florida weather—structural integrity, clean lines, and materials chosen to age gracefully.",
+    title: "Decks for Florida",
+    description: "Solid builds and clean lines—sun, rain, and time.",
     image: imgDeck,
     to: "/#contact",
     linkAriaLabel: "Deck projects — contact us",
@@ -170,6 +162,8 @@ export function ProductsSpotlightSection() {
                       className="h-[18rem] w-full object-cover sm:h-[20.5rem]"
                       loading="lazy"
                       decoding="async"
+                      fetchPriority="low"
+                      sizes="(max-width: 640px) 88vw, (max-width: 1024px) 80vw, 36rem"
                     />
                   </div>
 
@@ -187,11 +181,6 @@ export function ProductsSpotlightSection() {
                       <p className="font-sans text-[1.42rem] font-semibold uppercase leading-[1.12] tracking-[0.06em] text-white/92 sm:text-[1.6rem]">
                         {p.label}
                       </p>
-                      {p.styleLine ? (
-                        <p className="mt-2 font-sans text-[0.65rem] font-semibold uppercase leading-snug tracking-[0.1em] text-zinc-400 sm:text-[0.7rem]">
-                          {p.styleLine}
-                        </p>
-                      ) : null}
                     </div>
                     <span
                       className="inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#a88d70] text-white sm:h-13 sm:w-13"

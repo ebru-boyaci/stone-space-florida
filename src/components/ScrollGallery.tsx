@@ -128,6 +128,9 @@ export function ScrollGallery() {
                       className="h-full min-h-0 w-full object-cover"
                       draggable={false}
                       decoding="async"
+                      loading="lazy"
+                      fetchPriority={i === 0 ? "high" : "low"}
+                      sizes="(max-width: 768px) 94vw, min(92vw, 1580px)"
                     />
                   </div>
                 ))}

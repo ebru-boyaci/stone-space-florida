@@ -42,7 +42,7 @@ const TILES: {
     fadeStart: 0.58,
     zClass: "z-[0]",
     imgClass:
-      "block h-auto w-auto max-w-[min(29vw,272px)] max-h-[min(84dvh,800px)] object-contain object-center sm:max-w-[min(27vw,286px)] sm:max-h-[min(88dvh,846px)]",
+      "block h-auto w-auto max-w-[min(26vw,240px)] max-h-[min(52dvh,480px)] object-contain object-center sm:max-w-[min(27vw,286px)] sm:max-h-[min(84dvh,800px)] md:max-h-[min(88dvh,846px)]",
   },
   {
     src: hera,
@@ -64,8 +64,7 @@ const TILES: {
     fadeStart: 0.6,
     zClass: "z-[2]",
     imgClass:
-      "block h-auto max-h-[min(39dvh,360px)] w-auto max-w-[min(48vw,416px)] object-contain object-center sm:max-h-[min(41dvh,392px)] sm:max-w-[min(47vw,472px)] lg:max-h-[min(44dvh,424px)] lg:max-w-[min(44vw,500px)]",
-    wrapClass: "hidden md:block",
+      "block h-auto max-h-[min(32dvh,300px)] w-auto max-w-[min(44vw,360px)] object-contain object-center sm:max-h-[min(39dvh,360px)] sm:max-w-[min(48vw,416px)] lg:max-h-[min(44dvh,424px)] lg:max-w-[min(44vw,500px)]",
   },
   {
     src: mona,
@@ -87,8 +86,7 @@ const TILES: {
     fadeStart: 0.53,
     zClass: "z-[2]",
     imgClass:
-      "block h-auto max-h-[min(42dvh,392px)] w-auto max-w-[min(40vw,368px)] object-contain object-center sm:max-h-[min(46dvh,436px)] sm:max-w-[min(43vw,440px)] lg:max-h-[min(48dvh,472px)] lg:max-w-[min(41vw,468px)]",
-    wrapClass: "hidden lg:block",
+      "block h-auto max-h-[min(30dvh,280px)] w-auto max-w-[min(42vw,340px)] object-contain object-center sm:max-h-[min(42dvh,392px)] sm:max-w-[min(40vw,368px)] lg:max-h-[min(48dvh,472px)] lg:max-w-[min(41vw,468px)]",
   },
   {
     src: vera,
@@ -103,7 +101,9 @@ const TILES: {
   },
 ];
 
-const WHEEL_SCALE = 0.00085;
+const WHEEL_SCALE_DESKTOP = 0.00085;
+/** Dar ekranda aynı jestle progress daha çok artsın — aşağı “çıkmak” için daha az kaydırma. */
+const WHEEL_SCALE_MOBILE = 0.00275;
 
 /** Batched wheel → fewer motion updates (less jank). */
 function useLockedHeroProgress(
@@ -127,15 +127,17 @@ function useLockedHeroProgress(
       return;
     }
 
+    const wheelScale = () =>
+      typeof window !== "undefined" && window.innerWidth < 768 ? WHEEL_SCALE_MOBILE : WHEEL_SCALE_DESKTOP;
+
     const bump = (delta: number) => {
       if (exitCompleteRef.current || returningRef.current) return;
       if (Date.now() < suppressWheelUntilRef.current) return;
       if (firstGesturePendingRef.current && progress.get() < 1e-5) {
         firstGesturePendingRef.current = false;
         onHeroFirstGesture?.();
-        return;
       }
-      const next = Math.min(1, Math.max(0, progress.get() + delta * WHEEL_SCALE));
+      const next = Math.min(1, Math.max(0, progress.get() + delta * wheelScale()));
       progress.set(next);
       if (next >= 1) {
         exitCompleteRef.current = true;
@@ -355,9 +357,11 @@ function CollageTile({
             src={src}
             alt=""
             className={imgClass}
-            loading="eager"
+            loading={tileIndex === 0 ? "eager" : "lazy"}
+            fetchPriority={tileIndex === 0 ? "high" : "low"}
             decoding="async"
             draggable={false}
+            sizes="(max-width: 768px) 45vw, 20rem"
           />
         </div>
       </motion.div>
@@ -486,11 +490,11 @@ export function HeroWithCollage({
   return (
     <section
       ref={ref}
-      className="relative flex min-h-[100dvh] min-h-[100svh] flex-col items-center justify-center overflow-hidden pl-[max(1rem,env(safe-area-inset-left,0px))] pr-[max(1rem,env(safe-area-inset-right,0px))] pb-20 pt-[calc(9rem+env(safe-area-inset-top,0px))] sm:pl-6 sm:pr-6 sm:pt-[calc(10rem+env(safe-area-inset-top,0px))] lg:pt-[calc(12rem+env(safe-area-inset-top,0px))] lg:pb-24"
+      className="relative flex min-h-[100dvh] min-h-[100svh] flex-col items-center justify-center overflow-hidden pl-[max(1rem,env(safe-area-inset-left,0px))] pr-[max(1rem,env(safe-area-inset-right,0px))] pb-12 pt-[calc(8.5rem+env(safe-area-inset-top,0px))] sm:pb-20 sm:pl-6 sm:pr-6 sm:pt-[calc(10rem+env(safe-area-inset-top,0px))] lg:pt-[calc(12rem+env(safe-area-inset-top,0px))] lg:pb-24"
       aria-label="Intro"
     >
       <div
-        className="pointer-events-none absolute inset-0 z-0 isolate overflow-hidden"
+        className="pointer-events-none absolute inset-0 z-0 isolate overflow-hidden max-md:origin-[50%_44%] max-md:scale-[0.78]"
         aria-hidden
       >
         {TILES.map((tile, i) => (
