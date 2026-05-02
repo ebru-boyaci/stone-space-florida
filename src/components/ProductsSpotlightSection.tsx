@@ -1,0 +1,199 @@
+import bgImage from "@assets/kitchen 5.jpg";
+import imgCabinets from "@assets/services/cabinet-installation.png";
+import imgDeck from "@assets/services/deck-installation.png";
+import imgVinyl from "@assets/services/flooring-installtion.png";
+import imgPorcelain from "@assets/quartz/delmar -porcelain.jpeg";
+import coverQuartz from "@assets/kitchen1.jpg";
+import imgTileFloor from "@assets/kitchen2.jpg";
+import { useEffect, useRef } from "react";
+import { Link } from "react-router-dom";
+
+type ProductSpotlight = {
+  id: string;
+  label: string;
+  styleLine?: string;
+  title: string;
+  description: string;
+  image: string;
+  to: string;
+  linkAriaLabel: string;
+};
+
+const PRODUCTS: ProductSpotlight[] = [
+  {
+    id: "porcelain",
+    label: "PORCELAIN",
+    title: "Refined Porcelain Surfaces",
+    description:
+      "Durable, low-maintenance porcelain ideal for countertops, walls, and high-traffic areas with a polished, modern finish.",
+    image: imgPorcelain,
+    to: "/#contact",
+    linkAriaLabel: "Porcelain surfaces — contact us",
+  },
+  {
+    id: "quartz",
+    label: "QUARTZ",
+    title: "Discover the Elegance of Quartz",
+    description:
+      "Enhance your spaces with our premium quartz selection—perfect for countertops, backsplashes, and elegant interiors!",
+    image: coverQuartz,
+    to: "/catalog/quartz",
+    linkAriaLabel: "Quartz surfaces — browse full catalog",
+  },
+  {
+    id: "cabinets",
+    label: "CABINETS",
+    styleLine: "SHAKER / SLIM SHAKER / EUROPEAN CABINETS",
+    title: "Cabinetry Built Around You",
+    description:
+      "From layout to finish, we deliver kitchens and baths with cabinetry tailored to your style and storage needs.",
+    image: imgCabinets,
+    to: "/#contact",
+    linkAriaLabel: "Cabinets — contact us",
+  },
+  {
+    id: "vinyl-flooring",
+    label: "VINYL FLOORING",
+    title: "Vinyl Flooring, Everyday Tough",
+    description:
+      "Water-resistant, comfortable underfoot vinyl—great for busy homes that need beauty without the upkeep.",
+    image: imgVinyl,
+    to: "/#contact",
+    linkAriaLabel: "Vinyl flooring — contact us",
+  },
+  {
+    id: "porcelain-tile-flooring",
+    label: "PORCELAIN TILE FLOORING",
+    title: "Porcelain Tile Underfoot",
+    description:
+      "Large-format and classic tile layouts that stand up to moisture and wear while elevating every room.",
+    image: imgTileFloor,
+    to: "/#contact",
+    linkAriaLabel: "Porcelain tile flooring — contact us",
+  },
+  {
+    id: "deck",
+    label: "DECK",
+    title: "Outdoor Living, Built to Last",
+    description:
+      "Decks designed for Florida weather—structural integrity, clean lines, and materials chosen to age gracefully.",
+    image: imgDeck,
+    to: "/#contact",
+    linkAriaLabel: "Deck projects — contact us",
+  },
+];
+
+export function ProductsSpotlightSection() {
+  const sectionRef = useRef<HTMLElement>(null);
+
+  /** Bölüm görünmeden önce büyük görseli prefetch (hızlı scroll’da siyah flaş azalır). */
+  useEffect(() => {
+    const el = sectionRef.current;
+    if (!el || typeof IntersectionObserver === "undefined") return;
+    const preload = () => {
+      const hi = new Image();
+      hi.decoding = "async";
+      hi.src = bgImage;
+    };
+    const io = new IntersectionObserver(
+      (entries) => {
+        if (entries[0]?.isIntersecting) {
+          preload();
+          io.disconnect();
+        }
+      },
+      { root: null, rootMargin: "520px 0px", threshold: 0 },
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+
+  return (
+    <section
+      ref={sectionRef}
+      className="relative isolate flex min-h-[140vh] items-center overflow-hidden bg-[#171312] px-6 py-20 sm:min-h-[150vh] sm:px-10 sm:py-24 [contain:layout_paint]"
+      aria-label="Product categories"
+    >
+      <img
+        src={bgImage}
+        alt=""
+        className="absolute inset-0 -z-20 h-full w-full object-cover"
+        loading="lazy"
+        decoding="async"
+        fetchPriority="low"
+      />
+      <div className="absolute inset-0 -z-10 bg-black/62" />
+      <div className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_140%_95%_at_50%_35%,rgba(255,255,255,0.08),rgba(0,0,0,0.38))]" />
+
+      <div className="mx-auto w-full max-w-[min(95vw,74rem)]">
+        <ul
+          role="list"
+          className="flex snap-x snap-mandatory gap-5 overflow-x-auto scroll-pb-2 pb-2 [-webkit-overflow-scrolling:touch] [scrollbar-gutter:stable]"
+        >
+          {PRODUCTS.map((p) => (
+            <li
+              key={p.id}
+              className="w-[min(95vw,36rem)] max-w-[min(95vw,36rem)] shrink-0 snap-center first:pl-0 last:pr-0"
+            >
+              <Link
+                to={p.to}
+                aria-label={p.linkAriaLabel}
+                className="group block w-full rounded-[0.42rem] focus-visible:outline focus-visible:outline-offset-4 focus-visible:outline-[#a88d70]"
+              >
+                <article className="relative flex min-h-[clamp(35rem,68vh,46rem)] flex-col overflow-hidden rounded-[0.4rem] border border-white/[0.1] bg-[#2f3137]/92 p-6 shadow-[0_20px_50px_rgba(0,0,0,0.42)] sm:min-h-[clamp(37rem,71vh,49rem)] sm:p-7">
+                  <div className="pointer-events-none absolute inset-0 -z-0 bg-[#4a3f43] [transform-origin:bottom] scale-y-0 transition-transform duration-500 ease-out group-hover:scale-y-100" />
+
+                  <div className="relative z-10 overflow-hidden border border-white/[0.06]">
+                    <img
+                      src={p.image}
+                      alt=""
+                      className="h-[18rem] w-full object-cover sm:h-[20.5rem]"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  </div>
+
+                  <div className="relative z-10 pt-5 sm:pt-6">
+                    <h3 className="text-pretty font-sans text-[clamp(1.72rem,3.2vw,2.45rem)] font-semibold leading-[1.14] tracking-[-0.02em] text-white">
+                      {p.title}
+                    </h3>
+                    <p className="mt-5 text-pretty text-[1rem] leading-[1.72] text-zinc-200 sm:text-[1.06rem]">
+                      {p.description}
+                    </p>
+                  </div>
+
+                  <div className="relative z-10 mt-auto flex items-center justify-between gap-4 border-t border-white/[0.08] pt-6">
+                    <div className="min-w-0">
+                      <p className="font-sans text-[1.42rem] font-semibold uppercase leading-[1.12] tracking-[0.06em] text-white/92 sm:text-[1.6rem]">
+                        {p.label}
+                      </p>
+                      {p.styleLine ? (
+                        <p className="mt-2 font-sans text-[0.65rem] font-semibold uppercase leading-snug tracking-[0.1em] text-zinc-400 sm:text-[0.7rem]">
+                          {p.styleLine}
+                        </p>
+                      ) : null}
+                    </div>
+                    <span
+                      className="inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#a88d70] text-white sm:h-13 sm:w-13"
+                      aria-hidden
+                    >
+                      <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none">
+                        <path
+                          d="M7 17 17 7M17 7h-6M17 7v6"
+                          stroke="currentColor"
+                          strokeWidth="1.6"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                      </svg>
+                    </span>
+                  </div>
+                </article>
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  );
+}
