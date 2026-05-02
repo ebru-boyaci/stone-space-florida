@@ -124,7 +124,7 @@ export function ProductsSpotlightSection() {
     <section
       ref={sectionRef}
       className="relative isolate flex min-h-[140vh] items-center overflow-x-clip bg-[#171312] px-6 py-20 sm:min-h-[150vh] sm:px-10 sm:py-24 [contain:layout_paint]"
-      aria-label="Product categories"
+      aria-labelledby="products-spotlight-heading"
     >
       <img
         src={bgImage}
@@ -138,6 +138,12 @@ export function ProductsSpotlightSection() {
       <div className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_140%_95%_at_50%_35%,rgba(255,255,255,0.08),rgba(0,0,0,0.38))]" />
 
       <div className="relative z-10 w-full">
+        <h2
+          id="products-spotlight-heading"
+          className="mx-auto mb-10 max-w-[min(95vw,74rem)] text-center font-sans text-[clamp(1.85rem,4.5vw,2.65rem)] font-semibold uppercase leading-tight tracking-[0.12em] text-white/95 sm:mb-12 md:mb-14"
+        >
+          Products
+        </h2>
         <p className="sr-only">Swipe horizontally to browse all products.</p>
         <ul
           ref={listRef}
