@@ -76,35 +76,79 @@ body {
   }
 }
 
-@keyframes craft-line-focus {
-
-  0%,
-  100% {
-    opacity: 0.34;
-  }
-
-  50% {
-    opacity: 1;
-  }
-}
-
+/**
+ * Satır başına opacity animasyonu kaldırıldı: büyük clamp tipografi + 14 öğe
+ * sürekli opacity değişimi kaydırmada ciddi repaint/jank üretiyordu.
+ * Dikey ticker yalnızca translate3d (GPU) ile döner.
+ */
 .craft-ticker-track {
   animation: craft-ticker-y 11.8s linear infinite;
   will-change: transform;
 }
 
 .craft-ticker-line {
-  animation: craft-line-focus 11.8s ease-in-out infinite;
+  opacity: 1;
 }
 
 @media (prefers-reduced-motion: reduce) {
 
-  .craft-ticker-track,
-  .craft-ticker-line {
+  .craft-ticker-track {
     animation: none;
   }
+}
 
-  .craft-ticker-line {
+/* Karo girişi — Motion yerine tek GPU dostu animasyon (CraftShowcaseSection) */
+@keyframes craft-tile-in {
+  from {
+    opacity: 0;
+    transform: scale(0.86);
+  }
+
+  to {
     opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.craft-tile {
+  opacity: 0;
+  transform: scale(0.86);
+}
+
+.craft-showcase--visible .craft-tile {
+  animation: craft-tile-in 0.62s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.craft-showcase--visible .craft-tile:nth-child(1) {
+  animation-delay: 0s;
+}
+
+.craft-showcase--visible .craft-tile:nth-child(2) {
+  animation-delay: 0.085s;
+}
+
+.craft-showcase--visible .craft-tile:nth-child(3) {
+  animation-delay: 0.17s;
+}
+
+.craft-showcase--visible .craft-tile:nth-child(4) {
+  animation-delay: 0.255s;
+}
+
+.craft-showcase--visible .craft-tile:nth-child(5) {
+  animation-delay: 0.34s;
+}
+
+.craft-showcase--visible .craft-tile:nth-child(6) {
+  animation-delay: 0.425s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+  .craft-tile,
+  .craft-showcase--visible .craft-tile {
+    animation: none;
+    opacity: 1;
+    transform: none;
   }
 }

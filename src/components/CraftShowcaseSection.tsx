@@ -4,8 +4,7 @@ import kitchen3 from "@assets/kitchen3.jpg";
 import kitchen4 from "@assets/kitchen4.jpg";
 import kitchen5 from "@assets/kitchen 5.jpg";
 import kitchen6 from "@assets/kitchen6.jpg";
-import { motion, useReducedMotion, useScroll, useTransform, type MotionValue } from "motion/react";
-import { useRef } from "react";
+import { useEffect, useRef, useState, type RefObject } from "react";
 
 const COPY_LINES = [
   "Precision Design",
@@ -22,52 +21,90 @@ const TICKER_DURATION_S = 11.8;
 type Tile = {
   src: string;
   cls: string;
-  driftX: [number, number];
-  driftY: [number, number];
   imgCls?: string;
 };
 
 const TILES: readonly Tile[] = [
-  { src: kitchen1, cls: "left-[-1%] top-[12%] w-[29vw] max-w-[19rem] aspect-[1.65/1]", driftX: [-12, 10], driftY: [10, -12] },
-  { src: kitchen2, cls: "left-[40%] top-[4.5%] w-[24vw] max-w-[16rem] aspect-[1.55/1]", driftX: [9, -10], driftY: [8, -8] },
+  { src: kitchen1, cls: "left-[-1%] top-[12%] w-[29vw] max-w-[19rem] aspect-[1.65/1]" },
+  { src: kitchen2, cls: "left-[40%] top-[4.5%] w-[24vw] max-w-[16rem] aspect-[1.55/1]" },
   {
     src: kitchen3,
     cls: "left-[44%] top-[75%] w-[17vw] max-w-[11rem] aspect-[1/1]",
-    driftX: [-8, 9],
-    driftY: [12, -10],
     imgCls: "scale-[1.65]",
   },
-  { src: kitchen4, cls: "left-[-2%] top-[45%] w-[20vw] max-w-[13rem] aspect-[1/1]", driftX: [8, -9], driftY: [10, -12] },
-  { src: kitchen5, cls: "right-[-1%] top-[16%] w-[26vw] max-w-[17rem] aspect-[1.58/1]", driftX: [-10, 12], driftY: [9, -10] },
+  { src: kitchen4, cls: "left-[-2%] top-[45%] w-[20vw] max-w-[13rem] aspect-[1/1]" },
+  { src: kitchen5, cls: "right-[-1%] top-[16%] w-[26vw] max-w-[17rem] aspect-[1.58/1]" },
   {
     src: kitchen6,
     cls: "right-[-2%] top-[59%] w-[21vw] max-w-[13.5rem] aspect-[1/1]",
-    driftX: [11, -11],
-    driftY: [10, -12],
     imgCls: "scale-[1.8]",
   },
 ] as const;
 
-/** Scroll ile drift: tek useTransform / döşeme (yay yok = scroll bitince ekstra kare yok). */
-function ScrollTile({ tile, progress }: { tile: Tile; progress: MotionValue<number> }) {
-  const x = useTransform(progress, [0, 1], tile.driftX);
-  const y = useTransform(progress, [0, 1], tile.driftY);
+const IMG_STAGGER_MS = 48;
 
-  return (
-    <motion.figure
-      className={`absolute z-20 overflow-hidden [transform:translateZ(0)] [backface-visibility:hidden] ${tile.cls}`}
-      style={{ x, y }}
-    >
-      <img
-        src={tile.src}
-        alt=""
-        className={`h-full w-full object-cover [transform:translateZ(0)] [backface-visibility:hidden] ${tile.imgCls ?? ""}`}
-        loading="lazy"
-        decoding="async"
-        sizes="(max-width: 768px) 40vw, 18rem"
-      />
-    </motion.figure>
-  );
+function usePrefersReducedMotion() {
+  const [reduced, setReduced] = useState(false);
+
+  useEffect(() => {
+    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    setReduced(mq.matches);
+    const onChange = () => setReduced(mq.matches);
+    mq.addEventListener("change", onChange);
+    return () => mq.removeEventListener("change", onChange);
+  }, []);
+
+  return reduced;
+}
+
+function useSectionEntered(ref: RefObject<HTMLElement | null>) {
+  const [entered, setEntered] = useState(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const io = new IntersectionObserver(
+      ([e]) => {
+        if (e?.isIntersecting) {
+          setEntered(true);
+          io.disconnect();
+        }
+      },
+      { threshold: 0.12, rootMargin: "0px 0px -10% 0px" },
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, [ref]);
+
+  return entered;
+}
+
+/** Bölüm görününce görselleri kademeli mount — altı büyük JPG aynı karede decode olmasın. */
+function useStaggeredImageCount(active: boolean) {
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    if (!active) {
+      setCount(0);
+      return;
+    }
+    let cancelled = false;
+    let i = 0;
+    const step = () => {
+      if (cancelled) return;
+      i += 1;
+      setCount(i);
+      if (i < TILES.length) {
+        window.setTimeout(step, IMG_STAGGER_MS);
+      }
+    };
+    window.setTimeout(step, 0);
+    return () => {
+      cancelled = true;
+    };
+  }, [active]);
+
+  return count;
 }
 
 function TickerStatic() {
@@ -122,20 +159,20 @@ function TickerAnimated() {
 
 export function CraftShowcaseSection() {
   const sectionRef = useRef<HTMLElement>(null);
-  const reduceMotion = useReducedMotion();
+  const reduceMotion = usePrefersReducedMotion();
+  const entered = useSectionEntered(sectionRef);
+  const imageCount = useStaggeredImageCount(entered && !reduceMotion);
 
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ["start end", "end start"],
-  });
-
-  /** useSpring kaldırıldı — scroll ile birebir, süzülme nedeniyle ekstra frame yok */
-  const clusterY = useTransform(scrollYProgress, [0, 1], [-14, 28]);
+  /** Reduced motion: tüm görselleri hemen göster (stagger yok). */
+  const showImageAt = (index: number) =>
+    reduceMotion ? true : imageCount > index;
 
   return (
     <section
       ref={sectionRef}
-      className="relative overflow-hidden bg-[#a88667] px-5 py-20 sm:px-8 sm:py-24 md:px-10 md:py-28"
+      className={`relative overflow-hidden bg-[#a88667] px-5 py-20 sm:px-8 sm:py-24 md:px-10 md:py-28 ${
+        entered ? "craft-showcase--visible" : ""
+      }`}
       aria-label="Stone Spaces craft showcase"
     >
       <div
@@ -143,19 +180,44 @@ export function CraftShowcaseSection() {
         aria-hidden
       />
 
-      <motion.div className="relative mx-auto h-[clamp(42rem,82vh,58rem)] w-full max-w-[min(97vw,88rem)]" style={{ y: clusterY }}>
-        {TILES.map((tile) => (
-          <ScrollTile key={tile.src + tile.cls} tile={tile} progress={scrollYProgress} />
+      <div
+        className="relative mx-auto h-[clamp(42rem,82vh,58rem)] w-full max-w-[min(97vw,88rem)]"
+      >
+        {TILES.map((tile, index) => (
+          <figure key={tile.src + tile.cls} className={`craft-tile absolute z-20 overflow-hidden ${tile.cls}`}>
+            {!showImageAt(index) ? (
+              <span className="absolute inset-0 bg-black/12" aria-hidden />
+            ) : null}
+            {showImageAt(index) ? (
+              <img
+                src={tile.src}
+                alt=""
+                className={`h-full w-full object-cover ${tile.imgCls ?? ""}`}
+                loading="lazy"
+                decoding="async"
+                fetchPriority="low"
+                sizes="(max-width: 768px) 40vw, 18rem"
+              />
+            ) : null}
+          </figure>
         ))}
 
         <div className="pointer-events-none absolute inset-0 z-10 flex items-center justify-center">
-          <div className="relative h-[clamp(20rem,36vh,25rem)] overflow-hidden text-center [mask-image:linear-gradient(to_bottom,transparent_0%,black_16%,black_84%,transparent_100%)]">
+          <div className="relative h-[clamp(20rem,36vh,25rem)] w-full max-w-[min(92vw,48rem)] overflow-hidden text-center">
+            <div
+              className="pointer-events-none absolute inset-x-0 top-0 z-20 h-[20%] bg-gradient-to-b from-[#a88667] to-transparent"
+              aria-hidden
+            />
+            <div
+              className="pointer-events-none absolute inset-x-0 bottom-0 z-20 h-[20%] bg-gradient-to-t from-[#a88667] to-transparent"
+              aria-hidden
+            />
             <div className="text-[clamp(2.45rem,8.2vw,5.3rem)] font-light leading-[1.03] tracking-[-0.028em]">
               {reduceMotion ? <TickerStatic /> : <TickerAnimated />}
             </div>
           </div>
         </div>
-      </motion.div>
+      </div>
     </section>
   );
 }
