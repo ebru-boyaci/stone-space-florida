@@ -30,14 +30,14 @@ function MarqueeSegment() {
 export function ServicesMarqueeBand() {
   return (
     <section
-      className="relative overflow-hidden bg-[#343434] pt-6 sm:pt-8 md:pt-10"
+      className="relative overflow-hidden bg-[#343434] pt-[4.5rem] sm:pt-24 md:pt-[7.5rem]"
       aria-labelledby="services-marquee-heading"
     >
       <h2 id="services-marquee-heading" className="sr-only">
         Services
       </h2>
       <div className="border-y border-white/[0.1]">
-        <div className="relative flex items-center overflow-hidden pt-12 pb-9 sm:pt-14 sm:pb-10 md:pt-16 md:pb-11">
+        <div className="relative flex items-center overflow-hidden pt-36 pb-[6.75rem] sm:pt-[10.5rem] sm:pb-30 md:pt-48 md:pb-[8.25rem]">
           <div className="marquee-x-track marquee-x-track--services flex w-max">
             <MarqueeSegment />
             <MarqueeSegment />
