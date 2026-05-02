@@ -16,12 +16,6 @@ type ServiceCard = {
 
 const SERVICES: ServiceCard[] = [
   {
-    category: "Installation",
-    title: "Countertops",
-    src: imgCountertops,
-    alt: "Countertop installation",
-  },
-  {
     category: "Design",
     title: "3D kitchen design",
     src: imgKitchenDesign,
@@ -38,6 +32,12 @@ const SERVICES: ServiceCard[] = [
     title: "Turn-key",
     src: imgTurnKey,
     alt: "Turn-key projects",
+  },
+  {
+    category: "Installation",
+    title: "Countertops",
+    src: imgCountertops,
+    alt: "Countertop installation",
   },
   {
     category: "Cabinetry",
@@ -66,11 +66,11 @@ const SERVICES: ServiceCard[] = [
 ];
 
 const iconRing =
-  "flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-[#a88d70]/85 text-[#8a6f52] sm:h-10 sm:w-10";
+  "flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-[#a88d70]/85 text-[#8a6f52] sm:h-9 sm:w-9";
 
 function IconCube() {
   return (
-    <svg className="h-4 w-4 sm:h-[1.05rem] sm:w-[1.05rem]" viewBox="0 0 24 24" fill="none" aria-hidden>
+    <svg className="h-3.5 w-3.5 sm:h-4 sm:w-4" viewBox="0 0 24 24" fill="none" aria-hidden>
       <path
         d="M12 3.2 20 7.6v8.8L12 20.8 4 16.4V7.6L12 3.2Z"
         stroke="currentColor"
@@ -84,7 +84,7 @@ function IconCube() {
 
 function IconBuilding() {
   return (
-    <svg className="h-4 w-4 sm:h-[1.05rem] sm:w-[1.05rem]" viewBox="0 0 24 24" fill="none" aria-hidden>
+    <svg className="h-3.5 w-3.5 sm:h-4 sm:w-4" viewBox="0 0 24 24" fill="none" aria-hidden>
       <path d="M7 21V6.2h10V21" stroke="currentColor" strokeWidth="1.35" strokeLinecap="round" />
       <path d="M5 21h14M10 9.2h2.2M10 13h2.2M10 16.7h2.2M14.8 9.2h1M14.8 13h1M14.8 16.7h1" stroke="currentColor" strokeWidth="1.25" strokeLinecap="round" />
     </svg>
@@ -107,8 +107,8 @@ export function FeatureValueGrid() {
             key={item.title + item.category}
             className="w-[min(88vw,26.5rem)] shrink-0 snap-start sm:w-[min(80vw,29rem)] md:w-[min(74vw,31rem)]"
           >
-            <article className="flex h-full min-h-[min(30rem,66vh)] flex-col rounded-none border border-black/[0.06] bg-[#f2efe8] p-5 sm:min-h-[32rem] sm:p-6 md:min-h-[34rem] md:p-7">
-              <div className="flex gap-2.5">
+            <article className="flex h-full min-h-[min(18rem,44vh)] flex-col rounded-none border border-black/[0.06] bg-[#f2efe8] p-3 sm:min-h-[20rem] sm:p-4 md:min-h-[22rem] md:p-5">
+              <div className="flex gap-2">
                 <span className={iconRing} aria-hidden>
                   <IconCube />
                 </span>
@@ -117,21 +117,21 @@ export function FeatureValueGrid() {
                 </span>
               </div>
 
-              <div className="relative mt-5 flex min-h-0 flex-1 items-center justify-center py-3 sm:mt-6 sm:py-4 md:py-5">
+              <div className="relative mt-2 flex min-h-0 flex-1 items-center justify-center py-1 sm:mt-3 sm:py-1.5 md:py-2">
                 <img
                   src={item.src}
                   alt={item.alt}
-                  className="h-auto w-full max-w-none object-contain object-center [max-height:min(34rem,62vw)] sm:[max-height:min(40rem,56vh)] md:[max-height:min(44rem,52vh)]"
+                  className="h-auto w-full max-w-none object-contain object-center [max-height:min(36rem,65vw)] sm:[max-height:min(40rem,54vh)] md:[max-height:min(44rem,50vh)]"
                   loading="lazy"
                   decoding="async"
                 />
               </div>
 
-              <div className="mt-auto border-t border-black/[0.06] pt-5 text-left sm:pt-6">
+              <div className="mt-auto border-t border-black/[0.06] pt-2.5 text-left sm:pt-3">
                 <p className="text-[0.72rem] font-semibold uppercase tracking-[0.18em] text-zinc-600 sm:text-[0.75rem]">
                   {item.category}
                 </p>
-                <h3 className="mt-2 font-sans text-[1.22rem] font-bold leading-tight tracking-[-0.02em] text-zinc-950 sm:text-[1.38rem] md:text-[1.45rem]">
+                <h3 className="mt-1.5 font-sans text-[1.35rem] font-bold leading-tight tracking-[-0.02em] text-zinc-950 sm:mt-2 sm:text-[1.52rem] md:text-[1.62rem]">
                   {item.title}
                 </h3>
               </div>
