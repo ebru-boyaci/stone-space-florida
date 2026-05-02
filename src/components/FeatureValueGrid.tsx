@@ -107,7 +107,7 @@ export function FeatureValueGrid() {
             key={item.title + item.category}
             className="w-[min(88vw,26.5rem)] shrink-0 snap-start sm:w-[min(80vw,29rem)] md:w-[min(74vw,31rem)]"
           >
-            <article className="flex h-full min-h-[min(18rem,44vh)] flex-col rounded-none border border-black/[0.06] bg-[#f2efe8] p-3 sm:min-h-[20rem] sm:p-4 md:min-h-[22rem] md:p-5">
+            <article className="flex h-full min-h-[min(19rem,46vh)] flex-col rounded-none border border-black/[0.06] bg-[#f2efe8] p-3.5 sm:min-h-[21rem] sm:p-4 md:min-h-[23rem] md:p-5">
               <div className="flex gap-2">
                 <span className={iconRing} aria-hidden>
                   <IconCube />
@@ -121,7 +121,7 @@ export function FeatureValueGrid() {
                 <img
                   src={item.src}
                   alt={item.alt}
-                  className="h-auto w-full max-w-none object-contain object-center [max-height:min(36rem,65vw)] sm:[max-height:min(40rem,54vh)] md:[max-height:min(44rem,50vh)]"
+                  className="h-auto w-full max-w-none object-contain object-center [max-height:min(37rem,66vw)] sm:[max-height:min(41rem,55vh)] md:[max-height:min(45rem,51vh)]"
                   loading="lazy"
                   decoding="async"
                 />
