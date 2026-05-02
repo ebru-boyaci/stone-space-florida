@@ -5,18 +5,19 @@ const REPEAT = 16;
 function MarqueeSegment() {
   return (
     <div
-      className="flex shrink-0 items-center pr-[0.38em] font-medium tracking-[-0.04em] text-white antialiased"
+      className="flex shrink-0 items-center gap-x-[0.45em] pr-[0.38em] font-extralight tracking-[-0.01em] text-white antialiased"
       style={{
-        fontFamily: '"Montserrat", ui-sans-serif, system-ui, sans-serif',
-        fontSize: "clamp(2.85rem, 8.2vw, 6.75rem)",
-        lineHeight: 1.05,
+        fontFamily: '"Manrope", system-ui, sans-serif',
+        fontSize: "clamp(3.5rem, 10vw, 8.25rem)",
+        fontWeight: 200,
+        lineHeight: 1.2,
       }}
     >
       {Array.from({ length: REPEAT }, (_, i) => (
-        <span key={i} className="inline-flex items-center gap-[0.42em] whitespace-nowrap">
+        <span key={i} className="inline-flex items-center gap-[0.58em] whitespace-nowrap">
           <span>{LABEL}</span>
           {i < REPEAT - 1 ? (
-            <span className="select-none font-light text-white/38" aria-hidden>
+            <span className="select-none font-extralight text-white" aria-hidden>
               /
             </span>
           ) : null}
