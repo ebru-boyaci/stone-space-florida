@@ -42,7 +42,7 @@ const TILES: {
     fadeStart: 0.58,
     zClass: "z-[0]",
     imgClass:
-      "block h-auto w-auto max-w-[min(33vw,308px)] max-h-[min(96dvh,908px)] object-contain object-center sm:max-w-[min(31vw,324px)] sm:max-h-[min(100dvh,960px)]",
+      "block h-auto w-auto max-w-[min(29vw,272px)] max-h-[min(84dvh,800px)] object-contain object-center sm:max-w-[min(27vw,286px)] sm:max-h-[min(88dvh,846px)]",
   },
   {
     src: hera,
@@ -53,7 +53,7 @@ const TILES: {
     fadeStart: 0.52,
     zClass: "z-[0]",
     imgClass:
-      "block h-auto w-auto max-h-[min(26dvh,240px)] max-w-[min(70vw,624px)] object-contain object-center sm:max-h-[min(27.5dvh,260px)] sm:max-w-[min(66vw,672px)]",
+      "block h-auto w-auto max-h-[min(23dvh,212px)] max-w-[min(62vw,552px)] object-contain object-center sm:max-h-[min(24dvh,228px)] sm:max-w-[min(58vw,592px)]",
   },
   {
     src: lora,
@@ -64,7 +64,7 @@ const TILES: {
     fadeStart: 0.6,
     zClass: "z-[2]",
     imgClass:
-      "block h-auto max-h-[min(44dvh,408px)] w-auto max-w-[min(55vw,472px)] object-contain object-center sm:max-h-[min(47dvh,444px)] sm:max-w-[min(54vw,536px)] lg:max-h-[min(50dvh,480px)] lg:max-w-[min(50vw,568px)]",
+      "block h-auto max-h-[min(39dvh,360px)] w-auto max-w-[min(48vw,416px)] object-contain object-center sm:max-h-[min(41dvh,392px)] sm:max-w-[min(47vw,472px)] lg:max-h-[min(44dvh,424px)] lg:max-w-[min(44vw,500px)]",
     wrapClass: "hidden md:block",
   },
   {
@@ -76,7 +76,7 @@ const TILES: {
     fadeStart: 0.55,
     zClass: "z-[2]",
     imgClass:
-      "block h-auto max-h-[min(44dvh,408px)] w-auto max-w-[min(55vw,472px)] object-contain object-center sm:max-h-[min(47dvh,444px)] sm:max-w-[min(54vw,536px)] lg:max-h-[min(50dvh,480px)] lg:max-w-[min(50vw,568px)]",
+      "block h-auto max-h-[min(39dvh,360px)] w-auto max-w-[min(48vw,416px)] object-contain object-center sm:max-h-[min(41dvh,392px)] sm:max-w-[min(47vw,472px)] lg:max-h-[min(44dvh,424px)] lg:max-w-[min(44vw,500px)]",
   },
   {
     src: marte,
@@ -87,7 +87,7 @@ const TILES: {
     fadeStart: 0.53,
     zClass: "z-[2]",
     imgClass:
-      "block h-auto max-h-[min(48dvh,444px)] w-auto max-w-[min(46vw,416px)] object-contain object-center sm:max-h-[min(52dvh,496px)] sm:max-w-[min(49vw,500px)] lg:max-h-[min(54dvh,536px)] lg:max-w-[min(47vw,532px)]",
+      "block h-auto max-h-[min(42dvh,392px)] w-auto max-w-[min(40vw,368px)] object-contain object-center sm:max-h-[min(46dvh,436px)] sm:max-w-[min(43vw,440px)] lg:max-h-[min(48dvh,472px)] lg:max-w-[min(41vw,468px)]",
     wrapClass: "hidden lg:block",
   },
   {
@@ -99,7 +99,7 @@ const TILES: {
     fadeStart: 0.63,
     zClass: "z-[2]",
     imgClass:
-      "block h-auto max-h-[min(42dvh,372px)] w-auto max-w-[min(55vw,468px)] object-contain object-center sm:max-h-[min(46dvh,420px)] sm:max-w-[min(50vw,548px)] lg:max-h-[min(48dvh,464px)] lg:max-w-[min(52vw,620px)]",
+      "block h-auto max-h-[min(37dvh,328px)] w-auto max-w-[min(48vw,412px)] object-contain object-center sm:max-h-[min(40dvh,372px)] sm:max-w-[min(44vw,484px)] lg:max-h-[min(42dvh,408px)] lg:max-w-[min(46vw,546px)]",
   },
 ];
 
