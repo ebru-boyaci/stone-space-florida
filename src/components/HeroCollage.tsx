@@ -486,7 +486,7 @@ export function HeroWithCollage({
   return (
     <section
       ref={ref}
-      className="relative flex min-h-[100dvh] flex-col items-center justify-center overflow-hidden px-6 pt-36 pb-20 sm:pt-40 lg:pt-48 lg:pb-24"
+      className="relative flex min-h-[100dvh] min-h-[100svh] flex-col items-center justify-center overflow-hidden pl-[max(1rem,env(safe-area-inset-left,0px))] pr-[max(1rem,env(safe-area-inset-right,0px))] pb-20 pt-[calc(9rem+env(safe-area-inset-top,0px))] sm:pl-6 sm:pr-6 sm:pt-[calc(10rem+env(safe-area-inset-top,0px))] lg:pt-[calc(12rem+env(safe-area-inset-top,0px))] lg:pb-24"
       aria-label="Intro"
     >
       <div

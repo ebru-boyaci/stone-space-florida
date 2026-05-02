@@ -170,7 +170,7 @@ export function CraftShowcaseSection() {
   return (
     <section
       ref={sectionRef}
-      className={`relative overflow-hidden bg-[#a88667] px-5 py-20 sm:px-8 sm:py-24 md:px-10 md:py-28 ${
+      className={`relative overflow-hidden bg-[#a88667] pl-[max(1.25rem,env(safe-area-inset-left,0px))] pr-[max(1.25rem,env(safe-area-inset-right,0px))] py-20 sm:px-8 sm:py-24 md:px-10 md:py-28 ${
         entered ? "craft-showcase--visible" : ""
       }`}
       aria-label="Stone Spaces craft showcase"

@@ -52,7 +52,7 @@ export function StoneSpacesMarquee() {
           </div>
         </div>
 
-        <div className="relative z-[2] border-b border-[#e8e8e8]/45 px-6 pt-20 pb-20 sm:px-10 sm:pt-24 sm:pb-24 md:pt-28 md:pb-28">
+        <div className="relative z-[2] border-b border-[#e8e8e8]/45 pl-[max(1.5rem,env(safe-area-inset-left,0px))] pr-[max(1.5rem,env(safe-area-inset-right,0px))] pt-20 pb-[max(5rem,env(safe-area-inset-bottom,0px))] sm:px-10 sm:pt-24 sm:pb-24 md:pt-28 md:pb-28">
           <div className="mx-auto flex max-w-3xl flex-col items-center gap-12 text-center sm:gap-14 md:gap-16">
             <a
               href="#top"

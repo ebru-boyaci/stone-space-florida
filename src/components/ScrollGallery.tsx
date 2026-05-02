@@ -92,7 +92,7 @@ export function ScrollGallery() {
     <>
       <section
         id="approach"
-        className="relative scroll-mt-40 mt-[clamp(5.5rem,14vw,14rem)] mb-[clamp(5.5rem,14vw,14rem)] bg-black px-6 sm:mt-[clamp(7rem,16vw,17rem)] sm:mb-[clamp(7rem,16vw,17rem)] sm:px-10 md:mt-[clamp(8.5rem,18vw,20rem)] md:mb-[clamp(8.5rem,18vw,20rem)] lg:mt-[clamp(10rem,20vw,24rem)] lg:mb-[clamp(10rem,20vw,24rem)]"
+        className="relative scroll-mt-40 mt-[clamp(5.5rem,14vw,14rem)] mb-[clamp(5.5rem,14vw,14rem)] bg-black pl-[max(1.5rem,env(safe-area-inset-left,0px))] pr-[max(1.5rem,env(safe-area-inset-right,0px))] sm:mt-[clamp(7rem,16vw,17rem)] sm:mb-[clamp(7rem,16vw,17rem)] sm:pl-10 sm:pr-10 md:mt-[clamp(8.5rem,18vw,20rem)] md:mb-[clamp(8.5rem,18vw,20rem)] lg:mt-[clamp(10rem,20vw,24rem)] lg:mb-[clamp(10rem,20vw,24rem)]"
       >
         <div className="mx-auto flex min-h-[min(32vh,420px)] w-full max-w-6xl flex-col justify-center py-[clamp(2rem,7vw,5.5rem)]">
           <p className="relative z-30 text-balance text-center font-contact-display text-[clamp(1.15rem,3.85vw,2.25rem)] font-normal leading-[1.5] tracking-normal text-contact-display antialiased sm:leading-[1.48] [text-shadow:0_2px_32px_rgba(0,0,0,0.75)]">
@@ -109,7 +109,7 @@ export function ScrollGallery() {
           <div className="sticky top-0 flex h-[100dvh] max-h-[100dvh] w-full min-h-0 flex-col overflow-x-clip bg-black">
             <div
               ref={wrapRef}
-              className="relative flex min-h-0 w-full min-w-0 flex-1 flex-col overflow-x-clip pb-6 pt-10 sm:pb-8 sm:pt-14 md:pb-10 md:pt-16"
+              className="relative flex min-h-0 w-full min-w-0 flex-1 flex-col overflow-x-clip pl-[max(0.5rem,env(safe-area-inset-left,0px))] pr-[max(0.5rem,env(safe-area-inset-right,0px))] pb-6 pt-10 sm:pb-8 sm:pl-2 sm:pr-2 sm:pt-14 md:pb-10 md:pt-16"
             >
               <motion.div
                 ref={trackRef}

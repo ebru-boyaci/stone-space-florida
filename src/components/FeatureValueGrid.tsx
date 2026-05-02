@@ -204,7 +204,7 @@ export function FeatureValueGrid() {
 
   return (
     <section
-      className="relative overflow-x-clip bg-[#343434] px-5 pb-32 pt-6 sm:px-8 sm:pb-40 sm:pt-8 md:px-10 md:pb-48"
+      className="relative overflow-x-clip bg-[#343434] pl-[max(1.25rem,env(safe-area-inset-left,0px))] pr-[max(1.25rem,env(safe-area-inset-right,0px))] pb-[max(8rem,env(safe-area-inset-bottom,0px))] pt-6 sm:px-8 sm:pb-40 sm:pt-8 md:px-10 md:pb-48"
       aria-label="Stone Spaces services"
     >
       <p className="sr-only">Swipe horizontally to browse all services.</p>
@@ -221,7 +221,7 @@ export function FeatureValueGrid() {
         ← Swipe for more →
       </p>
       <div
-        className="mt-10 flex flex-row justify-center gap-8 pb-4 sm:mt-14 sm:gap-12 md:mt-16 md:gap-14"
+        className="mt-10 flex flex-row justify-center gap-8 pb-[max(1rem,env(safe-area-inset-bottom,0px))] sm:mt-14 sm:gap-12 md:mt-16 md:gap-14"
         dir="ltr"
       >
         <ServiceScrollNavButton direction="prev" onClick={() => scrollServices(-1)} />

@@ -1,5 +1,6 @@
-/** İletişim: header h-32 sm:h-36 lg:h-40 altına hizala */
-export const HEADER_BAR_PADDING = "pt-32 sm:pt-36 lg:pt-40";
+/** İletişim: header (h-32 / 36 / 40) + çentik / durum çubuğu güvenli alanı */
+export const HEADER_BAR_PADDING =
+  "pt-[calc(8rem+env(safe-area-inset-top,0px))] sm:pt-[calc(9rem+env(safe-area-inset-top,0px))] lg:pt-[calc(10rem+env(safe-area-inset-top,0px))]";
 
 /** İlk ekran yüksekliği: header çıkıntısını dikkate alır (h-32 / 36 / 40) */
 export const MIN_H_FIRST_SCREEN =

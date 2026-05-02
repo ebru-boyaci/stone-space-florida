@@ -96,7 +96,7 @@ export default function App() {
   }, [contactOpen, closeContact]);
 
   return (
-    <div id="top" className="min-h-screen overflow-x-clip bg-black text-zinc-100">
+    <div id="top" className="min-h-screen min-h-[100dvh] overflow-x-clip bg-black text-zinc-100">
       <Header
         contactOpen={contactOpen}
         navCollapsed={navCollapsed}

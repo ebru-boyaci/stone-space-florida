@@ -123,7 +123,7 @@ export function ProductsSpotlightSection() {
   return (
     <section
       ref={sectionRef}
-      className="relative isolate flex min-h-[140vh] items-start justify-center overflow-x-clip bg-[#171312] px-6 pb-20 pt-16 sm:min-h-[150vh] sm:px-10 sm:pb-24 sm:pt-20 md:pt-24 [contain:layout_paint]"
+      className="relative isolate flex min-h-[140vh] items-start justify-center overflow-x-clip bg-[#171312] pl-[max(1rem,env(safe-area-inset-left,0px))] pr-[max(1rem,env(safe-area-inset-right,0px))] pb-[max(5rem,env(safe-area-inset-bottom,0px))] pt-16 sm:min-h-[150vh] sm:px-10 sm:pb-24 sm:pt-20 md:pt-24 [contain:layout_paint]"
       aria-labelledby="products-spotlight-heading"
     >
       <img
@@ -148,7 +148,7 @@ export function ProductsSpotlightSection() {
         <ul
           ref={listRef}
           role="list"
-          className="-mx-6 flex snap-x snap-mandatory touch-pan-x gap-5 overflow-x-auto overscroll-x-contain pb-4 pl-12 pr-6 [-ms-overflow-style:none] [scrollbar-width:none] [scroll-padding-inline-start:3rem] sm:-mx-10 sm:gap-6 sm:pl-16 sm:pr-10 sm:[scroll-padding-inline-start:4rem] md:gap-7 md:pl-20 md:[scroll-padding-inline-start:5rem] [&::-webkit-scrollbar]:hidden"
+          className="-mx-6 flex snap-x snap-mandatory touch-pan-x gap-4 overflow-x-auto overscroll-x-contain pb-4 pl-10 pr-4 [-ms-overflow-style:none] [scrollbar-width:none] [scroll-padding-inline-start:2.5rem] sm:-mx-10 sm:gap-6 sm:pl-16 sm:pr-10 sm:[scroll-padding-inline-start:4rem] md:gap-7 md:pl-20 md:[scroll-padding-inline-start:5rem] [&::-webkit-scrollbar]:hidden"
         >
           {PRODUCTS.map((p) => (
             <li
@@ -160,7 +160,7 @@ export function ProductsSpotlightSection() {
                 aria-label={p.linkAriaLabel}
                 className="group block w-full rounded-[0.42rem] focus-visible:outline focus-visible:outline-offset-4 focus-visible:outline-[#a88d70]"
               >
-                <article className="relative flex min-h-[clamp(35rem,68vh,46rem)] flex-col overflow-hidden rounded-[0.4rem] border border-white/[0.1] bg-[#2f3137]/92 p-6 shadow-[0_20px_50px_rgba(0,0,0,0.42)] sm:min-h-[clamp(37rem,71vh,49rem)] sm:p-7">
+                <article className="relative flex min-h-[clamp(26rem,62vh,46rem)] flex-col overflow-hidden rounded-[0.4rem] border border-white/[0.1] bg-[#2f3137]/92 p-5 shadow-[0_20px_50px_rgba(0,0,0,0.42)] sm:min-h-[clamp(37rem,71vh,49rem)] sm:p-7">
                   <div className="pointer-events-none absolute inset-0 -z-0 bg-[#4a3f43] [transform-origin:bottom] scale-y-0 transition-transform duration-500 ease-out group-hover:scale-y-100" />
 
                   <div className="relative z-10 overflow-hidden border border-white/[0.06]">
@@ -217,7 +217,7 @@ export function ProductsSpotlightSection() {
           ← Swipe for more →
         </p>
         <div
-          className="mt-10 flex flex-row justify-center gap-8 pb-4 sm:mt-14 sm:gap-12 md:mt-16 md:gap-14"
+          className="mt-10 flex flex-row justify-center gap-8 pb-[max(1rem,env(safe-area-inset-bottom,0px))] sm:mt-14 sm:gap-12 md:mt-16 md:gap-14"
           dir="ltr"
         >
           <ServiceScrollNavButton

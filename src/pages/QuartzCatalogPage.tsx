@@ -6,8 +6,8 @@ export function QuartzCatalogPage() {
   const items = useMemo(() => getQuartzCatalogItems(), []);
 
   return (
-    <div className="min-h-screen bg-[#0c0c0c] pb-24 pt-[calc(12.5rem+env(safe-area-inset-top))] text-zinc-100">
-      <div className="mx-auto flex w-full max-w-[min(96vw,80rem)] flex-col px-5 sm:px-8 lg:px-10">
+    <div className="min-h-screen bg-[#0c0c0c] pb-[max(6rem,env(safe-area-inset-bottom,0px))] pt-[calc(12.5rem+env(safe-area-inset-top,0px))] text-zinc-100">
+      <div className="mx-auto flex w-full max-w-[min(96vw,80rem)] flex-col pl-[max(1.25rem,env(safe-area-inset-left,0px))] pr-[max(1.25rem,env(safe-area-inset-right,0px))] sm:px-8 lg:px-10">
         <header className="border-b border-white/[0.08] pb-8 sm:pb-10">
           <p className="text-xs font-semibold tracking-[0.28em] text-[#b9a086] uppercase sm:text-sm">Catalog</p>
           <h1 className="mt-2 font-serif text-[clamp(2rem,4vw,2.85rem)] font-medium tracking-[-0.02em] text-white">

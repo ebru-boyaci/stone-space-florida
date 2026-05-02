@@ -117,8 +117,8 @@ export function ScrollRevealTextSection() {
             aria-hidden
           />
 
-          <div className="relative z-10 mx-auto max-w-[min(92vw,82rem)] px-6 text-center sm:max-w-[min(90vw,88rem)] sm:px-10">
-            <h2 className="font-contact-display text-[clamp(3.95rem,11.5vw,6.75rem)] font-normal leading-[1.1] tracking-[-0.04em] sm:text-[clamp(4.4rem,10.4vw,7.5rem)] sm:leading-[1.08] md:text-[clamp(4.85rem,9.75vw,8.2rem)]">
+          <div className="relative z-10 mx-auto max-w-[min(92vw,82rem)] pl-[max(1.5rem,env(safe-area-inset-left,0px))] pr-[max(1.5rem,env(safe-area-inset-right,0px))] text-center sm:max-w-[min(90vw,88rem)] sm:px-10">
+            <h2 className="font-contact-display text-[clamp(2.35rem,8.5vw,6.75rem)] font-normal leading-[1.14] tracking-[-0.04em] sm:text-[clamp(4.4rem,10.4vw,7.5rem)] sm:leading-[1.08] md:text-[clamp(4.85rem,9.75vw,8.2rem)]">
               {reduceMotion ? (
                 <>
                   <span className="block text-white">{LINE_PRIMARY}</span>

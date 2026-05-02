@@ -179,7 +179,7 @@ export function ContactOverlay({ open, mountKey }: { open: boolean; mountKey: nu
           role="region"
           aria-label="Contact"
           aria-labelledby="contact-heading"
-          className="fixed inset-0 z-[40] flex min-h-0 flex-col overflow-y-auto overscroll-y-contain bg-[#0a0a0a]"
+          className="fixed inset-0 z-[40] flex min-h-0 flex-col overflow-y-auto overscroll-y-contain bg-[#0a0a0a] pb-[env(safe-area-inset-bottom,0px)]"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}

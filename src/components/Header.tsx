@@ -52,8 +52,8 @@ export function Header({
       <motion.header
         className={
           contactOpen
-            ? "fixed inset-x-0 top-0 z-50 max-w-[100vw] overflow-x-clip border-b border-white/[0.08] bg-[#0a0a0a]"
-            : "fixed inset-x-0 top-0 z-50 max-w-[100vw] overflow-x-clip border-b border-white/[0.06] bg-transparent"
+            ? "fixed inset-x-0 top-0 z-50 max-w-[100vw] overflow-x-clip border-b border-white/[0.08] bg-[#0a0a0a] pt-[env(safe-area-inset-top,0px)]"
+            : "fixed inset-x-0 top-0 z-50 max-w-[100vw] overflow-x-clip border-b border-white/[0.06] bg-transparent pt-[env(safe-area-inset-top,0px)]"
         }
         initial={false}
         animate={{ y: headerY }}

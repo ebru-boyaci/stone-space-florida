@@ -148,7 +148,7 @@ export function ServicesJourneySection() {
         />
         <div className="absolute inset-0 bg-[#343434]/35" />
 
-        <div className="relative z-10 mx-auto mt-[clamp(4.75rem,10vh,8.5rem)] flex w-full max-w-[min(94vw,58rem)] flex-col items-center px-6 pb-2 text-center sm:px-10">
+        <div className="relative z-10 mx-auto mt-[clamp(4.75rem,10vh,8.5rem)] flex w-full max-w-[min(94vw,58rem)] flex-col items-center pl-[max(1.5rem,env(safe-area-inset-left,0px))] pr-[max(1.5rem,env(safe-area-inset-right,0px))] pb-2 text-center sm:px-10">
           <h2
             className="font-hero-script text-[clamp(4.5rem,11.1vw,10.15rem)] leading-[0.91] tracking-[-0.032em] text-[#f2f0ec] [text-shadow:0_2px_26px_rgba(0,0,0,0.45)]"
             style={{
@@ -166,7 +166,7 @@ export function ServicesJourneySection() {
           </p>
         </div>
 
-        <div className="relative z-10 mx-auto mt-[clamp(8rem,13vh,15rem)] grid w-full max-w-[min(96vw,95rem)] grid-cols-1 gap-5 px-6 sm:px-10 lg:mt-[clamp(8rem,11vh,12rem)] lg:block lg:h-[76rem] lg:max-w-[94rem] lg:px-8">
+        <div className="relative z-10 mx-auto mt-[clamp(8rem,13vh,15rem)] grid w-full max-w-[min(96vw,95rem)] grid-cols-1 gap-5 pl-[max(1.5rem,env(safe-area-inset-left,0px))] pr-[max(1.5rem,env(safe-area-inset-right,0px))] sm:px-10 lg:mt-[clamp(8rem,11vh,12rem)] lg:block lg:h-[76rem] lg:max-w-[94rem] lg:px-8">
           <motion.article
             style={{ y: cardYL, willChange: "transform" }}
             className="relative aspect-square overflow-hidden bg-[#2b2b2b] [transform:translateZ(0)] lg:absolute lg:left-0 lg:top-[4rem] lg:w-[42%] lg:-translate-x-[62%]"
