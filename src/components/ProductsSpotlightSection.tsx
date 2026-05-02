@@ -5,6 +5,7 @@ import imgVinyl from "@assets/services/flooring-installtion.png";
 import imgPorcelain from "@assets/quartz/delmar -porcelain.jpeg";
 import coverQuartz from "@assets/kitchen1.jpg";
 import imgTileFloor from "@assets/kitchen2.jpg";
+import { ServiceScrollNavButton } from "@/components/ServiceScrollNavButton";
 import { useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 
@@ -85,6 +86,17 @@ const PRODUCTS: ProductSpotlight[] = [
 
 export function ProductsSpotlightSection() {
   const sectionRef = useRef<HTMLElement>(null);
+  const listRef = useRef<HTMLUListElement>(null);
+
+  function scrollProducts(dir: -1 | 1) {
+    const ul = listRef.current;
+    if (!ul) return;
+    const first = ul.firstElementChild as HTMLElement | null;
+    if (!first) return;
+    const gap = parseFloat(getComputedStyle(ul).columnGap || getComputedStyle(ul).gap || "20") || 20;
+    const step = first.getBoundingClientRect().width + gap;
+    ul.scrollBy({ left: dir * step, behavior: "smooth" });
+  }
 
   /** Bölüm görünmeden önce büyük görseli prefetch (hızlı scroll’da siyah flaş azalır). */
   useEffect(() => {
@@ -111,7 +123,7 @@ export function ProductsSpotlightSection() {
   return (
     <section
       ref={sectionRef}
-      className="relative isolate flex min-h-[140vh] items-center overflow-hidden bg-[#171312] px-6 py-20 sm:min-h-[150vh] sm:px-10 sm:py-24 [contain:layout_paint]"
+      className="relative isolate flex min-h-[140vh] items-center overflow-x-clip bg-[#171312] px-6 py-20 sm:min-h-[150vh] sm:px-10 sm:py-24 [contain:layout_paint]"
       aria-label="Product categories"
     >
       <img
@@ -125,15 +137,17 @@ export function ProductsSpotlightSection() {
       <div className="absolute inset-0 -z-10 bg-black/62" />
       <div className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_140%_95%_at_50%_35%,rgba(255,255,255,0.08),rgba(0,0,0,0.38))]" />
 
-      <div className="mx-auto w-full max-w-[min(95vw,74rem)]">
+      <div className="relative z-10 w-full">
+        <p className="sr-only">Swipe horizontally to browse all products.</p>
         <ul
+          ref={listRef}
           role="list"
-          className="flex snap-x snap-mandatory gap-5 overflow-x-auto scroll-pb-2 pb-2 [-webkit-overflow-scrolling:touch] [scrollbar-gutter:stable]"
+          className="-mx-6 flex snap-x snap-mandatory touch-pan-x gap-5 overflow-x-auto overscroll-x-contain pb-4 pl-12 pr-6 [-ms-overflow-style:none] [scrollbar-width:none] [scroll-padding-inline-start:3rem] sm:-mx-10 sm:gap-6 sm:pl-16 sm:pr-10 sm:[scroll-padding-inline-start:4rem] md:gap-7 md:pl-20 md:[scroll-padding-inline-start:5rem] [&::-webkit-scrollbar]:hidden"
         >
           {PRODUCTS.map((p) => (
             <li
               key={p.id}
-              className="w-[min(95vw,36rem)] max-w-[min(95vw,36rem)] shrink-0 snap-center first:pl-0 last:pr-0"
+              className="w-[min(88vw,36rem)] max-w-[36rem] shrink-0 snap-start sm:w-[min(80vw,36rem)]"
             >
               <Link
                 to={p.to}
@@ -193,6 +207,24 @@ export function ProductsSpotlightSection() {
             </li>
           ))}
         </ul>
+        <p className="mt-3 text-center text-xs text-zinc-500 sm:hidden" aria-hidden>
+          ← Swipe for more →
+        </p>
+        <div
+          className="mt-10 flex flex-row justify-center gap-8 pb-4 sm:mt-14 sm:gap-12 md:mt-16 md:gap-14"
+          dir="ltr"
+        >
+          <ServiceScrollNavButton
+            direction="prev"
+            ariaItem="product"
+            onClick={() => scrollProducts(-1)}
+          />
+          <ServiceScrollNavButton
+            direction="next"
+            ariaItem="product"
+            onClick={() => scrollProducts(1)}
+          />
+        </div>
       </div>
     </section>
   );
