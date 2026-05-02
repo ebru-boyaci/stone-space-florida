@@ -3,9 +3,10 @@ import { useEffect, useRef } from "react";
 /**
  * Hero kolajı bittiğinde (`enabled`) çalışır: doküman scroll’una göre header üstten kayma.
  *
- * - Üst bantta (y küçük) header her zaman görünür — adres çubuğu / bounce ile y sıçramalarında delta>6 yanlış gizlemesin.
- * - Yukarı delta eşiği düşük — trackpad’de yavaş kaydırmada da header döner.
- * - rAF ile kare başına tek okuma; tekrarlayan rAF isteği tek kuyrukta birleşir (duraksama azaltır).
+ * - Aşağı kaydırırken header gizlenir.
+ * - Yukarı kaydırmak başlığı geri getirmez; yalnızca sayfa üstüne yaklaşınca (scrollY küçük) tekrar görünür.
+ * - Üst bölgede (topZone) header her zaman görünür.
+ * - rAF ile kare başına tek okuma.
  */
 export function useDocumentNavScrollCollapse(enabled: boolean, setCollapsed: (v: boolean) => void) {
   const lastY = useRef(0);
@@ -13,9 +14,10 @@ export function useDocumentNavScrollCollapse(enabled: boolean, setCollapsed: (v:
   useEffect(() => {
     if (!enabled) return;
 
+    const topZonePx = 200;
     const yInit = window.scrollY;
     lastY.current = yInit;
-    setCollapsed(yInit > 140);
+    setCollapsed(yInit > topZonePx);
 
     let raf = 0;
     const flush = () => {
@@ -24,13 +26,11 @@ export function useDocumentNavScrollCollapse(enabled: boolean, setCollapsed: (v:
       const delta = y - lastY.current;
       lastY.current = y;
 
-      const topZonePx = 200;
       if (y < topZonePx) {
         setCollapsed(false);
         return;
       }
       if (delta > 6) setCollapsed(true);
-      else if (delta < -4) setCollapsed(false);
     };
 
     const onScroll = () => {
