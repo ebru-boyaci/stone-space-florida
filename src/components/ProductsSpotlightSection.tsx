@@ -123,7 +123,7 @@ export function ProductsSpotlightSection() {
   return (
     <section
       ref={sectionRef}
-      className="relative isolate flex min-h-[140vh] items-center overflow-x-clip bg-[#171312] px-6 py-20 sm:min-h-[150vh] sm:px-10 sm:py-24 [contain:layout_paint]"
+      className="relative isolate flex min-h-[140vh] items-start justify-center overflow-x-clip bg-[#171312] px-6 pb-20 pt-16 sm:min-h-[150vh] sm:px-10 sm:pb-24 sm:pt-20 md:pt-24 [contain:layout_paint]"
       aria-labelledby="products-spotlight-heading"
     >
       <img
