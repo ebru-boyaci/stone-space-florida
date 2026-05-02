@@ -94,20 +94,20 @@ function IconBuilding() {
 export function FeatureValueGrid() {
   return (
     <section
-      className="relative bg-[#343434] px-5 pb-20 pt-6 sm:px-8 sm:pb-24 sm:pt-8 md:px-10 md:pb-28"
+      className="relative overflow-x-clip bg-[#343434] px-5 pb-20 pt-6 sm:px-8 sm:pb-24 sm:pt-8 md:px-10 md:pb-28"
       aria-label="Stone Spaces services"
     >
       <p className="sr-only">Swipe horizontally to browse all services.</p>
       <ul
-        className="-mx-5 flex snap-x snap-mandatory touch-pan-x gap-6 overflow-x-auto overscroll-x-contain px-5 pb-4 [-ms-overflow-style:none] [scrollbar-width:none] sm:-mx-8 sm:gap-7 sm:px-8 md:-mx-10 md:gap-8 md:px-10 [&::-webkit-scrollbar]:hidden"
+        className="-mx-5 flex snap-x snap-mandatory touch-pan-x gap-5 overflow-x-auto overscroll-x-contain bg-[#343434] pb-4 pl-8 pr-4 [-ms-overflow-style:none] [scrollbar-width:none] sm:-mx-8 sm:gap-6 sm:pl-10 sm:pr-6 md:-mx-10 md:gap-7 md:pl-12 md:pr-8 [&::-webkit-scrollbar]:hidden"
         role="list"
       >
         {SERVICES.map((item) => (
           <li
             key={item.title + item.category}
-            className="w-[min(88vw,26rem)] shrink-0 snap-start sm:w-[min(78vw,28rem)] md:w-[min(72vw,30rem)]"
+            className="w-[min(88vw,26.5rem)] shrink-0 snap-start sm:w-[min(80vw,29rem)] md:w-[min(74vw,31rem)]"
           >
-            <article className="flex h-full min-h-[min(42rem,85vh)] flex-col rounded-none border border-black/[0.06] bg-[#f2efe8] p-7 shadow-[0_18px_48px_rgba(0,0,0,0.35)] sm:min-h-[44rem] sm:p-8 md:min-h-[46rem] md:p-9">
+            <article className="flex h-full min-h-[min(30rem,66vh)] flex-col rounded-none border border-black/[0.06] bg-[#f2efe8] p-5 sm:min-h-[32rem] sm:p-6 md:min-h-[34rem] md:p-7">
               <div className="flex gap-2.5">
                 <span className={iconRing} aria-hidden>
                   <IconCube />
@@ -117,21 +117,21 @@ export function FeatureValueGrid() {
                 </span>
               </div>
 
-              <div className="relative mt-7 flex min-h-0 flex-1 items-center justify-center py-8 sm:mt-8 sm:py-10 md:py-12">
+              <div className="relative mt-5 flex min-h-0 flex-1 items-center justify-center py-3 sm:mt-6 sm:py-4 md:py-5">
                 <img
                   src={item.src}
                   alt={item.alt}
-                  className="max-h-[min(22rem,52vw)] w-full max-w-[min(100%,24rem)] object-contain object-center sm:max-h-[26rem] md:max-h-[30rem]"
+                  className="h-auto w-full max-w-none object-contain object-center [max-height:min(34rem,62vw)] sm:[max-height:min(40rem,56vh)] md:[max-height:min(44rem,52vh)]"
                   loading="lazy"
                   decoding="async"
                 />
               </div>
 
-              <div className="mt-auto border-t border-black/[0.06] pt-6 text-left sm:pt-7">
-                <p className="text-[0.72rem] font-medium uppercase tracking-[0.18em] text-zinc-600 sm:text-[0.75rem]">
+              <div className="mt-auto border-t border-black/[0.06] pt-5 text-left sm:pt-6">
+                <p className="text-[0.72rem] font-semibold uppercase tracking-[0.18em] text-zinc-600 sm:text-[0.75rem]">
                   {item.category}
                 </p>
-                <h3 className="mt-2 font-sans text-[1.22rem] font-semibold leading-tight tracking-[-0.02em] text-zinc-950 sm:text-[1.38rem] md:text-[1.45rem]">
+                <h3 className="mt-2 font-sans text-[1.22rem] font-bold leading-tight tracking-[-0.02em] text-zinc-950 sm:text-[1.38rem] md:text-[1.45rem]">
                   {item.title}
                 </h3>
               </div>
