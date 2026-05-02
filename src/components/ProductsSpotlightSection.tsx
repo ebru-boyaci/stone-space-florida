@@ -2,7 +2,7 @@ import bgImage from "@assets/kitchen 5.jpg";
 import imgCabinets from "@assets/services/cabinet-installation.png";
 import imgDeck from "@assets/services/deck-installation.png";
 import imgVinyl from "@assets/services/flooring-installtion.png";
-import imgPorcelain from "@assets/quartz/delmar -porcelain.jpeg";
+import imgPorcelain from "@assets/porcelain/delmar-porcelain.jpeg";
 import coverQuartz from "@assets/kitchen1.jpg";
 import imgTileFloor from "@assets/kitchen2.jpg";
 import { ServiceScrollNavButton } from "@/components/ServiceScrollNavButton";
@@ -24,10 +24,10 @@ const PRODUCTS: ProductSpotlight[] = [
     id: "porcelain",
     label: "PORCELAIN",
     title: "Porcelain surfaces",
-    description: "Tough, easy-care slabs for kitchens and baths.",
+    description: "Full catalog: colors and finishes for kitchens and baths.",
     image: imgPorcelain,
-    to: "/#contact",
-    linkAriaLabel: "Porcelain surfaces — contact us",
+    to: "/catalog/porcelain",
+    linkAriaLabel: "Porcelain surfaces — browse full catalog",
   },
   {
     id: "quartz",
@@ -41,11 +41,11 @@ const PRODUCTS: ProductSpotlight[] = [
   {
     id: "cabinets",
     label: "CABINETS",
-    title: "Custom cabinets",
-    description: "Kitchens and baths planned around your storage and style.",
+    title: "Cabinets",
+    description: "Full catalog: door styles and finishes we can source for your space.",
     image: imgCabinets,
-    to: "/#contact",
-    linkAriaLabel: "Cabinets — contact us",
+    to: "/catalog/cabinets",
+    linkAriaLabel: "Cabinets — browse full catalog",
   },
   {
     id: "vinyl-flooring",
@@ -202,9 +202,6 @@ export function ProductsSpotlightSection() {
             </li>
           ))}
         </ul>
-        <p className="mt-3 text-center text-xs text-zinc-500 sm:hidden" aria-hidden>
-          ← Swipe for more →
-        </p>
         <div
           className="mt-10 flex flex-row justify-center gap-8 pb-[max(1rem,env(safe-area-inset-bottom,0px))] sm:mt-14 sm:gap-12 md:mt-16 md:gap-14"
           dir="ltr"

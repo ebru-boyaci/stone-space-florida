@@ -1,6 +1,8 @@
 import { ContactOverlay } from "@/components/ContactOverlay";
 import { Header } from "@/components/Header";
 import { HomeSections } from "@/pages/HomeSections";
+import { CabinetsCatalogPage } from "@/pages/CabinetsCatalogPage";
+import { PorcelainCatalogPage } from "@/pages/PorcelainCatalogPage";
 import { QuartzCatalogPage } from "@/pages/QuartzCatalogPage";
 import { useDocumentNavScrollCollapse } from "@/hooks/useDocumentNavScrollCollapse";
 import { useScrollLock } from "@/hooks/useScrollLock";
@@ -123,6 +125,22 @@ export default function App() {
           element={
             <main inert={contactOpen}>
               <QuartzCatalogPage />
+            </main>
+          }
+        />
+        <Route
+          path="/catalog/porcelain"
+          element={
+            <main inert={contactOpen}>
+              <PorcelainCatalogPage />
+            </main>
+          }
+        />
+        <Route
+          path="/catalog/cabinets"
+          element={
+            <main inert={contactOpen}>
+              <CabinetsCatalogPage />
             </main>
           }
         />

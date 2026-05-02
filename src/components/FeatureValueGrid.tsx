@@ -217,9 +217,6 @@ export function FeatureValueGrid() {
           <ServiceCardItem key={item.title + item.category} item={item} />
         ))}
       </ul>
-      <p className="mt-3 text-center text-xs text-zinc-500 sm:hidden" aria-hidden>
-        ← Swipe for more →
-      </p>
       <div
         className="mt-10 flex flex-row justify-center gap-8 pb-[max(1rem,env(safe-area-inset-bottom,0px))] sm:mt-14 sm:gap-12 md:mt-16 md:gap-14"
         dir="ltr"
