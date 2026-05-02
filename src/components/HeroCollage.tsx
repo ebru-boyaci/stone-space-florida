@@ -14,7 +14,7 @@ import {
   type MotionValue,
 } from "motion/react";
 import type { MutableRefObject, ReactNode } from "react";
-import { useEffect, useLayoutEffect, useRef } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 
 function easeInCubic(t: number) {
   return Math.min(1, Math.max(0, t)) ** 3;
@@ -104,6 +104,13 @@ const TILES: {
 const WHEEL_SCALE_DESKTOP = 0.00085;
 /** Dar ekranda aynı jestle progress daha çok artsın — aşağı “çıkmak” için daha az kaydırma. */
 const WHEEL_SCALE_MOBILE = 0.00275;
+
+/** Mobil kolaj: viewport genişliğine göre ölçek (kenarlarda boşluk azalsın). ≥768px → 1. */
+function collageScaleForViewportWidth(w: number) {
+  if (w >= 768) return 1;
+  const ref = 400;
+  return Math.max(0.88, Math.min(1, w / ref));
+}
 
 /** Batched wheel → fewer motion updates (less jank). */
 function useLockedHeroProgress(
@@ -386,6 +393,9 @@ export function HeroWithCollage({
 }) {
   const reduceMotion = useReducedMotion();
   const ref = useRef<HTMLElement>(null);
+  const [collageScale, setCollageScale] = useState(() =>
+    typeof window !== "undefined" ? collageScaleForViewportWidth(window.innerWidth) : 1,
+  );
   const progress = useMotionValue(0);
   const exitCompleteRef = useRef(false);
   const returningRef = useRef(false);
@@ -450,7 +460,10 @@ export function HeroWithCollage({
 
   useLayoutEffect(() => {
     const sync = () => {
-      layoutUnit.set(Math.min(window.innerWidth, window.innerHeight));
+      const w = window.innerWidth;
+      const h = window.innerHeight;
+      layoutUnit.set(Math.min(w, h));
+      setCollageScale(collageScaleForViewportWidth(w));
     };
     sync();
     window.addEventListener("resize", sync);
@@ -490,43 +503,49 @@ export function HeroWithCollage({
   return (
     <section
       ref={ref}
-      className="relative flex min-h-[100dvh] min-h-[100svh] flex-col items-center justify-center overflow-hidden pl-[max(1rem,env(safe-area-inset-left,0px))] pr-[max(1rem,env(safe-area-inset-right,0px))] pb-12 pt-[calc(8.5rem+env(safe-area-inset-top,0px))] sm:pb-20 sm:pl-6 sm:pr-6 sm:pt-[calc(10rem+env(safe-area-inset-top,0px))] lg:pt-[calc(12rem+env(safe-area-inset-top,0px))] lg:pb-24"
+      className="relative flex min-h-[100dvh] min-h-[100svh] flex-col items-center justify-center overflow-x-clip overflow-y-hidden pb-12 pt-[calc(8.5rem+env(safe-area-inset-top,0px))] sm:pb-20 sm:pt-[calc(10rem+env(safe-area-inset-top,0px))] lg:pt-[calc(12rem+env(safe-area-inset-top,0px))] lg:pb-24"
       aria-label="Intro"
     >
       <div
-        className="pointer-events-none absolute inset-0 z-0 isolate overflow-hidden max-md:origin-[50%_44%] max-md:scale-[0.78]"
+        className="pointer-events-none absolute inset-0 z-0 max-md:origin-[50%_44%]"
+        style={
+          collageScale < 1
+            ? { transform: `scale(${collageScale})`, transformOrigin: "50% 44%" }
+            : undefined
+        }
         aria-hidden
       >
-        {TILES.map((tile, i) => (
-          <CollageTile
-            key={i}
-            src={tile.src}
-            rest={tile.rest}
-            corner={tile.corner}
-            spreadEnd={tile.spreadEnd}
-            exitBoost={tile.exitBoost}
-            fadeStart={tile.fadeStart}
-            progress={smoothProgress}
-            layoutUnit={layoutUnit}
-            zClass={tile.zClass}
-            imgClass={tile.imgClass}
-            wrapClass={tile.wrapClass}
-            tileIndex={i}
-            entranceCycle={homeEntranceKey}
+        <div className="relative isolate h-full w-full overflow-hidden">
+          {TILES.map((tile, i) => (
+            <CollageTile
+              key={i}
+              src={tile.src}
+              rest={tile.rest}
+              corner={tile.corner}
+              spreadEnd={tile.spreadEnd}
+              exitBoost={tile.exitBoost}
+              fadeStart={tile.fadeStart}
+              progress={smoothProgress}
+              layoutUnit={layoutUnit}
+              zClass={tile.zClass}
+              imgClass={tile.imgClass}
+              wrapClass={tile.wrapClass}
+              tileIndex={i}
+              entranceCycle={homeEntranceKey}
+            />
+          ))}
+          <div
+            className="pointer-events-none absolute inset-0 z-[3] bg-black/[0.26]"
+            aria-hidden
           />
-        ))}
+        </div>
         <div
-          className="pointer-events-none absolute inset-0 z-[3] bg-black/[0.26]"
+          className="pointer-events-none absolute inset-0 z-[4] bg-[radial-gradient(ellipse_92%_68%_at_50%_42%,rgba(0,0,0,0.48),rgba(0,0,0,0.24)_44%,rgba(0,0,0,0.38)_100%)]"
           aria-hidden
         />
       </div>
 
-      <div
-        className="pointer-events-none absolute inset-0 z-[4] bg-[radial-gradient(ellipse_92%_68%_at_50%_42%,rgba(0,0,0,0.48),rgba(0,0,0,0.24)_44%,rgba(0,0,0,0.38)_100%)]"
-        aria-hidden
-      />
-
-      <div className="relative z-10 flex -translate-y-5 flex-col items-center sm:-translate-y-7 lg:-translate-y-8">
+      <div className="relative z-10 flex w-full max-w-full -translate-y-5 flex-col items-center px-[max(1rem,env(safe-area-inset-left,0px))] sm:-translate-y-7 sm:px-6 lg:-translate-y-8">
         {children}
       </div>
     </section>
