@@ -4,6 +4,8 @@ export type CatalogGalleryItem = {
   slug: string;
   label: string;
   src: string;
+  /** `object-position` for `object-cover` (default: centered). */
+  imageObjectClass?: string;
 };
 
 type ViewMode = "grid" | "rail";
@@ -73,7 +75,7 @@ function ItemCard({ item }: { item: CatalogGalleryItem }) {
         <img
           src={item.src}
           alt={item.label}
-          className="h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.02]"
+          className={`h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.02] ${item.imageObjectClass ?? "object-center"}`}
           loading="lazy"
           decoding="async"
           width={800}
@@ -115,7 +117,10 @@ export function CatalogItemsSection({ items }: { items: CatalogGalleryItem[] }) 
             aria-label="Catalog items, horizontal scroll"
           >
             {items.map((item) => (
-              <li key={item.slug} className="w-[min(78vw,19.5rem)] shrink-0 snap-start sm:w-[17.5rem]">
+              <li
+                key={item.slug}
+                className="w-[min(92vw,26rem)] shrink-0 snap-start sm:w-[min(22rem,85vw)] md:w-[min(24rem,40vw)] lg:w-[min(26rem,32vw)]"
+              >
                 <ItemCard item={item} />
               </li>
             ))}

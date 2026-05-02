@@ -1,7 +1,7 @@
 import bgImage from "@assets/kitchen 5.jpg";
 import imgCabinets from "@assets/services/cabinet-installation.png";
 import imgDeck from "@assets/services/deck-installation.png";
-import imgVinyl from "@assets/services/flooring-installtion.png";
+import imgVinyl from "@assets/vinyl/vinyl-spotlight.png";
 import imgPorcelain from "@assets/porcelain/delmar-porcelain.jpeg";
 import coverQuartz from "@assets/kitchen1.jpg";
 import imgTileFloor from "@assets/kitchen2.jpg";

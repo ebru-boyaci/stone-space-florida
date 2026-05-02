@@ -233,7 +233,17 @@ export function getCabinetCatalogItems(): CabinetCatalogItem[] {
   }));
 }
 
-/** For `CatalogItemsSection`: slug, label, src only. */
-export function getCabinetCatalogGalleryItems(): { slug: string; label: string; src: string }[] {
-  return getCabinetCatalogItems().map(({ slug, label, src }) => ({ slug, label, src }));
+/** For `CatalogItemsSection`: slug, label, src, and top-aligned crop (not vertically centered). */
+export function getCabinetCatalogGalleryItems(): {
+  slug: string;
+  label: string;
+  src: string;
+  imageObjectClass: string;
+}[] {
+  return getCabinetCatalogItems().map(({ slug, label, src }) => ({
+    slug,
+    label,
+    src,
+    imageObjectClass: "object-top",
+  }));
 }

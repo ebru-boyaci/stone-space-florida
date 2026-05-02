@@ -13,9 +13,22 @@ export default function App() {
   const location = useLocation();
   const isHome = location.pathname === "/";
 
-  /** SPA’da route değişince tarayıcı scroll’u sıfırlamaz; katalog açılınca üstte başlasın. */
+  /** Tarayıcı geri/ileri ve SPA geçişlerinde eski scroll konumunu geri yükleme (önce altta “flash” sonra yukarı animasyon). */
+  useEffect(() => {
+    if ("scrollRestoration" in window.history) {
+      window.history.scrollRestoration = "manual";
+    }
+  }, []);
+
+  /** Route değişince anında en üstte başla. `html { scroll-behavior: smooth }` bazı motorlarda programatik scroll’u da yumuşatır; geçici olarak auto. */
   useLayoutEffect(() => {
-    window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+    const root = document.documentElement;
+    const prev = root.style.scrollBehavior;
+    root.style.scrollBehavior = "auto";
+    root.scrollTop = 0;
+    document.body.scrollTop = 0;
+    window.scrollTo(0, 0);
+    root.style.scrollBehavior = prev;
   }, [location.pathname]);
 
   const [contactOpen, setContactOpen] = useState(false);
