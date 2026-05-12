@@ -1,5 +1,5 @@
 import { useScrollLock } from "@/hooks/useScrollLock";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 export type CatalogGalleryItem = {
   slug: string;
@@ -7,8 +7,8 @@ export type CatalogGalleryItem = {
   src: string;
   /** `object-position` for `object-cover` (default: centered). */
   imageObjectClass?: string;
-  /** Layout / installation example — opens lightbox on tap when set. */
-  exampleSrc?: string;
+  /** Layout / installation examples — opens lightbox on tap; swipe horizontally when more than one. */
+  exampleSrcs?: string[];
 };
 
 type ViewMode = "grid" | "rail";
@@ -134,21 +134,177 @@ function ItemCard({ item, onPickExample }: { item: CatalogGalleryItem; onPickExa
   );
 }
 
-/** Quartz / tile katalog için grid veya yatay kaydırmalı (mobil dostu) gösterim. */
-export function CatalogItemsSection({ items }: { items: CatalogGalleryItem[] }) {
-  const [mode, setMode] = useState<ViewMode>("grid");
-  const [lightbox, setLightbox] = useState<{ src: string; label: string } | null>(null);
+function ExampleLightbox({
+  label,
+  srcs,
+  onClose,
+}: {
+  label: string;
+  srcs: string[];
+  onClose: () => void;
+}) {
+  const railRef = useRef<HTMLUListElement>(null);
+  const [active, setActive] = useState(0);
+  const multi = srcs.length > 1;
 
-  useScrollLock(!!lightbox);
+  const scrollToIndex = useCallback((i: number) => {
+    const el = railRef.current;
+    if (!el) return;
+    const clamped = Math.max(0, Math.min(srcs.length - 1, i));
+    const slide = el.children.item(clamped) as HTMLElement | null;
+    slide?.scrollIntoView({ behavior: "smooth", inline: "start", block: "nearest" });
+  }, [srcs.length]);
 
   useEffect(() => {
-    if (!lightbox) return;
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setLightbox(null);
+      if (e.key === "Escape") {
+        onClose();
+        return;
+      }
+      if (!multi) return;
+      if (e.key === "ArrowLeft" || e.key === "ArrowRight") {
+        e.preventDefault();
+        const el = railRef.current;
+        if (!el) return;
+        const w = el.clientWidth || 1;
+        const cur = Math.max(0, Math.min(srcs.length - 1, Math.round(el.scrollLeft / w)));
+        scrollToIndex(e.key === "ArrowLeft" ? cur - 1 : cur + 1);
+      }
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [lightbox]);
+  }, [multi, onClose, scrollToIndex, srcs.length]);
+
+  useEffect(() => {
+    setActive(0);
+    railRef.current?.scrollTo({ left: 0 });
+  }, [srcs]);
+
+  return (
+    <div
+      className="fixed inset-0 z-[70] flex items-center justify-center p-4 pt-[max(1rem,env(safe-area-inset-top,0px))] pb-[max(1rem,env(safe-area-inset-bottom,0px))]"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="catalog-example-title"
+    >
+      <button type="button" className="absolute inset-0 bg-black/88" aria-label="Close example" onClick={onClose} />
+      <div className="relative z-10 flex max-h-[min(92dvh,56rem)] w-full max-w-[min(96vw,56rem)] flex-col gap-3">
+        <div className="flex items-center justify-between gap-3 pl-1">
+          <p id="catalog-example-title" className="text-sm font-medium text-white">
+            {label}
+            <span className="ml-2 font-normal text-zinc-400">
+              · example{multi ? `s (${active + 1}/${srcs.length})` : ""}
+            </span>
+          </p>
+          <button
+            type="button"
+            className="shrink-0 rounded-full border border-white/15 px-3 py-1.5 text-xs uppercase tracking-wide text-zinc-200 transition-colors hover:bg-white/10"
+            onClick={onClose}
+          >
+            Close
+          </button>
+        </div>
+
+        <div className="relative rounded-sm bg-black/30">
+          {multi ? (
+            <>
+              <p className="sr-only">Use left and right arrow keys, or swipe horizontally, to browse example images.</p>
+              <button
+                type="button"
+                aria-label="Previous example"
+                className="absolute left-1 top-1/2 z-20 hidden -translate-y-1/2 rounded-full border border-white/20 bg-black/55 px-2.5 py-2 text-zinc-100 shadow-md backdrop-blur-sm transition-colors hover:bg-black/75 sm:block"
+                onClick={() => {
+                  const el = railRef.current;
+                  if (!el) return;
+                  const w = el.clientWidth || 1;
+                  const cur = Math.max(0, Math.min(srcs.length - 1, Math.round(el.scrollLeft / w)));
+                  scrollToIndex(cur - 1);
+                }}
+              >
+                ‹
+              </button>
+              <button
+                type="button"
+                aria-label="Next example"
+                className="absolute right-1 top-1/2 z-20 hidden -translate-y-1/2 rounded-full border border-white/20 bg-black/55 px-2.5 py-2 text-zinc-100 shadow-md backdrop-blur-sm transition-colors hover:bg-black/75 sm:block"
+                onClick={() => {
+                  const el = railRef.current;
+                  if (!el) return;
+                  const w = el.clientWidth || 1;
+                  const cur = Math.max(0, Math.min(srcs.length - 1, Math.round(el.scrollLeft / w)));
+                  scrollToIndex(cur + 1);
+                }}
+              >
+                ›
+              </button>
+            </>
+          ) : null}
+
+          <ul
+            ref={railRef}
+            className={`flex max-h-[min(82dvh,50rem)] w-full touch-pan-x overflow-x-auto overscroll-x-contain [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden ${
+              multi ? "snap-x snap-mandatory gap-0" : ""
+            }`}
+            onScroll={() => {
+              const el = railRef.current;
+              if (!el || !multi) return;
+              const w = el.clientWidth || 1;
+              const i = Math.round(el.scrollLeft / w);
+              setActive(Math.max(0, Math.min(srcs.length - 1, i)));
+            }}
+          >
+            {srcs.map((src, i) => (
+              <li
+                key={`${src}-${i}`}
+                className={`flex min-h-0 shrink-0 items-center justify-center bg-black/20 ${
+                  multi ? "w-full min-w-full snap-start snap-always" : "w-full"
+                }`}
+              >
+                <img
+                  src={src}
+                  alt={
+                    multi
+                      ? `${label} installation example ${i + 1} of ${srcs.length}`
+                      : `${label} installation example`
+                  }
+                  className="max-h-[min(82dvh,50rem)] w-full object-contain shadow-2xl"
+                />
+              </li>
+            ))}
+          </ul>
+
+          {multi ? (
+            <div className="flex justify-center gap-1.5 py-2.5" role="tablist" aria-label="Example slides">
+              {srcs.map((_, i) => (
+                <button
+                  key={i}
+                  type="button"
+                  role="tab"
+                  aria-selected={i === active}
+                  aria-label={`Show example ${i + 1}`}
+                  className={`h-1.5 rounded-full transition-all ${i === active ? "w-6 bg-[#b9a086]" : "w-1.5 bg-zinc-600 hover:bg-zinc-500"}`}
+                  onClick={() => scrollToIndex(i)}
+                />
+              ))}
+            </div>
+          ) : null}
+          {multi ? (
+            <p className="pb-1 text-center text-xs text-zinc-500 sm:hidden" aria-hidden>
+              ← Swipe for more →
+            </p>
+          ) : null}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/** Quartz / tile katalog için grid veya yatay kaydırmalı (mobil dostu) gösterim. */
+export function CatalogItemsSection({ items }: { items: CatalogGalleryItem[] }) {
+  const [mode, setMode] = useState<ViewMode>("grid");
+  const [lightbox, setLightbox] = useState<{ srcs: string[]; label: string } | null>(null);
+
+  useScrollLock(!!lightbox);
 
   return (
     <>
@@ -164,8 +320,8 @@ export function CatalogItemsSection({ items }: { items: CatalogGalleryItem[] }) 
                 <ItemCard
                   item={item}
                   onPickExample={
-                    item.exampleSrc
-                      ? () => setLightbox({ src: item.exampleSrc!, label: item.label })
+                    item.exampleSrcs?.length
+                      ? () => setLightbox({ srcs: item.exampleSrcs!, label: item.label })
                       : undefined
                   }
                 />
@@ -188,8 +344,8 @@ export function CatalogItemsSection({ items }: { items: CatalogGalleryItem[] }) 
                   <ItemCard
                     item={item}
                     onPickExample={
-                      item.exampleSrc
-                        ? () => setLightbox({ src: item.exampleSrc!, label: item.label })
+                      item.exampleSrcs?.length
+                        ? () => setLightbox({ srcs: item.exampleSrcs!, label: item.label })
                         : undefined
                     }
                   />
@@ -204,39 +360,7 @@ export function CatalogItemsSection({ items }: { items: CatalogGalleryItem[] }) 
       </div>
 
       {lightbox ? (
-        <div
-          className="fixed inset-0 z-[70] flex items-center justify-center p-4 pt-[max(1rem,env(safe-area-inset-top,0px))] pb-[max(1rem,env(safe-area-inset-bottom,0px))]"
-          role="dialog"
-          aria-modal="true"
-          aria-labelledby="catalog-example-title"
-        >
-          <button
-            type="button"
-            className="absolute inset-0 bg-black/88"
-            aria-label="Close example"
-            onClick={() => setLightbox(null)}
-          />
-          <div className="relative z-10 flex max-h-[min(92dvh,56rem)] w-full max-w-[min(96vw,56rem)] flex-col gap-3">
-            <div className="flex items-center justify-between gap-3 pl-1">
-              <p id="catalog-example-title" className="text-sm font-medium text-white">
-                {lightbox.label}
-                <span className="ml-2 font-normal text-zinc-400">· example</span>
-              </p>
-              <button
-                type="button"
-                className="shrink-0 rounded-full border border-white/15 px-3 py-1.5 text-xs uppercase tracking-wide text-zinc-200 transition-colors hover:bg-white/10"
-                onClick={() => setLightbox(null)}
-              >
-                Close
-              </button>
-            </div>
-            <img
-              src={lightbox.src}
-              alt={`${lightbox.label} installation example`}
-              className="max-h-[min(82dvh,50rem)] w-full rounded-sm object-contain shadow-2xl"
-            />
-          </div>
-        </div>
+        <ExampleLightbox label={lightbox.label} srcs={lightbox.srcs} onClose={() => setLightbox(null)} />
       ) : null}
     </>
   );
