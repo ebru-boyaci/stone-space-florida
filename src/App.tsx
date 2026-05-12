@@ -4,6 +4,7 @@ import { HomeSections } from "@/pages/HomeSections";
 import { CabinetsCatalogPage } from "@/pages/CabinetsCatalogPage";
 import { PorcelainCatalogPage } from "@/pages/PorcelainCatalogPage";
 import { QuartzCatalogPage } from "@/pages/QuartzCatalogPage";
+import { TileCatalogPage } from "@/pages/TileCatalogPage";
 import { ServiceDetailPage } from "@/pages/ServiceDetailPage";
 import { useDocumentNavScrollCollapse } from "@/hooks/useDocumentNavScrollCollapse";
 import { useScrollLock } from "@/hooks/useScrollLock";
@@ -155,6 +156,14 @@ export default function App() {
           element={
             <main inert={contactOpen}>
               <CabinetsCatalogPage />
+            </main>
+          }
+        />
+        <Route
+          path="/catalog/tile"
+          element={
+            <main inert={contactOpen}>
+              <TileCatalogPage />
             </main>
           }
         />

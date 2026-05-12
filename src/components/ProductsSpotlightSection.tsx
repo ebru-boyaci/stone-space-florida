@@ -62,8 +62,8 @@ const PRODUCTS: ProductSpotlight[] = [
     title: "Porcelain tile",
     description: "Floor layouts that handle moisture and daily wear.",
     image: imgTileFloor,
-    to: "/services/porcelain-tile",
-    linkAriaLabel: "Porcelain tile flooring — learn more",
+    to: "/catalog/tile",
+    linkAriaLabel: "Porcelain tile — browse catalog and examples",
   },
   {
     id: "deck",
