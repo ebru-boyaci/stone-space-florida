@@ -17,17 +17,6 @@ export function CabinetsCatalogPage() {
             Browse door styles and finishes we can source for your project. Photos follow our supplier&apos;s public
             style guide; exact slabs and availability are confirmed when you order.
           </p>
-          <p className="mt-3 max-w-2xl text-pretty text-sm leading-relaxed text-zinc-500">
-            Style reference:{" "}
-            <a
-              href="https://shop.milestonecabinetry.com/products.html"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-[#b9a086] underline decoration-[#b9a086]/40 underline-offset-2 transition-colors hover:text-[#c9b59a]"
-            >
-              Milestone Cabinetry — Cabinet Styles &amp; Collections
-            </a>
-          </p>
         </header>
 
         <CatalogItemsSection items={items} />

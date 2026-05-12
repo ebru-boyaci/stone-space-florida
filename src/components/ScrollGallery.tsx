@@ -5,7 +5,7 @@ import { motion, useReducedMotion, useScroll, useSpring, useTransform } from "mo
 import { useCallback, useLayoutEffect, useRef } from "react";
 
 const COPY =
-  "We bring you the best quality stones from around the world, so you can transform your kitchen into a thing of beauty. With more than 60 different stones, and options from Asia, Europe and America—we have the perfect stones for any style and budget.";
+  "We provide complete, turnkey remodeling services—from design to installation. From kitchens and bathrooms to flooring, cabinetry, and countertops, we handle every detail with high-quality materials and expert craftsmanship. Our goal is to transform your space into a beautiful, functional living environment.";
 
 const IMAGES = [imgA, imgB, imgC] as const;
 

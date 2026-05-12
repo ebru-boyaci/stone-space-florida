@@ -23,11 +23,11 @@ const PRODUCTS: ProductSpotlight[] = [
   {
     id: "porcelain",
     label: "PORCELAIN",
-    title: "Porcelain surfaces",
-    description: "Full catalog: colors and finishes for kitchens and baths.",
+    title: "Porcelain slabs",
+    description: "Heat-resistant, non-porous slabs for counters, walls, and indoor–outdoor use.",
     image: imgPorcelain,
     to: "/catalog/porcelain",
-    linkAriaLabel: "Porcelain surfaces — browse full catalog",
+    linkAriaLabel: "Porcelain slabs — browse full catalog",
   },
   {
     id: "quartz",
@@ -53,8 +53,8 @@ const PRODUCTS: ProductSpotlight[] = [
     title: "Vinyl flooring",
     description: "Water-smart and soft underfoot for busy homes.",
     image: imgVinyl,
-    to: "/#contact",
-    linkAriaLabel: "Vinyl flooring — contact us",
+    to: "/services/vinyl-flooring",
+    linkAriaLabel: "Vinyl flooring — learn more",
   },
   {
     id: "porcelain-tile-flooring",
@@ -62,8 +62,8 @@ const PRODUCTS: ProductSpotlight[] = [
     title: "Porcelain tile",
     description: "Floor layouts that handle moisture and daily wear.",
     image: imgTileFloor,
-    to: "/#contact",
-    linkAriaLabel: "Porcelain tile flooring — contact us",
+    to: "/services/porcelain-tile",
+    linkAriaLabel: "Porcelain tile flooring — learn more",
   },
   {
     id: "deck",
@@ -71,8 +71,8 @@ const PRODUCTS: ProductSpotlight[] = [
     title: "Decks for Florida",
     description: "Solid builds and clean lines—sun, rain, and time.",
     image: imgDeck,
-    to: "/#contact",
-    linkAriaLabel: "Deck projects — contact us",
+    to: "/services/deck",
+    linkAriaLabel: "Deck projects — learn more",
   },
 ];
 

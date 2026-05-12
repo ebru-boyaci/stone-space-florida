@@ -4,6 +4,7 @@ import { HomeSections } from "@/pages/HomeSections";
 import { CabinetsCatalogPage } from "@/pages/CabinetsCatalogPage";
 import { PorcelainCatalogPage } from "@/pages/PorcelainCatalogPage";
 import { QuartzCatalogPage } from "@/pages/QuartzCatalogPage";
+import { ServiceDetailPage } from "@/pages/ServiceDetailPage";
 import { useDocumentNavScrollCollapse } from "@/hooks/useDocumentNavScrollCollapse";
 import { useScrollLock } from "@/hooks/useScrollLock";
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
@@ -154,6 +155,14 @@ export default function App() {
           element={
             <main inert={contactOpen}>
               <CabinetsCatalogPage />
+            </main>
+          }
+        />
+        <Route
+          path="/services/:slug"
+          element={
+            <main inert={contactOpen}>
+              <ServiceDetailPage />
             </main>
           }
         />
