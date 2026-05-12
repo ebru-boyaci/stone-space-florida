@@ -5,6 +5,8 @@ import { CabinetsCatalogPage } from "@/pages/CabinetsCatalogPage";
 import { PorcelainCatalogPage } from "@/pages/PorcelainCatalogPage";
 import { QuartzCatalogPage } from "@/pages/QuartzCatalogPage";
 import { TileCatalogPage } from "@/pages/TileCatalogPage";
+import { FloorCatalogPage } from "@/pages/FloorCatalogPage";
+import { DeckCatalogPage } from "@/pages/DeckCatalogPage";
 import { ServiceDetailPage } from "@/pages/ServiceDetailPage";
 import { useDocumentNavScrollCollapse } from "@/hooks/useDocumentNavScrollCollapse";
 import { forceReleaseDocumentScrollLock, useScrollLock } from "@/hooks/useScrollLock";
@@ -174,6 +176,22 @@ export default function App() {
           element={
             <main inert={contactOpen}>
               <TileCatalogPage />
+            </main>
+          }
+        />
+        <Route
+          path="/catalog/floor"
+          element={
+            <main inert={contactOpen}>
+              <FloorCatalogPage />
+            </main>
+          }
+        />
+        <Route
+          path="/catalog/deck"
+          element={
+            <main inert={contactOpen}>
+              <DeckCatalogPage />
             </main>
           }
         />

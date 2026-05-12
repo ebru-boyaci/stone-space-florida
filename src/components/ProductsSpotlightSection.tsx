@@ -51,10 +51,10 @@ const PRODUCTS: ProductSpotlight[] = [
     id: "vinyl-flooring",
     label: "VINYL FLOORING",
     title: "Vinyl flooring",
-    description: "Water-smart and soft underfoot for busy homes.",
+    description: "Water-smart and soft underfoot—browse swatches and room examples in our flooring catalog.",
     image: imgVinyl,
-    to: "/services/vinyl-flooring",
-    linkAriaLabel: "Vinyl flooring — learn more",
+    to: "/catalog/floor",
+    linkAriaLabel: "Vinyl flooring — browse catalog and examples",
   },
   {
     id: "porcelain-tile-flooring",
@@ -69,10 +69,10 @@ const PRODUCTS: ProductSpotlight[] = [
     id: "deck",
     label: "DECK",
     title: "Decks for Florida",
-    description: "Solid builds and clean lines—sun, rain, and time.",
+    description: "Solid builds and clean lines—browse cladding and finish examples, or read our deck services overview.",
     image: imgDeck,
-    to: "/services/deck",
-    linkAriaLabel: "Deck projects — learn more",
+    to: "/catalog/deck",
+    linkAriaLabel: "Decks — browse catalog and examples",
   },
 ];
 

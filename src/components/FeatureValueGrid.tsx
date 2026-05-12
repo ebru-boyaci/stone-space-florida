@@ -58,7 +58,7 @@ const SERVICES: ServiceCard[] = [
     title: "Deck build",
     src: imgDeck,
     alt: "Deck installation",
-    to: "/services/deck",
+    to: "/catalog/deck",
   },
   {
     category: "Flooring",
