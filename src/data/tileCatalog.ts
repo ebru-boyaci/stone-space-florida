@@ -21,6 +21,7 @@ function fileBase(path: string): string {
  * - `{slug}-tile.*` + `{slug}-tile-example.*`
  * - `{slug}.*` + `{slug}-example.*`
  * - `{slug}.*` yalnız (örnek yok) — örnek tıklaması olmaz
+ * - İsteğe bağlı alias: kısa örnek slug → swatch slug (aşağıdaki `exampleSlugAliases`)
  */
 export function getTileCatalogGalleryItems(): CatalogGalleryItem[] {
   const moduleByBase = new Map<string, string>();
@@ -50,6 +51,18 @@ export function getTileCatalogGalleryItems(): CatalogGalleryItem[] {
       covers.set(base, moduleByBase.get(base)!);
     } else if (!/-tile$/i.test(base)) {
       covers.set(base, moduleByBase.get(base)!);
+    }
+  }
+
+  /** Örnek dosya adı swatch slug’ından kısaysa (örn. `pulpis-prime-light-gray-example` → matte swatch). */
+  const exampleSlugAliases: Record<string, string> = {
+    "pulpis-prime-light-gray": "pulpis-prime-light-gray-matte",
+  };
+  for (const [fromSlug, toSlug] of Object.entries(exampleSlugAliases)) {
+    const url = examples.get(fromSlug);
+    if (url && covers.has(toSlug)) {
+      examples.set(toSlug, url);
+      examples.delete(fromSlug);
     }
   }
 

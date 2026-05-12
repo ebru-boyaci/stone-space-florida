@@ -229,10 +229,9 @@ function useLockedHeroProgress(
       window.removeEventListener("touchstart", onTouchStart);
       window.removeEventListener("touchmove", onTouchMove);
       window.removeEventListener("keydown", onKey);
-      if (!exitCompleteRef.current) {
-        document.documentElement.style.overflow = "";
-        document.body.style.overflow = "";
-      }
+      /** Route değişiminde / unmount’ta her durumda bırak — aksi halde sayfa scroll’u kilitli kalabiliyor */
+      document.documentElement.style.overflow = "";
+      document.body.style.overflow = "";
     };
   }, [
     progress,

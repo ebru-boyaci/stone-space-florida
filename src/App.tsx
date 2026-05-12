@@ -7,7 +7,7 @@ import { QuartzCatalogPage } from "@/pages/QuartzCatalogPage";
 import { TileCatalogPage } from "@/pages/TileCatalogPage";
 import { ServiceDetailPage } from "@/pages/ServiceDetailPage";
 import { useDocumentNavScrollCollapse } from "@/hooks/useDocumentNavScrollCollapse";
-import { useScrollLock } from "@/hooks/useScrollLock";
+import { forceReleaseDocumentScrollLock, useScrollLock } from "@/hooks/useScrollLock";
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 import { Route, Routes, useLocation } from "react-router-dom";
 
@@ -15,23 +15,7 @@ export default function App() {
   const location = useLocation();
   const isHome = location.pathname === "/";
 
-  /** Tarayıcı geri/ileri ve SPA geçişlerinde eski scroll konumunu geri yükleme (önce altta “flash” sonra yukarı animasyon). */
-  useEffect(() => {
-    if ("scrollRestoration" in window.history) {
-      window.history.scrollRestoration = "manual";
-    }
-  }, []);
-
-  /** Route değişince anında en üstte başla. `html { scroll-behavior: smooth }` bazı motorlarda programatik scroll’u da yumuşatır; geçici olarak auto. */
-  useLayoutEffect(() => {
-    const root = document.documentElement;
-    const prev = root.style.scrollBehavior;
-    root.style.scrollBehavior = "auto";
-    root.scrollTop = 0;
-    document.body.scrollTop = 0;
-    window.scrollTo(0, 0);
-    root.style.scrollBehavior = prev;
-  }, [location.pathname]);
+  const routePathRef = useRef<string | null>(null);
 
   const [contactOpen, setContactOpen] = useState(false);
   const [contactMountKey, setContactMountKey] = useState(0);
@@ -42,7 +26,33 @@ export default function App() {
   const [heroStripHidden, setHeroStripHidden] = useState(false);
   const [scrollCollapsed, setScrollCollapsed] = useState(false);
 
+  /** Route değişince scroll konumu; önceki sayfadan kalan body kilidi / #contact iletişimini temizle (katalogda scroll kilitlenmesi). */
+  useLayoutEffect(() => {
+    const root = document.documentElement;
+    const prevBehavior = root.style.scrollBehavior;
+    root.style.scrollBehavior = "auto";
+    root.scrollTop = 0;
+    document.body.scrollTop = 0;
+    window.scrollTo(0, 0);
+    root.style.scrollBehavior = prevBehavior;
+
+    if (routePathRef.current !== null && routePathRef.current !== location.pathname) {
+      setContactOpen(false);
+      if (window.location.hash === "#contact") {
+        window.history.replaceState(null, "", `${location.pathname}${location.search}`);
+      }
+      forceReleaseDocumentScrollLock();
+    }
+    routePathRef.current = location.pathname;
+  }, [location.pathname]);
+
   const navCollapsed = isHome ? heroStripHidden || scrollCollapsed : scrollCollapsed;
+
+  useEffect(() => {
+    if ("scrollRestoration" in window.history) {
+      window.history.scrollRestoration = "manual";
+    }
+  }, []);
 
   const onHeroFirstGesture = useCallback(() => setHeroStripHidden(true), []);
   const onHeroUnlockDocument = useCallback(() => {

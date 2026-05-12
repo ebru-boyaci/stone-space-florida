@@ -24,7 +24,8 @@
  */
 html {
   overflow-x: clip;
-  scroll-behavior: smooth;
+  /* Global smooth + programatik scroll / modal kilidi birlikte bazen takılma yapıyor */
+  scroll-behavior: auto;
   font-size: 67%;
 }
 

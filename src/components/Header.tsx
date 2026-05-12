@@ -3,7 +3,7 @@ import { useScrollLock } from "@/hooks/useScrollLock";
 import { NAV_LINKS, SITE_PHONE_DISPLAY, SITE_PHONE_TEL } from "@/config/site";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { useCallback, useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 const springHeader = { type: "spring" as const, stiffness: 300, damping: 42, mass: 0.58 };
 const springPanel = { type: "spring" as const, stiffness: 400, damping: 32 };
@@ -23,17 +23,22 @@ export function Header({
   onExitContact,
 }: HeaderProps) {
   const reduceMotion = useReducedMotion();
+  const location = useLocation();
   const [menuOpen, setMenuOpen] = useState(false);
   const [megaOpen, setMegaOpen] = useState(false);
-
-  useEffect(() => {
-    if (navCollapsed) setMegaOpen(false);
-  }, [navCollapsed]);
 
   const closeAll = useCallback(() => {
     setMenuOpen(false);
     setMegaOpen(false);
   }, []);
+
+  useEffect(() => {
+    if (navCollapsed) setMegaOpen(false);
+  }, [navCollapsed]);
+
+  useEffect(() => {
+    closeAll();
+  }, [location.pathname, closeAll]);
 
   useScrollLock(menuOpen);
 
