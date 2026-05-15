@@ -1,11 +1,9 @@
-import { CatalogItemsSection } from "@/components/CatalogItemsSection";
+import { DeckShowcaseSection } from "@/components/DeckShowcaseSection";
+import { DECK_SHOWCASE_BLOCKS } from "@/data/deckShowcase";
 import { getServiceDetail } from "@/data/serviceDetails";
-import { useMemo } from "react";
 import { Link } from "react-router-dom";
-import { getDeckCatalogItems } from "@/data/deckCatalog";
 
 export function DeckCatalogPage() {
-  const items = useMemo(() => getDeckCatalogItems(), []);
   const copy = getServiceDetail("deck");
 
   return (
@@ -29,8 +27,8 @@ export function DeckCatalogPage() {
             </p>
           ))}
           <p className="mt-4 max-w-2xl text-pretty text-sm leading-relaxed text-zinc-500 sm:text-[0.9375rem]">
-            Browse finishes and cladding examples below. Tap a card for installation photos; materials may vary in person.
-            Availability is confirmed when you order.
+            Below is a walkthrough of how we approach deck and cladding work—each block pairs photography with context.
+            Photos are representative; your layout, materials, and code requirements are confirmed during planning.
           </p>
           <p className="mt-6">
             <Link
@@ -42,7 +40,7 @@ export function DeckCatalogPage() {
           </p>
         </header>
 
-        <CatalogItemsSection items={items} />
+        <DeckShowcaseSection blocks={DECK_SHOWCASE_BLOCKS} />
       </div>
     </div>
   );

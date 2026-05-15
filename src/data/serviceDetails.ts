@@ -40,7 +40,7 @@ const DETAILS: Record<string, ServiceDetail> = {
     title: "Decks",
     paragraphs: [
       "Decks can be used for both exterior and interior applications, offering a versatile and modern design solution. They are suitable for floors and wall applications, creating a seamless and stylish look throughout the space. Ideal for poolside areas, decks are durable, slip-resistant, and built to withstand moisture and outdoor conditions while maintaining a clean, high-end appearance.",
-      "Large-format cladding and stone-look porcelain for facades and outdoor living can be coordinated with these builds—browse examples in the catalog below.",
+      "Large-format cladding and stone-look porcelain for facades and outdoor living can be coordinated with these builds—see porcelain slabs under Surfaces when you want to match exterior and interior finishes.",
     ],
   },
 };
