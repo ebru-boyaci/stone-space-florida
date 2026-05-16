@@ -19,7 +19,7 @@ export function DeckShowcaseSection({ blocks }: { blocks: DeckShowcaseBlock[] })
             className="border-b border-white/[0.06] pb-20 last:border-b-0 last:pb-0 sm:pb-24 lg:pb-28"
             aria-labelledby={`${block.id}-heading`}
           >
-            <div className="flex flex-col gap-10 sm:gap-12 lg:grid lg:grid-cols-2 lg:items-start lg:gap-14 xl:gap-20">
+            <div className="flex flex-col gap-10 sm:gap-12 lg:grid lg:grid-cols-2 lg:items-center lg:gap-14 xl:gap-20">
               <div className={`min-w-0 lg:row-start-1 ${imageFirst ? "lg:col-start-1" : "lg:col-start-2"}`}>
                 <figure className="inline-block w-full max-w-full rounded-sm border border-white/[0.08] bg-zinc-900/40 shadow-[0_24px_80px_-32px_rgba(0,0,0,0.85)]">
                   <img
@@ -32,7 +32,7 @@ export function DeckShowcaseSection({ blocks }: { blocks: DeckShowcaseBlock[] })
                 </figure>
               </div>
               <div
-                className={`flex min-w-0 flex-col justify-center lg:row-start-1 lg:py-4 ${
+                className={`flex w-full min-w-0 flex-col justify-center lg:row-start-1 ${
                   imageFirst ? "lg:col-start-2" : "lg:col-start-1"
                 }`}
               >
@@ -42,7 +42,7 @@ export function DeckShowcaseSection({ blocks }: { blocks: DeckShowcaseBlock[] })
                 >
                   {block.heading}
                 </h2>
-                <div className="mt-5 space-y-4 text-pretty text-lg leading-relaxed text-zinc-400 sm:mt-6 sm:text-xl sm:leading-relaxed lg:max-w-[36rem]">
+                <div className="mt-5 w-full space-y-4 text-pretty text-lg leading-relaxed text-zinc-400 sm:mt-6 sm:text-xl sm:leading-relaxed">
                   {block.paragraphs.map((p, i) => (
                     <p key={i}>{p}</p>
                   ))}
