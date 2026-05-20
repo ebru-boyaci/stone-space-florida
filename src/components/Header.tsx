@@ -234,7 +234,7 @@ export function Header({
               className="hidden overflow-hidden border-t border-white/[0.06] bg-black/80 backdrop-blur-xl lg:block"
             >
               <div className="mx-auto w-full max-w-full px-2 py-10 sm:px-3 lg:px-5 xl:px-6">
-                <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-4 lg:gap-12">
+                <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-5 lg:gap-12">
                   <div>
                     <p className="mb-4 text-xs font-semibold tracking-[0.22em] text-[#b9a086] uppercase">Site</p>
                     <ul className="space-y-3">

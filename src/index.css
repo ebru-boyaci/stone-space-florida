@@ -51,6 +51,7 @@ body {
 }
 
 @layer base {
+
   button,
   [type="button"],
   [type="submit"],
@@ -172,4 +173,135 @@ body {
     opacity: 1;
     transform: none;
   }
+}
+
+/* Service detail — grey & broken white (matches home services cards) */
+.service-detail-page__nav-band {
+  border-bottom: 1px solid rgb(0 0 0 / 0.12);
+}
+
+@media (min-width: 768px) {
+  .service-detail-hero {
+    align-items: start;
+  }
+
+  .service-detail-page__cover {
+    position: sticky;
+    top: calc(12.5rem + env(safe-area-inset-top, 0px) + 1.5rem);
+  }
+}
+
+.service-detail-page__cover img {
+  filter: drop-shadow(0 12px 32px rgb(0 0 0 / 0.08));
+}
+
+/* Projects — use more viewport width, readable type (root is 67%) */
+.project-page-shell,
+.service-page-shell {
+  width: 100%;
+  max-width: min(98vw, 118rem);
+  margin-inline: auto;
+  padding-inline: max(1rem, env(safe-area-inset-left, 0px)) max(1rem, env(safe-area-inset-right, 0px));
+}
+
+@media (min-width: 640px) {
+  .project-page-shell,
+  .service-page-shell {
+    padding-inline: 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .project-page-shell,
+  .service-page-shell {
+    padding-inline: 2.25rem;
+  }
+}
+
+/* Project detail — text left, media right (md+) */
+@media (min-width: 768px) {
+  .project-detail-hero--split {
+    align-items: stretch;
+    grid-template-columns: minmax(0, 1fr) clamp(20rem, 46vw, 42rem);
+    gap: 2rem;
+  }
+
+  .project-detail-video--portrait,
+  .project-detail-feature {
+    position: sticky;
+    top: calc(12.5rem + env(safe-area-inset-top, 0px) + 1.5rem);
+  }
+
+  .project-detail-feature__frame {
+    max-height: min(94svh, 64rem);
+  }
+
+  .project-detail-feature__frame img {
+    max-height: min(94svh, 64rem);
+    width: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+}
+
+@media (min-width: 1280px) {
+  .project-detail-hero--split {
+    gap: 2.75rem;
+  }
+}
+
+/* Frame matches video aspect; video fills edge-to-edge */
+.project-detail-video__frame {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  border-radius: 2px;
+  border: 1px solid rgb(255 255 255 / 0.08);
+  background: #000;
+}
+
+.project-detail-video__frame--portrait {
+  width: 100%;
+  max-height: min(94svh, 64rem);
+  margin-inline: auto;
+}
+
+@media (min-width: 768px) {
+  .project-detail-video__frame--portrait {
+    margin-inline: 0;
+  }
+}
+
+.project-detail-video__frame--landscape {
+  max-height: min(92svh, 50rem);
+}
+
+.project-detail-video__el {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  pointer-events: none;
+}
+
+.project-detail-video__el::-webkit-media-controls {
+  display: none !important;
+}
+
+.project-detail-video__el::-webkit-media-controls-enclosure {
+  display: none !important;
+}
+
+/* WhatsApp yatay fotoğraflar ~946px — tam sayfa genişliğinde upscale etmeyelim */
+.project-gallery__figure--landscape {
+  max-width: 946px;
+}
+
+.project-gallery__img--landscape {
+  width: 100%;
+  height: auto;
+  image-rendering: auto;
 }

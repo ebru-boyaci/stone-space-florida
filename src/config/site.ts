@@ -55,10 +55,30 @@ export const NAV_MENU_GROUPS: NavMenuGroup[] = [
     label: "Services",
     items: [
       { id: "3d-design", label: "3D design & layout", href: "/services/3d-design-layout", internal: true },
+      { id: "bathroom", label: "Bathroom renovation", href: "/services/bathroom", internal: true },
       { id: "turnkey", label: "Turnkey projects", href: "/services/turnkey-projects", internal: true },
-      { id: "deck-services", label: "Deck services", href: "/services/deck", internal: true },
+      { id: "countertops", label: "Countertops", href: "/services/countertops", internal: true },
+      { id: "cabinets-service", label: "Cabinets", href: "/services/cabinets", internal: true },
+      { id: "deck-services", label: "Deck build", href: "/services/deck", internal: true },
+      { id: "flooring-service", label: "Flooring", href: "/services/flooring", internal: true },
+      { id: "drywall", label: "Drywall & paint", href: "/services/drywall-painting", internal: true },
       { id: "vinyl-service", label: "Vinyl flooring", href: "/services/vinyl-flooring", internal: true },
       { id: "tile-service", label: "Porcelain tile", href: "/services/porcelain-tile", internal: true },
+    ],
+  },
+  {
+    id: "projects",
+    label: "Projects",
+    items: [
+      { id: "projects-all", label: "All projects", href: "/projects", internal: true },
+      { id: "navy-gold-kitchen", label: "Navy & Gold Kitchen", href: "/projects/navy-gold-kitchen", internal: true },
+      { id: "taj-mahal-kitchen", label: "Taj Mahal Kitchen", href: "/projects/taj-mahal-kitchen", internal: true },
+      {
+        id: "taj-mahal-waterfall-kitchen",
+        label: "Taj Mahal Waterfall Kitchen",
+        href: "/projects/taj-mahal-waterfall-kitchen",
+        internal: true,
+      },
     ],
   },
 ];

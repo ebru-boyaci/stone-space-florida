@@ -8,6 +8,8 @@ import { TileCatalogPage } from "@/pages/TileCatalogPage";
 import { FloorCatalogPage } from "@/pages/FloorCatalogPage";
 import { DeckCatalogPage } from "@/pages/DeckCatalogPage";
 import { ServiceDetailPage } from "@/pages/ServiceDetailPage";
+import { ProjectsPage } from "@/pages/ProjectsPage";
+import { ProjectDetailPage } from "@/pages/ProjectDetailPage";
 import { useDocumentNavScrollCollapse } from "@/hooks/useDocumentNavScrollCollapse";
 import { forceReleaseDocumentScrollLock, useScrollLock } from "@/hooks/useScrollLock";
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
@@ -200,6 +202,22 @@ export default function App() {
           element={
             <main inert={contactOpen}>
               <ServiceDetailPage />
+            </main>
+          }
+        />
+        <Route
+          path="/projects"
+          element={
+            <main inert={contactOpen}>
+              <ProjectsPage />
+            </main>
+          }
+        />
+        <Route
+          path="/projects/:slug"
+          element={
+            <main inert={contactOpen}>
+              <ProjectDetailPage />
             </main>
           }
         />

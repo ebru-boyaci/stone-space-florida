@@ -33,6 +33,7 @@ const SERVICES: ServiceCard[] = [
     title: "Bathroom",
     src: imgBathroom,
     alt: "Bathroom renovation",
+    to: "/services/bathroom",
   },
   {
     category: "Projects",
@@ -46,31 +47,35 @@ const SERVICES: ServiceCard[] = [
     title: "Countertops",
     src: imgCountertops,
     alt: "Countertop installation",
+    to: "/services/countertops",
   },
   {
     category: "Cabinetry",
     title: "Cabinets",
     src: imgCabinet,
     alt: "Cabinet installation",
+    to: "/services/cabinets",
   },
   {
     category: "Outdoor",
     title: "Deck build",
     src: imgDeck,
     alt: "Deck installation",
-    to: "/catalog/deck",
+    to: "/services/deck",
   },
   {
     category: "Flooring",
     title: "Flooring",
     src: imgFlooring,
     alt: "Flooring installation",
+    to: "/services/flooring",
   },
   {
     category: "Finishes",
     title: "Drywall & paint",
     src: imgDrywall,
     alt: "Drywall and painting service",
+    to: "/services/drywall-painting",
   },
 ];
 
