@@ -24,29 +24,26 @@ export function ServiceDetailPage() {
 
       <header className="service-detail-page__hero border-b border-zinc-900/10 bg-[#f2efe8]">
         <div className="service-page-shell py-8 sm:py-10 lg:py-12">
-          <div className="service-detail-hero md:grid md:grid-cols-[minmax(0,1fr)_clamp(16rem,36vw,28rem)] md:items-start md:gap-x-10 lg:gap-x-14">
-            <div className="min-w-0">
+          <div className="service-detail-hero">
+            <div className="service-detail-hero__copy min-w-0">
               <p className="text-sm font-semibold tracking-[0.28em] text-[#8a7358] uppercase sm:text-base">
                 {detail.kicker}
               </p>
               <h1 className="mt-2 font-serif text-[clamp(2.25rem,5vw,3.5rem)] font-medium tracking-[-0.02em] text-zinc-900">
                 {detail.title}
               </h1>
-              <p className="mt-4 max-w-3xl text-pretty text-lg leading-relaxed text-zinc-600 sm:text-xl">
+              <p className="mt-4 text-pretty text-lg leading-relaxed text-zinc-600 sm:text-xl">
                 {detail.summary}
               </p>
             </div>
 
-            <figure className="service-detail-page__cover mx-auto mt-8 w-full max-w-[20rem] md:mx-0 md:mt-0 md:max-w-none md:justify-self-end">
-              <div className="overflow-hidden rounded-sm border border-zinc-900/10 bg-[#ebe6dd] shadow-[0_16px_48px_-20px_rgba(0,0,0,0.2)]">
-                <img
-                  src={detail.coverImage}
-                  alt=""
-                  className="block h-auto w-full object-contain object-center"
-                  loading="eager"
-                  decoding="async"
-                />
-              </div>
+            <figure className="service-detail-page__cover">
+              <img
+                src={detail.coverImage}
+                alt=""
+                loading="eager"
+                decoding="async"
+              />
             </figure>
           </div>
         </div>
