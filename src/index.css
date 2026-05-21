@@ -180,7 +180,14 @@ body {
   border-bottom: 1px solid rgb(0 0 0 / 0.12);
 }
 
-.service-detail-hero {
+.service-detail-page__main,
+.service-detail-page__intro,
+.service-detail-content {
+  border: none;
+  box-shadow: none;
+}
+
+.service-detail-content {
   display: flex;
   flex-direction: column;
   gap: 2rem;
@@ -188,7 +195,7 @@ body {
 
 .service-detail-page__cover {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
   min-width: 0;
   margin: 0;
@@ -200,21 +207,19 @@ body {
   height: auto;
   max-height: min(52vh, 22rem);
   object-fit: contain;
-  object-position: center;
+  object-position: top center;
 }
 
 @media (min-width: 768px) {
-  .service-detail-hero {
+  .service-detail-content {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    align-items: center;
+    align-items: start;
     gap: clamp(1.5rem, 3vw, 2.75rem);
   }
 
   .service-detail-page__cover {
-    position: sticky;
-    top: calc(12.5rem + env(safe-area-inset-top, 0px) + 1.5rem);
-    align-self: center;
+    align-self: start;
     width: 100%;
   }
 
@@ -224,7 +229,7 @@ body {
     height: auto;
     max-height: min(78svh, 42rem);
     object-fit: contain;
-    object-position: center;
+    object-position: top center;
   }
 }
 

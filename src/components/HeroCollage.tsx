@@ -502,11 +502,11 @@ export function HeroWithCollage({
   return (
     <section
       ref={ref}
-      className="relative flex min-h-[100dvh] min-h-[100svh] flex-col items-center justify-center overflow-x-clip overflow-y-hidden pb-12 pt-[calc(8.5rem+env(safe-area-inset-top,0px))] sm:pb-20 sm:pt-[calc(10rem+env(safe-area-inset-top,0px))] lg:pt-[calc(12rem+env(safe-area-inset-top,0px))] lg:pb-24"
+      className="relative flex min-h-[100dvh] min-h-[100svh] flex-col items-center justify-center overflow-x-clip overflow-y-hidden pb-12 pt-[calc(11rem+env(safe-area-inset-top,0px))] sm:pb-20 sm:pt-[calc(12.5rem+env(safe-area-inset-top,0px))] lg:pt-[calc(14.5rem+env(safe-area-inset-top,0px))] lg:pb-24"
       aria-label="Intro"
     >
       <div
-        className="pointer-events-none absolute inset-0 z-0 max-md:origin-[50%_44%]"
+        className="pointer-events-none absolute inset-x-0 bottom-0 top-[2.5rem] z-0 max-md:origin-[50%_48%] sm:top-[2.75rem] lg:top-[3.25rem]"
         style={
           collageScale < 1
             ? { transform: `scale(${collageScale})`, transformOrigin: "50% 44%" }
@@ -544,7 +544,7 @@ export function HeroWithCollage({
         />
       </div>
 
-      <div className="relative z-10 flex w-full max-w-full -translate-y-5 flex-col items-center px-[max(1rem,env(safe-area-inset-left,0px))] sm:-translate-y-7 sm:px-6 lg:-translate-y-8">
+      <div className="relative z-10 flex w-full max-w-full -translate-y-3 flex-col items-center px-[max(1rem,env(safe-area-inset-left,0px))] sm:-translate-y-5 sm:px-6 lg:-translate-y-6">
         {children}
       </div>
     </section>
