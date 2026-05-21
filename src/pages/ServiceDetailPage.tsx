@@ -1,3 +1,4 @@
+import { HEADER_BAR_PADDING } from "@/config/layout";
 import { getServiceDetail } from "@/data/serviceDetails";
 import { Link, Navigate, useParams } from "react-router-dom";
 
@@ -11,19 +12,20 @@ export function ServiceDetailPage() {
 
   return (
     <div className="service-detail-page min-h-screen min-h-[100dvh] bg-[#f2efe8] text-zinc-900">
-      <div className="service-detail-page__nav-band bg-[#5a5854] pt-[calc(12.5rem+env(safe-area-inset-top,0px))] text-[#f2efe8]">
-        <div className="service-page-shell pb-4">
-          <Link
-            to="/"
-            className="text-base text-[#f2efe8]/75 underline decoration-[#f2efe8]/35 underline-offset-4 transition-colors hover:text-[#f2efe8] sm:text-lg"
-          >
-            ← Home
-          </Link>
-        </div>
-      </div>
+      <div
+        className={`service-detail-page__nav-band bg-[#5a5854] ${HEADER_BAR_PADDING}`}
+        aria-hidden
+      />
 
       <main className="service-detail-page__main pb-[max(6rem,env(safe-area-inset-bottom,0px))]">
         <div className="service-page-shell py-8 sm:py-10 lg:py-12">
+          <Link
+            to="/"
+            className="mb-6 inline-block text-base text-[#8a7358]/90 underline decoration-[#8a7358]/35 underline-offset-4 transition-colors hover:text-[#8a7358] sm:mb-8 sm:text-lg"
+          >
+            ← Home
+          </Link>
+
           <div className="service-detail-content">
             <div className="service-detail-content__copy min-w-0">
               <div className="service-detail-page__intro">

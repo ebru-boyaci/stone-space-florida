@@ -77,20 +77,8 @@ export const NAV_MENU_GROUPS: NavMenuGroup[] = [
     label: "Projects",
     items: [
       { id: "projects-all", label: "All projects", href: "/projects", internal: true },
-      { id: "navy-gold-kitchen", label: "Navy & Gold Kitchen", href: "/projects/navy-gold-kitchen", internal: true },
-      { id: "taj-mahal-kitchen", label: "Taj Mahal Kitchen", href: "/projects/taj-mahal-kitchen", internal: true },
-      {
-        id: "taj-mahal-waterfall-kitchen",
-        label: "Taj Mahal Waterfall Kitchen",
-        href: "/projects/taj-mahal-waterfall-kitchen",
-        internal: true,
-      },
-      {
-        id: "panda-white-kitchen",
-        label: "Panda White Kitchen",
-        href: "/projects/panda-white-kitchen",
-        internal: true,
-      },
+      { id: "before-after", label: "Before & after", href: "/before-after", internal: true },
+      { id: "references", label: "References", href: "/references", internal: true },
     ],
   },
 ];

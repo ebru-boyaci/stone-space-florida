@@ -233,6 +233,36 @@ body {
   }
 }
 
+/* Before / after — compare slider */
+.before-after-compare__range:focus-visible {
+  outline: none;
+}
+
+.before-after-compare:focus-within {
+  outline: 2px solid rgb(185 160 134 / 0.55);
+  outline-offset: 2px;
+}
+
+/* About — Quality guaranteed checkerboard (image | text alternating) */
+.about-quality-checker {
+  gap: 0;
+}
+
+.about-quality-checker__text {
+  background: #f5f2eb;
+}
+
+.about-quality-checker__image {
+  background: #e8e4dc;
+}
+
+@media (min-width: 1024px) {
+  .about-quality-checker__text,
+  .about-quality-checker__image {
+    min-height: clamp(16rem, 22vw, 22rem);
+  }
+}
+
 /* Projects — use more viewport width, readable type (root is 67%) */
 .project-page-shell,
 .service-page-shell {

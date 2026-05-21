@@ -11,10 +11,12 @@ import { ServiceDetailPage } from "@/pages/ServiceDetailPage";
 import { ProjectsPage } from "@/pages/ProjectsPage";
 import { ProjectDetailPage } from "@/pages/ProjectDetailPage";
 import { AboutPage } from "@/pages/AboutPage";
+import { BeforeAfterPage } from "@/pages/BeforeAfterPage";
+import { ReferencesPage } from "@/pages/ReferencesPage";
 import { useDocumentNavScrollCollapse } from "@/hooks/useDocumentNavScrollCollapse";
 import { forceReleaseDocumentScrollLock, useScrollLock } from "@/hooks/useScrollLock";
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
-import { Route, Routes, useLocation } from "react-router-dom";
+import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 
 export default function App() {
   const location = useLocation();
@@ -211,6 +213,23 @@ export default function App() {
           element={
             <main inert={contactOpen}>
               <AboutPage />
+            </main>
+          }
+        />
+        <Route
+          path="/before-after"
+          element={
+            <main inert={contactOpen}>
+              <BeforeAfterPage />
+            </main>
+          }
+        />
+        <Route path="/referance" element={<Navigate to="/references" replace />} />
+        <Route
+          path="/references"
+          element={
+            <main inert={contactOpen}>
+              <ReferencesPage />
             </main>
           }
         />

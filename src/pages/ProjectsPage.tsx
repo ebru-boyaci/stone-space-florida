@@ -14,6 +14,14 @@ export function ProjectsPage() {
             Completed kitchens, baths, and full-home renovations—documented with the surfaces, cabinetry, and
             finishes specified on each job.
           </p>
+          <p className="mt-6">
+            <Link
+              to="/before-after"
+              className="text-sm text-[#b9a086] underline decoration-[#b9a086]/40 underline-offset-4 transition-colors hover:text-[#c9ae88] sm:text-base"
+            >
+              See before &amp; after transformations →
+            </Link>
+          </p>
         </header>
 
         <ul className="mt-12 grid gap-8 sm:mt-14 sm:grid-cols-2 sm:gap-10 lg:gap-12">

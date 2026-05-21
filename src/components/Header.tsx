@@ -1,9 +1,10 @@
 import logoWhite from "@assets/logo/white.PNG";
+import { MegaMenuPanel } from "@/components/MegaMenuPanel";
+import { MobileNavMenu } from "@/components/MobileNavMenu";
 import { useScrollLock } from "@/hooks/useScrollLock";
-import type { NavLinkItem } from "@/config/site";
-import { NAV_MENU_GROUPS, SITE_NAV_ITEMS, SITE_PHONE_DISPLAY, SITE_PHONE_TEL } from "@/config/site";
+import { SITE_PHONE_DISPLAY, SITE_PHONE_TEL } from "@/config/site";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
-import { useCallback, useEffect, useState, type MouseEvent } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 
 const springHeader = { type: "spring" as const, stiffness: 300, damping: 42, mass: 0.58 };
@@ -16,78 +17,6 @@ type HeaderProps = {
   onOpenContact?: () => void;
   onExitContact?: () => void;
 };
-
-type NavItemClickProps = {
-  item: NavLinkItem;
-  contactOpen?: boolean;
-  onOpenContact?: () => void;
-  onExitContact?: () => void;
-  onNavigate: () => void;
-};
-
-function navItemClassName(item: NavLinkItem, variant: "mega" | "mobile") {
-  const base =
-    item.accent
-      ? variant === "mega"
-        ? "text-base font-medium tracking-wide text-copper md:text-lg"
-        : "py-2.5 text-center text-xl font-medium text-copper sm:text-2xl"
-      : variant === "mega"
-        ? "text-base font-medium tracking-wide text-white/85 transition-colors hover:text-white md:text-lg"
-        : "py-2.5 text-center text-xl font-medium text-white/90 transition-colors hover:text-white sm:text-2xl";
-  return base;
-}
-
-function NavMenuItem({
-  item,
-  variant,
-  index,
-  reduceMotion,
-  contactOpen,
-  onOpenContact,
-  onExitContact,
-  onNavigate,
-}: NavItemClickProps & {
-  variant: "mega" | "mobile";
-  index: number;
-  reduceMotion: boolean | null;
-}) {
-  const isContact = item.id === "contact";
-  const className = navItemClassName(item, variant);
-
-  const handleClick = (e: MouseEvent) => {
-    if (isContact && (onOpenContact || onExitContact)) {
-      e.preventDefault();
-      if (contactOpen && onExitContact) onExitContact();
-      else onOpenContact?.();
-    }
-    onNavigate();
-  };
-
-  const motionProps = {
-    initial: reduceMotion ? false : { opacity: 0, y: variant === "mega" ? 10 : 14 },
-    animate: { opacity: 1, y: 0 },
-    transition: {
-      ...springPanel,
-      delay: reduceMotion ? 0 : variant === "mega" ? index * 0.03 : 0.06 + index * 0.04,
-    },
-  };
-
-  if (item.internal) {
-    return (
-      <motion.div {...motionProps}>
-        <Link to={item.href} className={className} onClick={handleClick}>
-          {item.label}
-        </Link>
-      </motion.div>
-    );
-  }
-
-  return (
-    <motion.a {...motionProps} href={item.href} className={className} onClick={handleClick}>
-      {item.label}
-    </motion.a>
-  );
-}
 
 export function Header({
   contactOpen = false,
@@ -124,8 +53,6 @@ export function Header({
   }, [closeAll]);
 
   const headerY = reduceMotion || contactOpen ? 0 : navCollapsed ? "-120%" : 0;
-
-  let megaIndex = 0;
 
   return (
     <>
@@ -248,71 +175,13 @@ export function Header({
               transition={{ duration: 0.32, ease: [0.22, 1, 0.36, 1] }}
               className="hidden overflow-hidden border-t border-white/[0.06] bg-black/80 backdrop-blur-xl lg:block"
             >
-              <div className="mx-auto w-full max-w-full px-2 py-10 sm:px-3 lg:px-5 xl:px-6">
-                <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-5 lg:gap-12">
-                  <div>
-                    <p className="mb-4 text-xs font-semibold tracking-[0.22em] text-[#b9a086] uppercase">Site</p>
-                    <ul className="space-y-3">
-                      {SITE_NAV_ITEMS.map((item) => (
-                        <li key={item.id}>
-                          <NavMenuItem
-                            item={item}
-                            variant="mega"
-                            index={megaIndex++}
-                            reduceMotion={reduceMotion}
-                            contactOpen={contactOpen}
-                            onOpenContact={onOpenContact}
-                            onExitContact={onExitContact}
-                            onNavigate={() => setMegaOpen(false)}
-                          />
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-
-                  {NAV_MENU_GROUPS.map((group) => (
-                    <div key={group.id}>
-                      <p className="mb-4 text-xs font-semibold tracking-[0.22em] text-[#b9a086] uppercase">{group.label}</p>
-                      <ul className="space-y-3">
-                        {group.items.map((item) => (
-                          <li key={item.id}>
-                            <NavMenuItem
-                              item={item}
-                              variant="mega"
-                              index={megaIndex++}
-                              reduceMotion={reduceMotion}
-                              contactOpen={contactOpen}
-                              onOpenContact={onOpenContact}
-                              onExitContact={onExitContact}
-                              onNavigate={() => setMegaOpen(false)}
-                            />
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  ))}
-
-                  <div>
-                    <p className="mb-4 text-xs font-semibold tracking-[0.22em] text-[#b9a086] uppercase">Get in touch</p>
-                    <NavMenuItem
-                      item={{ id: "contact", label: "Contact Us", href: "#contact" }}
-                      variant="mega"
-                      index={megaIndex++}
-                      reduceMotion={reduceMotion}
-                      contactOpen={contactOpen}
-                      onOpenContact={onOpenContact}
-                      onExitContact={onExitContact}
-                      onNavigate={() => setMegaOpen(false)}
-                    />
-                    <a
-                      href={`tel:${SITE_PHONE_TEL}`}
-                      className="mt-4 block text-base font-medium tracking-wide text-white/70 transition-colors hover:text-white md:text-lg"
-                      onClick={() => setMegaOpen(false)}
-                    >
-                      {SITE_PHONE_DISPLAY}
-                    </a>
-                  </div>
-                </div>
+              <div className="mx-auto w-full max-w-full px-2 py-8 sm:px-3 lg:px-5 xl:px-6">
+                <MegaMenuPanel
+                  contactOpen={contactOpen}
+                  onOpenContact={onOpenContact}
+                  onExitContact={onExitContact}
+                  onNavigate={() => setMegaOpen(false)}
+                />
               </div>
             </motion.div>
           )}
@@ -344,64 +213,17 @@ export function Header({
               </button>
             </div>
 
-            <nav
+            <div
               className="flex min-h-0 flex-1 flex-col overflow-y-auto overscroll-y-contain px-6 py-4"
-              aria-label="Mobile navigation"
               onClick={(e) => e.stopPropagation()}
             >
-              <div className="mx-auto w-full max-w-md">
-                {SITE_NAV_ITEMS.map((item, i) => (
-                  <NavMenuItem
-                    key={item.id}
-                    item={item}
-                    variant="mobile"
-                    index={i}
-                    reduceMotion={reduceMotion}
-                    contactOpen={contactOpen}
-                    onOpenContact={onOpenContact}
-                    onExitContact={onExitContact}
-                    onNavigate={() => setMenuOpen(false)}
-                  />
-                ))}
-
-                {NAV_MENU_GROUPS.map((group, gi) => (
-                  <div key={group.id} className={gi === 0 ? "mt-8" : "mt-10"}>
-                    <p className="mb-3 text-center text-xs font-semibold tracking-[0.22em] text-[#b9a086] uppercase">
-                      {group.label}
-                    </p>
-                    <ul className="flex flex-col items-center gap-0">
-                      {group.items.map((item, i) => (
-                        <li key={item.id} className="w-full">
-                          <NavMenuItem
-                            item={item}
-                            variant="mobile"
-                            index={1 + gi * 10 + i}
-                            reduceMotion={reduceMotion}
-                            contactOpen={contactOpen}
-                            onOpenContact={onOpenContact}
-                            onExitContact={onExitContact}
-                            onNavigate={() => setMenuOpen(false)}
-                          />
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                ))}
-
-                <div className="mt-10">
-                  <NavMenuItem
-                    item={{ id: "contact", label: "Contact Us", href: "#contact" }}
-                    variant="mobile"
-                    index={99}
-                    reduceMotion={reduceMotion}
-                    contactOpen={contactOpen}
-                    onOpenContact={onOpenContact}
-                    onExitContact={onExitContact}
-                    onNavigate={() => setMenuOpen(false)}
-                  />
-                </div>
-              </div>
-            </nav>
+              <MobileNavMenu
+                contactOpen={contactOpen}
+                onOpenContact={onOpenContact}
+                onExitContact={onExitContact}
+                onNavigate={() => setMenuOpen(false)}
+              />
+            </div>
 
             <motion.div
               className="shrink-0 border-t border-white/[0.08] px-6 py-8 text-center"
