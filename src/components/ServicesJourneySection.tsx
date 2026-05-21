@@ -12,14 +12,11 @@ import {
   useTransform,
 } from "motion/react";
 import { useMemo, useRef } from "react";
+import { Link } from "react-router-dom";
 
-const CABINET_TITLE = "Transform Your Kitchen with Cabinets";
-
-/** Kart 2 — ücretsiz danışmanlık / iletişim */
-const CONSULT_HEADLINE = "Contact us & unlock your complimentary stone consultation";
-
-/** Kart 3 — ücretsiz danışmanlık hizmeti */
-const FREE_CONSULT_TITLE = "Free Consultation Service";
+const CARD_1_TITLE = "Quartz & premium surfaces";
+const CARD_2_TITLE = "Our completed projects";
+const CARD_3_TITLE = "Free consultation";
 
 const CARD_NUM_CLASS =
   "flex size-[2.875rem] shrink-0 items-center justify-center rounded-full bg-white/[0.18] text-[0.9375rem] font-normal text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.12)] backdrop-blur-[3px]";
@@ -35,12 +32,15 @@ const ctaButton =
 function ServiceCardPitch({
   alignment,
   title,
-  ctaLabel = "Read more",
+  href,
+  ctaLabel,
+  internal = false,
 }: {
   alignment: PitchAlign;
   title: string;
-  /** Card CTA; varsayılan İngilizce "Read more". */
-  ctaLabel?: string;
+  href: string;
+  ctaLabel: string;
+  internal?: boolean;
 }) {
   const wrapper =
     alignment === "center"
@@ -50,17 +50,28 @@ function ServiceCardPitch({
         : "items-start text-left";
   const ctaAlign =
     alignment === "center" ? "mx-auto" : alignment === "right" ? "ml-auto" : "";
+  const ctaClassName = `${ctaButton} ${ctaAlign}`;
+  const arrow = (
+    <WebflowArrowIcon
+      flip={webflowForwardFlip()}
+      className="relative top-[0.06em] inline-block h-[0.85em] w-auto shrink-0 text-white/95 sm:h-[0.82em]"
+    />
+  );
 
   return (
     <div className={`flex max-w-[min(92vw,26rem)] flex-col gap-1 ${wrapper}`}>
       <h3 className={pitchTitle}>{title}</h3>
-      <a href="#contact" className={`${ctaButton} ${ctaAlign}`}>
-        {ctaLabel}
-        <WebflowArrowIcon
-          flip={webflowForwardFlip()}
-          className="relative top-[0.06em] inline-block h-[0.85em] w-auto shrink-0 text-white/95 sm:h-[0.82em]"
-        />
-      </a>
+      {internal ? (
+        <Link to={href} className={ctaClassName}>
+          {ctaLabel}
+          {arrow}
+        </Link>
+      ) : (
+        <a href={href} className={ctaClassName}>
+          {ctaLabel}
+          {arrow}
+        </a>
+      )}
     </div>
   );
 }
@@ -186,7 +197,13 @@ export function ServicesJourneySection() {
                 <div className={CARD_NUM_CLASS} aria-hidden>
                   1
                 </div>
-                <ServiceCardPitch alignment="right" title={CABINET_TITLE} />
+                <ServiceCardPitch
+                  alignment="right"
+                  title={CARD_1_TITLE}
+                  href="/catalog/quartz"
+                  ctaLabel="Explore catalog"
+                  internal
+                />
               </div>
             </div>
           </motion.article>
@@ -210,7 +227,13 @@ export function ServicesJourneySection() {
                 <div className={CARD_NUM_CLASS} aria-hidden>
                   2
                 </div>
-                <ServiceCardPitch alignment="center" title={CONSULT_HEADLINE} />
+                <ServiceCardPitch
+                  alignment="center"
+                  title={CARD_2_TITLE}
+                  href="/projects"
+                  ctaLabel="View projects"
+                  internal
+                />
               </div>
             </div>
           </motion.article>
@@ -234,7 +257,12 @@ export function ServicesJourneySection() {
                 <div className={CARD_NUM_CLASS} aria-hidden>
                   3
                 </div>
-                <ServiceCardPitch alignment="left" title={FREE_CONSULT_TITLE} />
+                <ServiceCardPitch
+                  alignment="left"
+                  title={CARD_3_TITLE}
+                  href="#contact"
+                  ctaLabel="Get in touch"
+                />
               </div>
             </div>
           </motion.article>
