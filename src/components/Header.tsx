@@ -1,7 +1,7 @@
 import logoWhite from "@assets/logo/white.PNG";
 import { useScrollLock } from "@/hooks/useScrollLock";
 import type { NavLinkItem } from "@/config/site";
-import { NAV_MENU_GROUPS, SITE_PHONE_DISPLAY, SITE_PHONE_TEL } from "@/config/site";
+import { NAV_MENU_GROUPS, SITE_NAV_ITEMS, SITE_PHONE_DISPLAY, SITE_PHONE_TEL } from "@/config/site";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { useCallback, useEffect, useState, type MouseEvent } from "react";
 import { Link, useLocation } from "react-router-dom";
@@ -253,18 +253,20 @@ export function Header({
                   <div>
                     <p className="mb-4 text-xs font-semibold tracking-[0.22em] text-[#b9a086] uppercase">Site</p>
                     <ul className="space-y-3">
-                      <li>
-                        <NavMenuItem
-                          item={{ id: "home", label: "Home", href: "/", internal: true }}
-                          variant="mega"
-                          index={megaIndex++}
-                          reduceMotion={reduceMotion}
-                          contactOpen={contactOpen}
-                          onOpenContact={onOpenContact}
-                          onExitContact={onExitContact}
-                          onNavigate={() => setMegaOpen(false)}
-                        />
-                      </li>
+                      {SITE_NAV_ITEMS.map((item) => (
+                        <li key={item.id}>
+                          <NavMenuItem
+                            item={item}
+                            variant="mega"
+                            index={megaIndex++}
+                            reduceMotion={reduceMotion}
+                            contactOpen={contactOpen}
+                            onOpenContact={onOpenContact}
+                            onExitContact={onExitContact}
+                            onNavigate={() => setMegaOpen(false)}
+                          />
+                        </li>
+                      ))}
                     </ul>
                   </div>
 
@@ -348,16 +350,19 @@ export function Header({
               onClick={(e) => e.stopPropagation()}
             >
               <div className="mx-auto w-full max-w-md">
-                <NavMenuItem
-                  item={{ id: "home", label: "Home", href: "/", internal: true }}
-                  variant="mobile"
-                  index={0}
-                  reduceMotion={reduceMotion}
-                  contactOpen={contactOpen}
-                  onOpenContact={onOpenContact}
-                  onExitContact={onExitContact}
-                  onNavigate={() => setMenuOpen(false)}
-                />
+                {SITE_NAV_ITEMS.map((item, i) => (
+                  <NavMenuItem
+                    key={item.id}
+                    item={item}
+                    variant="mobile"
+                    index={i}
+                    reduceMotion={reduceMotion}
+                    contactOpen={contactOpen}
+                    onOpenContact={onOpenContact}
+                    onExitContact={onExitContact}
+                    onNavigate={() => setMenuOpen(false)}
+                  />
+                ))}
 
                 {NAV_MENU_GROUPS.map((group, gi) => (
                   <div key={group.id} className={gi === 0 ? "mt-8" : "mt-10"}>

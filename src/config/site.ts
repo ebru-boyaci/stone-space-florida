@@ -37,6 +37,12 @@ export type NavMenuGroup = {
   items: NavLinkItem[];
 };
 
+/** Site section — home, about */
+export const SITE_NAV_ITEMS: NavLinkItem[] = [
+  { id: "home", label: "Home", href: "/", internal: true },
+  { id: "about", label: "About us", href: "/about", internal: true },
+];
+
 export const NAV_MENU_GROUPS: NavMenuGroup[] = [
   {
     id: "catalog",
@@ -91,7 +97,7 @@ export const NAV_MENU_GROUPS: NavMenuGroup[] = [
 
 /** Flat list for simple maps (mobile + legacy) */
 export const NAV_LINKS: NavLinkItem[] = [
-  { id: "home", label: "Home", href: "/", internal: true },
+  ...SITE_NAV_ITEMS,
   ...NAV_MENU_GROUPS.flatMap((g) => g.items),
   { id: "contact", label: "Contact Us", href: "#contact" },
 ];

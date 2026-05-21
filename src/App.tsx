@@ -10,6 +10,7 @@ import { DeckCatalogPage } from "@/pages/DeckCatalogPage";
 import { ServiceDetailPage } from "@/pages/ServiceDetailPage";
 import { ProjectsPage } from "@/pages/ProjectsPage";
 import { ProjectDetailPage } from "@/pages/ProjectDetailPage";
+import { AboutPage } from "@/pages/AboutPage";
 import { useDocumentNavScrollCollapse } from "@/hooks/useDocumentNavScrollCollapse";
 import { forceReleaseDocumentScrollLock, useScrollLock } from "@/hooks/useScrollLock";
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
@@ -202,6 +203,14 @@ export default function App() {
           element={
             <main inert={contactOpen}>
               <ServiceDetailPage />
+            </main>
+          }
+        />
+        <Route
+          path="/about"
+          element={
+            <main inert={contactOpen}>
+              <AboutPage />
             </main>
           }
         />
