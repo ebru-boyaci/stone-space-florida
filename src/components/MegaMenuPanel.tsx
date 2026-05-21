@@ -62,8 +62,11 @@ function MegaLink({
     );
   }
 
+  const externalProps =
+    item.href.startsWith("http") ? { target: "_blank" as const, rel: "noopener noreferrer" } : {};
+
   return (
-    <motion.a {...motionProps} href={item.href} className={className} onClick={handleClick}>
+    <motion.a {...motionProps} href={item.href} className={className} onClick={handleClick} {...externalProps}>
       {item.label}
     </motion.a>
   );
@@ -116,6 +119,30 @@ function ProjectsMegaContent(props: MegaMenuPanelProps & { section: MegaMenuSect
   );
 }
 
+function PageMegaContent({
+  item,
+  reduceMotion,
+  ...linkProps
+}: { item: NavLinkItem; reduceMotion: boolean | null } & MegaMenuPanelProps) {
+  return (
+    <div className="flex justify-center">
+      <motion.div
+        initial={reduceMotion ? false : { opacity: 0, y: 8 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={springPanel}
+      >
+        <Link
+          to={item.href}
+          className="inline-flex min-w-[12rem] items-center justify-center rounded-full border border-[#c9a882]/40 bg-[#c9a882]/10 px-8 py-3.5 text-base font-semibold tracking-[0.12em] text-white uppercase transition-colors hover:border-[#c9a882]/70 hover:bg-[#c9a882]/20 md:text-lg"
+          onClick={linkProps.onNavigate}
+        >
+          Go to {item.label}
+        </Link>
+      </motion.div>
+    </div>
+  );
+}
+
 function SectionPanel({
   section,
   reduceMotion,
@@ -123,6 +150,10 @@ function SectionPanel({
 }: { section: MegaMenuSection; reduceMotion: boolean | null } & MegaMenuPanelProps) {
   if (section.id === "projects") {
     return <ProjectsMegaContent section={section} reduceMotion={reduceMotion} {...linkProps} />;
+  }
+
+  if (section.id === "home" || section.id === "about") {
+    return <PageMegaContent item={section.items[0]} reduceMotion={reduceMotion} {...linkProps} />;
   }
 
   if (section.id === "contact") {

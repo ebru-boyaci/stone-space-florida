@@ -1,9 +1,9 @@
-import kitchen1 from "@assets/kitchen1.jpg";
-import kitchen2 from "@assets/kitchen2.jpg";
-import kitchen3 from "@assets/kitchen3.jpg";
-import kitchen4 from "@assets/kitchen4.jpg";
-import kitchen5 from "@assets/kitchen 5.jpg";
-import kitchen6 from "@assets/kitchen6.jpg";
+import kitchen1 from "@assets/craft/kitchen1.jpg";
+import kitchen2 from "@assets/craft/kitchen2.jpg";
+import kitchen3 from "@assets/craft/kitchen3.jpg";
+import kitchen4 from "@assets/craft/kitchen4.jpg";
+import kitchen5 from "@assets/craft/kitchen5.jpg";
+import kitchen6 from "@assets/craft/kitchen6.jpg";
 import { useEffect, useRef, useState, type RefObject } from "react";
 
 const COPY_LINES = [
@@ -22,15 +22,26 @@ type Tile = {
   src: string;
   cls: string;
   imgCls?: string;
+  /** İlk birkaç karo — tarayıcı önceliği */
+  priority?: boolean;
 };
 
 const TILES: readonly Tile[] = [
-  { src: kitchen1, cls: "left-[-1%] top-[12%] w-[29vw] max-w-[19rem] aspect-[1.65/1]" },
-  { src: kitchen2, cls: "left-[40%] top-[4.5%] w-[24vw] max-w-[16rem] aspect-[1.55/1]" },
+  {
+    src: kitchen1,
+    cls: "left-[-1%] top-[12%] w-[29vw] max-w-[19rem] aspect-[1.65/1]",
+    priority: true,
+  },
+  {
+    src: kitchen2,
+    cls: "left-[40%] top-[4.5%] w-[24vw] max-w-[16rem] aspect-[1.55/1]",
+    priority: true,
+  },
   {
     src: kitchen3,
     cls: "left-[44%] top-[75%] w-[17vw] max-w-[11rem] aspect-[1/1]",
     imgCls: "scale-[1.65]",
+    priority: true,
   },
   { src: kitchen4, cls: "left-[-2%] top-[45%] w-[20vw] max-w-[13rem] aspect-[1/1]" },
   { src: kitchen5, cls: "right-[-1%] top-[16%] w-[26vw] max-w-[17rem] aspect-[1.58/1]" },
@@ -40,8 +51,6 @@ const TILES: readonly Tile[] = [
     imgCls: "scale-[1.8]",
   },
 ] as const;
-
-const IMG_STAGGER_MS = 48;
 
 function usePrefersReducedMotion() {
   const [reduced, setReduced] = useState(false);
@@ -57,8 +66,9 @@ function usePrefersReducedMotion() {
   return reduced;
 }
 
-function useSectionEntered(ref: RefObject<HTMLElement | null>) {
-  const [entered, setEntered] = useState(false);
+/** Bölüm viewport’a yaklaşınca erken tetikle — görseller scroll’da paralel insin. */
+function useSectionNear(ref: RefObject<HTMLElement | null>) {
+  const [near, setNear] = useState(false);
 
   useEffect(() => {
     const el = ref.current;
@@ -66,45 +76,17 @@ function useSectionEntered(ref: RefObject<HTMLElement | null>) {
     const io = new IntersectionObserver(
       ([e]) => {
         if (e?.isIntersecting) {
-          setEntered(true);
+          setNear(true);
           io.disconnect();
         }
       },
-      { threshold: 0.12, rootMargin: "0px 0px -10% 0px" },
+      { threshold: 0, rootMargin: "0px 0px 35% 0px" },
     );
     io.observe(el);
     return () => io.disconnect();
   }, [ref]);
 
-  return entered;
-}
-
-/** Bölüm görününce görselleri kademeli mount — altı büyük JPG aynı karede decode olmasın. */
-function useStaggeredImageCount(active: boolean) {
-  const [count, setCount] = useState(0);
-
-  useEffect(() => {
-    if (!active) {
-      setCount(0);
-      return;
-    }
-    let cancelled = false;
-    let i = 0;
-    const step = () => {
-      if (cancelled) return;
-      i += 1;
-      setCount(i);
-      if (i < TILES.length) {
-        window.setTimeout(step, IMG_STAGGER_MS);
-      }
-    };
-    window.setTimeout(step, 0);
-    return () => {
-      cancelled = true;
-    };
-  }, [active]);
-
-  return count;
+  return near;
 }
 
 function TickerStatic() {
@@ -160,18 +142,14 @@ function TickerAnimated() {
 export function CraftShowcaseSection() {
   const sectionRef = useRef<HTMLElement>(null);
   const reduceMotion = usePrefersReducedMotion();
-  const entered = useSectionEntered(sectionRef);
-  const imageCount = useStaggeredImageCount(entered && !reduceMotion);
-
-  /** Reduced motion: tüm görselleri hemen göster (stagger yok). */
-  const showImageAt = (index: number) =>
-    reduceMotion ? true : imageCount > index;
+  const near = useSectionNear(sectionRef);
+  const loadImages = near || reduceMotion;
 
   return (
     <section
       ref={sectionRef}
       className={`relative overflow-hidden bg-[#a88667] pl-[max(1.25rem,env(safe-area-inset-left,0px))] pr-[max(1.25rem,env(safe-area-inset-right,0px))] py-20 sm:px-8 sm:py-24 md:px-10 md:py-28 ${
-        entered ? "craft-showcase--visible" : ""
+        loadImages ? "craft-showcase--visible" : ""
       }`}
       aria-label="Stone Spaces craft showcase"
     >
@@ -180,25 +158,22 @@ export function CraftShowcaseSection() {
         aria-hidden
       />
 
-      <div
-        className="relative mx-auto h-[clamp(42rem,82vh,58rem)] w-full max-w-[min(97vw,88rem)]"
-      >
+      <div className="relative mx-auto h-[clamp(42rem,82vh,58rem)] w-full max-w-[min(97vw,88rem)]">
         {TILES.map((tile, index) => (
           <figure key={tile.src + tile.cls} className={`craft-tile absolute z-20 overflow-hidden ${tile.cls}`}>
-            {!showImageAt(index) ? (
-              <span className="absolute inset-0 bg-black/12" aria-hidden />
-            ) : null}
-            {showImageAt(index) ? (
+            {loadImages ? (
               <img
                 src={tile.src}
                 alt=""
                 className={`h-full w-full object-cover ${tile.imgCls ?? ""}`}
-                loading="lazy"
+                loading={tile.priority ? "eager" : "lazy"}
                 decoding="async"
-                fetchPriority="low"
+                fetchPriority={tile.priority ? "high" : "auto"}
                 sizes="(max-width: 768px) 40vw, 18rem"
               />
-            ) : null}
+            ) : (
+              <span className="absolute inset-0 bg-black/10" aria-hidden />
+            )}
           </figure>
         ))}
 

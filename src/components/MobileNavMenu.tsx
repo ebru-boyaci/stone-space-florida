@@ -1,11 +1,9 @@
 import { MEGA_MENU_SECTIONS, MEGA_PROJECT_CARDS } from "@/config/megaMenu";
 import type { NavLinkItem } from "@/config/site";
-import { SITE_PHONE_DISPLAY, SITE_PHONE_TEL } from "@/config/site";
+import { SITE_NAV_ITEMS, SITE_PHONE_DISPLAY, SITE_PHONE_TEL } from "@/config/site";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { useState, type MouseEvent } from "react";
 import { Link } from "react-router-dom";
-
-const springPanel = { type: "spring" as const, stiffness: 400, damping: 32 };
 
 type MobileNavMenuProps = {
   contactOpen?: boolean;
@@ -42,23 +40,48 @@ function MobileNavLink({
     );
   }
 
+  const externalProps =
+    item.href.startsWith("http") ? { target: "_blank" as const, rel: "noopener noreferrer" } : {};
+
   return (
-    <a href={item.href} className={className} onClick={handleClick}>
+    <a href={item.href} className={className} onClick={handleClick} {...externalProps}>
       {item.label}
     </a>
   );
 }
 
-export function MobileNavMenu(props: MobileNavMenuProps) {
+export function MobileNavMenu({
+  contactOpen,
+  onOpenContact,
+  onExitContact,
+  onNavigate,
+}: MobileNavMenuProps) {
   const reduceMotion = useReducedMotion();
   const [openId, setOpenId] = useState<string | null>(null);
 
   return (
     <nav className="mx-auto w-full max-w-md" aria-label="Mobile navigation">
-      {MEGA_MENU_SECTIONS.map((section, si) => {
+      <ul className="flex flex-col border-b border-white/[0.06] pb-4">
+        {SITE_NAV_ITEMS.map((item) => (
+          <li key={item.id}>
+            <MobileNavLink
+              item={item}
+              contactOpen={contactOpen}
+              onOpenContact={onOpenContact}
+              onExitContact={onExitContact}
+              onNavigate={onNavigate}
+            />
+          </li>
+        ))}
+      </ul>
+
+      {MEGA_MENU_SECTIONS.filter((s) => s.id !== "home" && s.id !== "about").map((section, si) => {
         const isOpen = openId === section.id;
         return (
-          <div key={section.id} className={si === 0 ? "" : "mt-2 border-t border-white/[0.06] pt-2"}>
+          <div
+            key={section.id}
+            className={si === 0 ? "mt-4" : "mt-2 border-t border-white/[0.06] pt-2"}
+          >
             <button
               type="button"
               className="flex w-full items-center justify-between py-4 text-xs font-semibold tracking-[0.22em] text-[#b9a086] uppercase"
@@ -90,7 +113,13 @@ export function MobileNavMenu(props: MobileNavMenuProps) {
                       <>
                         {section.items.map((item) => (
                           <li key={item.id}>
-                            <MobileNavLink item={item} {...props} />
+                            <MobileNavLink
+                              item={item}
+                              contactOpen={contactOpen}
+                              onOpenContact={onOpenContact}
+                              onExitContact={onExitContact}
+                              onNavigate={onNavigate}
+                            />
                           </li>
                         ))}
                         {MEGA_PROJECT_CARDS.map((p) => (
@@ -98,7 +127,7 @@ export function MobileNavMenu(props: MobileNavMenuProps) {
                             <Link
                               to={p.href}
                               className="block py-2 text-center text-base text-white/75 hover:text-white"
-                              onClick={props.onNavigate}
+                              onClick={onNavigate}
                             >
                               {p.title}
                             </Link>
@@ -106,20 +135,38 @@ export function MobileNavMenu(props: MobileNavMenuProps) {
                         ))}
                       </>
                     ) : section.id === "contact" ? (
-                      <li>
-                        <MobileNavLink item={section.items[0]} {...props} />
-                        <a
-                          href={`tel:${SITE_PHONE_TEL}`}
-                          className="mt-2 block py-2 text-center text-lg text-white/80"
-                          onClick={props.onNavigate}
-                        >
-                          {SITE_PHONE_DISPLAY}
-                        </a>
-                      </li>
+                      <>
+                        {section.items.map((item) => (
+                          <li key={item.id}>
+                            <MobileNavLink
+                              item={item}
+                              contactOpen={contactOpen}
+                              onOpenContact={onOpenContact}
+                              onExitContact={onExitContact}
+                              onNavigate={onNavigate}
+                            />
+                          </li>
+                        ))}
+                        <li>
+                          <a
+                            href={`tel:${SITE_PHONE_TEL}`}
+                            className="mt-2 block py-2 text-center text-lg text-white/80"
+                            onClick={onNavigate}
+                          >
+                            {SITE_PHONE_DISPLAY}
+                          </a>
+                        </li>
+                      </>
                     ) : (
                       section.items.map((item) => (
                         <li key={item.id}>
-                          <MobileNavLink item={item} {...props} />
+                          <MobileNavLink
+                            item={item}
+                            contactOpen={contactOpen}
+                            onOpenContact={onOpenContact}
+                            onExitContact={onExitContact}
+                            onNavigate={onNavigate}
+                          />
                         </li>
                       ))
                     )}

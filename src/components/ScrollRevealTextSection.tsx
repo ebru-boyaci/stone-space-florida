@@ -1,9 +1,9 @@
-import moodBg from "@assets/stone.png";
+import moodBg from "@assets/tile/pulpis-dark-gray-matte.jpeg";
 import type { MotionValue } from "motion/react";
 import { motion, useReducedMotion, useScroll, useTransform } from "motion/react";
 import { memo, useRef } from "react";
 
-/** Arka plan: `stone.png` + üstten alta gradient kararma + vignette. */
+/** Arka plan: Pulpis dark gray (katalog) — `stone.png` yerine, aynı gri mermer tonu, daha temiz doku. */
 const bgImage = moodBg;
 
 const LINE_PRIMARY = "Nature's";
@@ -101,7 +101,8 @@ export function ScrollRevealTextSection() {
           <img
             src={bgImage}
             alt=""
-            className="absolute inset-0 h-full w-full object-cover brightness-[0.46] saturate-[0.74] contrast-[1.05] sm:brightness-[0.5]"
+            className="absolute inset-0 h-full w-full object-cover object-center brightness-[0.44] saturate-[0.68] contrast-[1.08] sm:brightness-[0.48]"
+            sizes="100vw"
             aria-hidden
             decoding="async"
             fetchPriority="high"

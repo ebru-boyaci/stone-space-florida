@@ -2,6 +2,19 @@
 export const SITE_PHONE_DISPLAY = "(904) 660-2994";
 export const SITE_PHONE_TEL = "+19046602994";
 
+/** Same WhatsApp line as stonespaces.com — “Message Us Now” */
+export const SITE_WHATSAPP_NUMBER = "19048065299";
+export const SITE_WHATSAPP_DISPLAY = "(904) 806-5299";
+export const SITE_WHATSAPP_URL = `https://wa.me/${SITE_WHATSAPP_NUMBER}`;
+const whatsappPrefill = encodeURIComponent(
+  "Hello, I'd like to get in touch with Stone Spaces about my project.",
+);
+export const SITE_WHATSAPP_HREF = `${SITE_WHATSAPP_URL}?text=${whatsappPrefill}`;
+
+export function openWhatsApp() {
+  window.open(SITE_WHATSAPP_HREF, "_blank", "noopener,noreferrer");
+}
+
 export const SITE_EMAIL = "sales@stonespaces.com";
 export const SITE_EMAIL_HREF = "mailto:sales@stonespaces.com";
 

@@ -1,5 +1,6 @@
 import { ContactOverlay } from "@/components/ContactOverlay";
 import { Header } from "@/components/Header";
+import { WhatsAppFab } from "@/components/WhatsAppFab";
 import { HomeSections } from "@/pages/HomeSections";
 import { CabinetsCatalogPage } from "@/pages/CabinetsCatalogPage";
 import { PorcelainCatalogPage } from "@/pages/PorcelainCatalogPage";
@@ -33,7 +34,8 @@ export default function App() {
   const [heroStripHidden, setHeroStripHidden] = useState(false);
   const [scrollCollapsed, setScrollCollapsed] = useState(false);
 
-  /** Route değişince scroll konumu; önceki sayfadan kalan body kilidi / #contact iletişimini temizle (katalogda scroll kilitlenmesi). */
+  const navCollapsed = isHome ? heroStripHidden || scrollCollapsed : scrollCollapsed;
+
   useLayoutEffect(() => {
     const root = document.documentElement;
     const prevBehavior = root.style.scrollBehavior;
@@ -44,16 +46,16 @@ export default function App() {
     root.style.scrollBehavior = prevBehavior;
 
     if (routePathRef.current !== null && routePathRef.current !== location.pathname) {
-      setContactOpen(false);
       if (window.location.hash === "#contact") {
-        window.history.replaceState(null, "", `${location.pathname}${location.search}`);
+        setContactOpen(true);
+        setContactMountKey((k) => k + 1);
+      } else {
+        setContactOpen(false);
       }
       forceReleaseDocumentScrollLock();
     }
     routePathRef.current = location.pathname;
   }, [location.pathname]);
-
-  const navCollapsed = isHome ? heroStripHidden || scrollCollapsed : scrollCollapsed;
 
   useEffect(() => {
     if ("scrollRestoration" in window.history) {
@@ -129,6 +131,8 @@ export default function App() {
     return () => window.removeEventListener("keydown", onKey);
   }, [contactOpen, closeContact]);
 
+  const mainInert = contactOpen;
+
   return (
     <div id="top" className="min-h-screen min-h-[100dvh] overflow-x-clip bg-black text-zinc-100">
       <Header
@@ -142,7 +146,7 @@ export default function App() {
         <Route
           path="/"
           element={
-            <main inert={contactOpen}>
+            <main inert={mainInert}>
               <HomeSections
                 homeEntranceKey={homeEntranceKey}
                 onHeroFirstGesture={onHeroFirstGesture}
@@ -152,106 +156,24 @@ export default function App() {
             </main>
           }
         />
-        <Route
-          path="/catalog/quartz"
-          element={
-            <main inert={contactOpen}>
-              <QuartzCatalogPage />
-            </main>
-          }
-        />
-        <Route
-          path="/catalog/porcelain"
-          element={
-            <main inert={contactOpen}>
-              <PorcelainCatalogPage />
-            </main>
-          }
-        />
-        <Route
-          path="/catalog/cabinets"
-          element={
-            <main inert={contactOpen}>
-              <CabinetsCatalogPage />
-            </main>
-          }
-        />
-        <Route
-          path="/catalog/tile"
-          element={
-            <main inert={contactOpen}>
-              <TileCatalogPage />
-            </main>
-          }
-        />
-        <Route
-          path="/catalog/floor"
-          element={
-            <main inert={contactOpen}>
-              <FloorCatalogPage />
-            </main>
-          }
-        />
-        <Route
-          path="/catalog/deck"
-          element={
-            <main inert={contactOpen}>
-              <DeckCatalogPage />
-            </main>
-          }
-        />
-        <Route
-          path="/services/:slug"
-          element={
-            <main inert={contactOpen}>
-              <ServiceDetailPage />
-            </main>
-          }
-        />
-        <Route
-          path="/about"
-          element={
-            <main inert={contactOpen}>
-              <AboutPage />
-            </main>
-          }
-        />
-        <Route
-          path="/before-after"
-          element={
-            <main inert={contactOpen}>
-              <BeforeAfterPage />
-            </main>
-          }
-        />
+        <Route path="/catalog/quartz" element={<main inert={mainInert}><QuartzCatalogPage /></main>} />
+        <Route path="/catalog/porcelain" element={<main inert={mainInert}><PorcelainCatalogPage /></main>} />
+        <Route path="/catalog/cabinets" element={<main inert={mainInert}><CabinetsCatalogPage /></main>} />
+        <Route path="/catalog/tile" element={<main inert={mainInert}><TileCatalogPage /></main>} />
+        <Route path="/catalog/floor" element={<main inert={mainInert}><FloorCatalogPage /></main>} />
+        <Route path="/catalog/deck" element={<main inert={mainInert}><DeckCatalogPage /></main>} />
+        <Route path="/services/:slug" element={<main inert={mainInert}><ServiceDetailPage /></main>} />
+        <Route path="/about" element={<main inert={mainInert}><AboutPage /></main>} />
+        <Route path="/before-after" element={<main inert={mainInert}><BeforeAfterPage /></main>} />
         <Route path="/referance" element={<Navigate to="/references" replace />} />
-        <Route
-          path="/references"
-          element={
-            <main inert={contactOpen}>
-              <ReferencesPage />
-            </main>
-          }
-        />
-        <Route
-          path="/projects"
-          element={
-            <main inert={contactOpen}>
-              <ProjectsPage />
-            </main>
-          }
-        />
-        <Route
-          path="/projects/:slug"
-          element={
-            <main inert={contactOpen}>
-              <ProjectDetailPage />
-            </main>
-          }
-        />
+        <Route path="/references" element={<main inert={mainInert}><ReferencesPage /></main>} />
+        <Route path="/projects" element={<main inert={mainInert}><ProjectsPage /></main>} />
+        <Route path="/projects/:slug" element={<main inert={mainInert}><ProjectDetailPage /></main>} />
       </Routes>
 
       <ContactOverlay open={contactOpen} mountKey={contactMountKey} />
+
+      {isHome ? <WhatsAppFab /> : null}
     </div>
   );
 }
