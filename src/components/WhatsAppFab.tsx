@@ -25,7 +25,7 @@ export function WhatsAppFab() {
       <span className="flex size-11 shrink-0 items-center justify-center rounded-full bg-[#b89a7a]/20 sm:size-12">
         <WhatsAppIcon className="size-6 sm:size-7" />
       </span>
-      <span className="pr-0.5 text-xs font-semibold tracking-[0.14em] text-white uppercase sm:text-sm sm:tracking-[0.16em]">
+      <span className="hidden pr-0.5 text-xs font-semibold tracking-[0.14em] text-white uppercase min-[380px]:inline sm:text-sm sm:tracking-[0.16em]">
         Contact us
       </span>
     </motion.a>

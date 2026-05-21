@@ -21,12 +21,13 @@ const showMapButtonClass =
   "mt-7 inline-flex items-center justify-center rounded-full bg-[#b89a7a] px-10 py-4 text-base font-semibold tracking-[0.15em] text-zinc-950 uppercase transition hover:opacity-90 sm:mt-9 sm:px-12 sm:py-5";
 
 const addressTextClass =
-  "mt-6 max-w-2xl text-pretty text-[min(3.375rem,8.5vw)] font-bold leading-[1.1] tracking-[-0.02em] text-white sm:mt-7 sm:leading-[1.08] sm:text-[3.5rem] lg:text-[3.9rem] xl:text-[3.95rem]";
+  "mt-5 max-w-2xl text-pretty text-[clamp(1.35rem,5.2vw,3.5rem)] font-bold leading-[1.15] tracking-[-0.02em] text-white sm:mt-7 sm:leading-[1.08] sm:text-[3.5rem] lg:text-[3.9rem] xl:text-[3.95rem]";
 
-const bodyValueWhite = "text-2xl font-medium leading-snug text-white sm:text-[1.9rem] sm:leading-[1.3]";
+const bodyValueWhite =
+  "text-xl font-medium leading-snug text-white sm:text-2xl sm:leading-[1.3] md:text-[1.9rem]";
 
 const bodyValueEmailClass =
-  "text-2xl font-medium leading-snug text-[#b89a7a] sm:text-[1.9rem] sm:leading-[1.3] transition hover:opacity-80";
+  "text-xl font-medium leading-snug text-[#b89a7a] break-all sm:break-normal sm:text-2xl sm:leading-[1.3] md:text-[1.9rem] transition hover:opacity-80";
 
 function SocialIcon({ name }: { name: (typeof SITE_SOCIAL_LINKS)[number]["name"] }) {
   const className = "h-10 w-10 text-current sm:h-12 sm:w-12";
@@ -57,11 +58,11 @@ function SocialIcon({ name }: { name: (typeof SITE_SOCIAL_LINKS)[number]["name"]
 function ContactDetails() {
   return (
     <section
-      className="w-full border-t border-white/[0.1] pt-20 pb-20 font-sans sm:pt-28 sm:pb-24 lg:pt-32"
+      className="w-full border-t border-white/[0.1] pt-12 pb-16 font-sans sm:pt-28 sm:pb-24 lg:pt-32"
       aria-label="Location and contact details"
     >
-      <div className="mx-auto grid w-full max-w-[min(100%,110rem)] grid-cols-1 items-stretch gap-16 sm:gap-24 lg:grid-cols-[minmax(0,0.82fr)_minmax(0,1.58fr)] lg:items-stretch lg:gap-0">
-        <div className="flex min-w-0 flex-col justify-center gap-[7.5rem] pt-[4.5rem] sm:gap-36 sm:pt-[5.6rem] lg:gap-36 lg:border-r lg:border-[#b89a7a]/15 lg:pt-0 lg:pb-0 lg:pe-8 xl:pe-12">
+      <div className="mx-auto grid w-full max-w-[min(100%,110rem)] grid-cols-1 items-stretch gap-12 sm:gap-24 lg:grid-cols-[minmax(0,0.82fr)_minmax(0,1.58fr)] lg:items-stretch lg:gap-0">
+        <div className="flex min-w-0 flex-col justify-center gap-16 pt-0 sm:gap-36 sm:pt-[5.6rem] lg:gap-36 lg:border-r lg:border-[#b89a7a]/15 lg:pt-0 lg:pb-0 lg:pe-8 xl:pe-12">
           <div>
             <p className={contactLabelClass}>Office</p>
             <p className={addressTextClass}>
@@ -107,7 +108,7 @@ function ContactDetails() {
                     href={s.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex h-18 w-18 items-center justify-center rounded-full border border-[#b89a7a]/50 text-white transition hover:border-[#b89a7a] sm:h-20 sm:w-20"
+                    className="flex size-14 items-center justify-center rounded-full border border-[#b89a7a]/50 text-white transition hover:border-[#b89a7a] sm:size-20"
                     aria-label={s.name}
                   >
                     <SocialIcon name={s.name} />
@@ -118,7 +119,7 @@ function ContactDetails() {
           </div>
         </div>
 
-        <figure className="relative m-0 flex min-h-[min(95vh,60rem)] w-full min-w-0 flex-1 flex-col self-stretch overflow-visible p-0 sm:min-h-[min(97vh,72rem)] lg:min-h-[min(78vh,58rem)] lg:h-full">
+        <figure className="relative m-0 flex min-h-[min(52vh,28rem)] w-full min-w-0 flex-1 flex-col self-stretch overflow-visible p-0 sm:min-h-[min(72vh,48rem)] lg:min-h-[min(78vh,58rem)] lg:h-full">
           <img
             src={mapImage}
             alt="Map to 6000 Powers Avenue, Jacksonville, Florida"
@@ -140,11 +141,13 @@ function ContactOverlayContent() {
         aria-hidden
       />
 
-      <div className={`relative z-[1] flex w-full max-w-full flex-1 flex-col items-center ${MIN_H_FIRST_SCREEN} justify-center px-6 sm:px-10`}>
+      <div
+        className={`relative z-[1] flex w-full max-w-full flex-1 flex-col items-center justify-center px-4 py-10 sm:px-10 sm:py-0 ${MIN_H_FIRST_SCREEN}`}
+      >
         <div className="relative grid w-full max-w-[min(98vw,80rem)] place-items-center">
           <motion.h2
             id="contact-heading"
-            className="col-start-1 row-start-1 max-w-[min(96vw,96rem)] text-center font-contact-display text-[clamp(6.85rem,21.5vw,19.5rem)] font-extralight lowercase leading-[0.88] tracking-[-0.055em] text-contact-display antialiased [text-shadow:0_4px_48px_rgba(0,0,0,0.45)] sm:text-[clamp(8.6rem,22.5vw,21rem)] lg:text-[clamp(9rem,19.5vw,22rem)]"
+            className="col-start-1 row-start-1 max-w-[min(96vw,96rem)] text-center font-contact-display text-[clamp(3.5rem,18vw,19.5rem)] font-extralight lowercase leading-[0.88] tracking-[-0.055em] text-contact-display antialiased [text-shadow:0_4px_48px_rgba(0,0,0,0.45)] sm:text-[clamp(8.6rem,22.5vw,21rem)] lg:text-[clamp(9rem,19.5vw,22rem)]"
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.72, ease: easeOut }}
@@ -152,7 +155,7 @@ function ContactOverlayContent() {
             get info
           </motion.h2>
           <motion.p
-            className="col-start-1 row-start-1 z-[1] mt-[clamp(10.35rem,26vw,19.25rem)] max-w-[min(94vw,64rem)] text-center font-hero-script text-[clamp(4.25rem,15.5vw,10.5rem)] lowercase leading-[0.82] text-white [text-shadow:0_2px_32px_rgba(0,0,0,0.6)] sm:mt-[clamp(11.65rem,28vw,22.25rem)] sm:text-[clamp(5.25rem,16.5vw,11.5rem)]"
+            className="col-start-1 row-start-1 z-[1] mt-[clamp(5.5rem,22vw,19.25rem)] max-w-[min(94vw,64rem)] text-center font-hero-script text-[clamp(2.5rem,12vw,10.5rem)] lowercase leading-[0.82] text-white [text-shadow:0_2px_32px_rgba(0,0,0,0.6)] sm:mt-[clamp(11.65rem,28vw,22.25rem)] sm:text-[clamp(5.25rem,16.5vw,11.5rem)]"
             initial={{ opacity: 0, y: 32 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3, duration: 0.8, ease: easeOut }}

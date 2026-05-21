@@ -1,3 +1,4 @@
+import { DARK_PAGE_SHELL } from "@/config/layout";
 import { MaterialSwatchLightbox } from "@/components/MaterialSwatchLightbox";
 import {
   ProjectVideoOrientationProbe,
@@ -24,7 +25,7 @@ function MaterialsSpecified({
       >
         Materials specified
       </h2>
-      <dl className="mt-5 grid grid-cols-2 gap-4 sm:gap-6">
+      <dl className="mt-5 grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-6">
         {materials.map((m, index) => {
           const swatches = resolveMaterialSwatches(m.name);
 
@@ -32,7 +33,7 @@ function MaterialsSpecified({
             <div
               key={m.category}
               className={`rounded-sm border border-white/[0.08] bg-zinc-900/25 px-5 py-5 sm:px-6 sm:py-6 ${
-                materials.length % 2 === 1 && index === materials.length - 1 ? "col-span-2" : ""
+                materials.length % 2 === 1 && index === materials.length - 1 ? "sm:col-span-2" : ""
               }`}
             >
               <dt className="text-sm font-semibold tracking-[0.2em] text-zinc-500 uppercase sm:text-base">
@@ -160,7 +161,7 @@ export function ProjectDetailPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#0c0c0c] pb-[max(6rem,env(safe-area-inset-bottom,0px))] pt-[calc(12.5rem+env(safe-area-inset-top,0px))] text-zinc-100">
+    <div className={DARK_PAGE_SHELL}>
       <div className="project-page-shell relative flex flex-col">
         {hasVideo && project.video && videoLayout === "pending" && !project.videoOrientation ? (
           <ProjectVideoOrientationProbe src={project.video} onOrientation={handleOrientation} />

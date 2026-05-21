@@ -105,7 +105,7 @@ export function ScrollGallery() {
         ref={gallerySectionRef}
         className="relative z-0 bg-black pb-12 sm:pb-16 md:pb-20"
       >
-        <div className="relative min-h-[320vh]">
+        <div className="scroll-gallery__pin relative min-h-[320vh]">
           <div className="sticky top-0 flex h-[100dvh] max-h-[100dvh] w-full min-h-0 flex-col overflow-x-clip bg-black">
             <div
               ref={wrapRef}

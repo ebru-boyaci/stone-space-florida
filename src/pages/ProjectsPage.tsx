@@ -1,10 +1,11 @@
+import { DARK_PAGE_SHELL } from "@/config/layout";
 import { PROJECTS } from "@/data/projects";
 import { Link } from "react-router-dom";
 
 export function ProjectsPage() {
   return (
-    <div className="min-h-screen bg-[#0c0c0c] pb-[max(6rem,env(safe-area-inset-bottom,0px))] pt-[calc(12.5rem+env(safe-area-inset-top,0px))] text-zinc-100">
-      <div className="project-page-shell flex flex-col">
+    <div className={DARK_PAGE_SHELL}>
+      <div className="project-page-shell flex flex-col py-8 sm:py-10 lg:py-12">
         <header className="w-full border-b border-white/[0.08] pb-10 sm:pb-12">
           <p className="text-sm font-semibold tracking-[0.28em] text-[#b9a086] uppercase sm:text-base">Portfolio</p>
           <h1 className="mt-2 font-serif text-[clamp(2.5rem,5vw,3.75rem)] font-medium tracking-[-0.02em] text-white">

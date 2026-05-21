@@ -35,7 +35,7 @@ html {
  */
 @media (max-width: 480px) {
   html {
-    font-size: 82%;
+    font-size: 87%;
   }
 }
 
@@ -256,10 +256,46 @@ body {
   background: #e8e4dc;
 }
 
+@media (max-width: 639px) {
+  .about-quality-checker {
+    grid-template-columns: 1fr;
+  }
+
+  .about-quality-checker__text,
+  .about-quality-checker__image {
+    aspect-ratio: auto;
+    min-height: min(70vw, 18rem);
+  }
+
+  .about-quality-checker__text > div {
+    max-width: min(100%, 28rem);
+  }
+}
+
 @media (min-width: 1024px) {
   .about-quality-checker__text,
   .about-quality-checker__image {
     min-height: clamp(16rem, 22vw, 22rem);
+  }
+}
+
+/* Craft showcase — dar ekranda karolar merkeze, taşma az */
+@media (max-width: 767px) {
+  .craft-showcase__stage {
+    height: clamp(36rem, 118vw, 48rem);
+  }
+
+  .craft-ticker-line,
+  .craft-ticker-track > p {
+    height: clamp(3.25rem, 11vw, 4.5rem);
+    font-size: clamp(1.65rem, 7.5vw, 2.45rem);
+  }
+}
+
+/* Scroll galeri — mobilde daha kısa scroll mesafesi */
+@media (max-width: 767px) {
+  .scroll-gallery__pin {
+    min-height: 220vh;
   }
 }
 

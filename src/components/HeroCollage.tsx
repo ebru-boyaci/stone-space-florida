@@ -416,6 +416,25 @@ export function HeroWithCollage({
   });
 
   const homeResetAnim = useRef<ReturnType<typeof animate> | null>(null);
+  const [showMobileHint, setShowMobileHint] = useState(() => reduceMotion !== true);
+
+  const unlockHeroProgress = () => {
+    if (exitCompleteRef.current || returningRef.current) return;
+    firstGesturePendingRef.current = false;
+    onHeroFirstGesture?.();
+    homeResetAnim.current?.stop();
+    homeResetAnim.current = animate(progress, 1, {
+      duration: 0.95,
+      ease: [0.22, 1, 0.36, 1],
+      onComplete: () => {
+        exitCompleteRef.current = true;
+        onHeroUnlockDocument?.();
+        document.documentElement.style.overflow = "";
+        document.body.style.overflow = "";
+        setShowMobileHint(false);
+      },
+    });
+  };
 
   useLockedHeroProgress(
     progress,
@@ -440,6 +459,7 @@ export function HeroWithCollage({
     returningRef.current = false;
     suppressHeroWheelUntilRef.current = Date.now() + 520;
     firstGesturePendingRef.current = true;
+    setShowMobileHint(true);
     onHeroRest?.();
 
     window.scrollTo(0, 0);
@@ -456,6 +476,21 @@ export function HeroWithCollage({
       homeResetAnim.current?.stop();
     };
   }, [homeEntranceKey, reduceMotion, progress, onHeroRest]);
+
+  useEffect(() => {
+    if (reduceMotion === true) {
+      setShowMobileHint(false);
+      return;
+    }
+    const unsub = smoothProgress.on("change", (v) => {
+      if (v > 0.06) setShowMobileHint(false);
+    });
+    return unsub;
+  }, [smoothProgress, reduceMotion]);
+
+  useEffect(() => {
+    if (reduceMotion === true) setShowMobileHint(false);
+  }, [reduceMotion]);
 
   useLayoutEffect(() => {
     const sync = () => {
@@ -490,6 +525,7 @@ export function HeroWithCollage({
             suppressHeroWheelUntilRef.current = Date.now() + 520;
             /** Scroll ile hero’ya dönüşte “landing” ilk jestini tekrarlama — yoksa üstte kalan wheel header’ı tekrar gizler */
             firstGesturePendingRef.current = false;
+            setShowMobileHint(true);
             onHeroRest?.();
           },
         });
@@ -547,6 +583,24 @@ export function HeroWithCollage({
       <div className="relative z-10 flex w-full max-w-full -translate-y-3 flex-col items-center px-[max(1rem,env(safe-area-inset-left,0px))] sm:-translate-y-5 sm:px-6 lg:-translate-y-6">
         {children}
       </div>
+
+      {showMobileHint ? (
+        <div
+          className="pointer-events-auto absolute inset-x-0 bottom-[max(1rem,env(safe-area-inset-bottom,0px))] z-20 flex flex-col items-center gap-3 px-4 md:hidden"
+          aria-live="polite"
+        >
+          <p className="text-center text-[0.6875rem] font-semibold tracking-[0.22em] text-white/45 uppercase">
+            Swipe up to explore
+          </p>
+          <button
+            type="button"
+            onClick={unlockHeroProgress}
+            className="min-h-11 rounded-full border border-white/25 bg-black/55 px-8 py-3 text-xs font-semibold tracking-[0.16em] text-white uppercase backdrop-blur-sm transition-colors hover:border-[#c9a882]/60 hover:bg-black/70 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#c9a882]"
+          >
+            Continue
+          </button>
+        </div>
+      ) : null}
     </section>
   );
 }

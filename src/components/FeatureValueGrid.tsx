@@ -230,7 +230,9 @@ export function FeatureValueGrid() {
       className="relative overflow-x-clip bg-[#343434] pl-[max(1.25rem,env(safe-area-inset-left,0px))] pr-[max(1.25rem,env(safe-area-inset-right,0px))] pb-[max(8rem,env(safe-area-inset-bottom,0px))] pt-6 sm:px-8 sm:pb-40 sm:pt-8 md:px-10 md:pb-48"
       aria-label="Stone Spaces services"
     >
-      <p className="sr-only">Swipe horizontally to browse all services.</p>
+      <p className="mb-4 text-center text-[0.6875rem] font-semibold tracking-[0.2em] text-white/40 uppercase sm:sr-only">
+        Swipe to browse services
+      </p>
       <ul
         ref={listRef}
         className="-mx-5 flex snap-x snap-mandatory touch-pan-x gap-5 overflow-x-auto overscroll-x-contain bg-[#343434] pb-4 pl-12 pr-5 [-ms-overflow-style:none] [scrollbar-width:none] [scroll-padding-inline-start:3rem] sm:-mx-8 sm:gap-6 sm:pl-16 sm:pr-8 sm:[scroll-padding-inline-start:4rem] md:-mx-10 md:gap-7 md:pl-20 md:pr-10 md:[scroll-padding-inline-start:5rem] [&::-webkit-scrollbar]:hidden"

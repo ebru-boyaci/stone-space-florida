@@ -83,7 +83,7 @@ export function ReferencesPage() {
         >
           <button
             type="button"
-            className="absolute right-4 top-[calc(8rem+env(safe-area-inset-top,0px))] rounded-full border border-white/20 bg-black/60 px-4 py-2 text-sm font-semibold uppercase tracking-[0.12em] text-white hover:bg-black/80 sm:right-8"
+            className="absolute right-[max(1rem,env(safe-area-inset-right,0px))] top-[max(1rem,env(safe-area-inset-top,0px))] min-h-11 rounded-full border border-white/20 bg-black/60 px-4 py-2.5 text-sm font-semibold uppercase tracking-[0.12em] text-white hover:bg-black/80 sm:right-8 sm:top-8"
             onClick={closeLightbox}
           >
             Close

@@ -77,7 +77,7 @@ export function BeforeAfterCompare({
         aria-hidden
       />
       <div
-        className="pointer-events-none absolute top-1/2 z-10 flex size-11 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-white/25 bg-black/55 text-white shadow-lg backdrop-blur-sm sm:size-12"
+        className="pointer-events-none absolute top-1/2 z-10 flex size-12 min-h-11 min-w-11 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-white/25 bg-black/55 text-white shadow-lg backdrop-blur-sm sm:size-12"
         style={{ left: `${position}%` }}
         aria-hidden
       >

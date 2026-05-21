@@ -29,26 +29,32 @@ type Tile = {
 const TILES: readonly Tile[] = [
   {
     src: kitchen1,
-    cls: "left-[-1%] top-[12%] w-[29vw] max-w-[19rem] aspect-[1.65/1]",
+    cls: "left-[2%] top-[10%] w-[42vw] max-w-[11rem] aspect-[1.65/1] md:left-[-1%] md:top-[12%] md:w-[29vw] md:max-w-[19rem]",
     priority: true,
   },
   {
     src: kitchen2,
-    cls: "left-[40%] top-[4.5%] w-[24vw] max-w-[16rem] aspect-[1.55/1]",
+    cls: "left-[38%] top-[3%] w-[36vw] max-w-[10rem] aspect-[1.55/1] md:left-[40%] md:top-[4.5%] md:w-[24vw] md:max-w-[16rem]",
     priority: true,
   },
   {
     src: kitchen3,
-    cls: "left-[44%] top-[75%] w-[17vw] max-w-[11rem] aspect-[1/1]",
-    imgCls: "scale-[1.65]",
+    cls: "left-[42%] top-[72%] w-[28vw] max-w-[9rem] aspect-[1/1] md:left-[44%] md:top-[75%] md:w-[17vw] md:max-w-[11rem]",
+    imgCls: "scale-[1.45] md:scale-[1.65]",
     priority: true,
   },
-  { src: kitchen4, cls: "left-[-2%] top-[45%] w-[20vw] max-w-[13rem] aspect-[1/1]" },
-  { src: kitchen5, cls: "right-[-1%] top-[16%] w-[26vw] max-w-[17rem] aspect-[1.58/1]" },
+  {
+    src: kitchen4,
+    cls: "left-[0%] top-[42%] w-[32vw] max-w-[10rem] aspect-[1/1] md:left-[-2%] md:top-[45%] md:w-[20vw] md:max-w-[13rem]",
+  },
+  {
+    src: kitchen5,
+    cls: "right-[0%] top-[14%] w-[38vw] max-w-[11rem] aspect-[1.58/1] md:right-[-1%] md:top-[16%] md:w-[26vw] md:max-w-[17rem]",
+  },
   {
     src: kitchen6,
-    cls: "right-[-2%] top-[59%] w-[21vw] max-w-[13.5rem] aspect-[1/1]",
-    imgCls: "scale-[1.8]",
+    cls: "right-[0%] top-[56%] w-[32vw] max-w-[10rem] aspect-[1/1] md:right-[-2%] md:top-[59%] md:w-[21vw] md:max-w-[13.5rem]",
+    imgCls: "scale-[1.5] md:scale-[1.8]",
   },
 ] as const;
 
@@ -158,7 +164,7 @@ export function CraftShowcaseSection() {
         aria-hidden
       />
 
-      <div className="relative mx-auto h-[clamp(42rem,82vh,58rem)] w-full max-w-[min(97vw,88rem)]">
+      <div className="craft-showcase__stage relative mx-auto h-[clamp(42rem,82vh,58rem)] w-full max-w-[min(97vw,88rem)]">
         {TILES.map((tile, index) => (
           <figure key={tile.src + tile.cls} className={`craft-tile absolute z-20 overflow-hidden ${tile.cls}`}>
             {loadImages ? (

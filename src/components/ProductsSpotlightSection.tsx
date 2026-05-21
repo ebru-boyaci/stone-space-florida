@@ -115,7 +115,7 @@ export function ProductsSpotlightSection() {
   return (
     <section
       ref={sectionRef}
-      className="relative isolate flex min-h-[140vh] items-start justify-center overflow-x-clip bg-[#171312] pl-[max(1rem,env(safe-area-inset-left,0px))] pr-[max(1rem,env(safe-area-inset-right,0px))] pb-[max(5rem,env(safe-area-inset-bottom,0px))] pt-16 sm:min-h-[150vh] sm:px-10 sm:pb-24 sm:pt-20 md:pt-24 [contain:layout_paint]"
+      className="relative isolate flex min-h-[min(120vh,920px)] items-start justify-center overflow-x-clip bg-[#171312] pl-[max(1rem,env(safe-area-inset-left,0px))] pr-[max(1rem,env(safe-area-inset-right,0px))] pb-[max(5rem,env(safe-area-inset-bottom,0px))] pt-16 sm:min-h-[150vh] sm:px-10 sm:pb-24 sm:pt-20 md:pt-24 [contain:layout_paint]"
       aria-labelledby="products-spotlight-heading"
     >
       <img
@@ -136,7 +136,9 @@ export function ProductsSpotlightSection() {
         >
           Products
         </h2>
-        <p className="sr-only">Swipe horizontally to browse all products.</p>
+        <p className="mb-4 text-center text-[0.6875rem] font-semibold tracking-[0.2em] text-white/45 uppercase sm:sr-only">
+          Swipe to browse products
+        </p>
         <ul
           ref={listRef}
           role="list"

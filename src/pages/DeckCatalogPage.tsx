@@ -1,4 +1,5 @@
 import { DeckShowcaseSection } from "@/components/DeckShowcaseSection";
+import { DARK_PAGE_SHELL } from "@/config/layout";
 import { DECK_SHOWCASE_BLOCKS } from "@/data/deckShowcase";
 import { getServiceDetail } from "@/data/serviceDetails";
 import { Link } from "react-router-dom";
@@ -7,8 +8,8 @@ export function DeckCatalogPage() {
   const copy = getServiceDetail("deck");
 
   return (
-    <div className="min-h-screen bg-[#0c0c0c] pb-[max(6rem,env(safe-area-inset-bottom,0px))] pt-[calc(12.5rem+env(safe-area-inset-top,0px))] text-zinc-100">
-      <div className="mx-auto flex w-full max-w-[min(96vw,88rem)] flex-col pl-[max(1.25rem,env(safe-area-inset-left,0px))] pr-[max(1.25rem,env(safe-area-inset-right,0px))] sm:px-8 lg:px-10">
+    <div className={DARK_PAGE_SHELL}>
+      <div className="project-page-shell flex max-w-[min(98vw,88rem)] flex-col py-8 sm:py-10 lg:py-12">
         <header className="w-full border-b border-white/[0.08] pb-10 sm:pb-12">
           <p className="text-xs font-semibold tracking-[0.28em] text-[#b9a086] uppercase sm:text-sm">{copy?.kicker ?? "Outdoor & interior"}</p>
           <h1 className="mt-2 font-serif text-[clamp(2.25rem,4.5vw,3.25rem)] font-medium tracking-[-0.02em] text-white">
