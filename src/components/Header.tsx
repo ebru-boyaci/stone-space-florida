@@ -129,6 +129,21 @@ export function Header({
 
   return (
     <>
+      <AnimatePresence>
+        {megaOpen && (
+          <motion.button
+            type="button"
+            aria-label="Close menu"
+            className="fixed inset-0 z-[49] hidden cursor-default bg-black/20 lg:block"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            onClick={() => setMegaOpen(false)}
+          />
+        )}
+      </AnimatePresence>
+
       <motion.header
         className={
           contactOpen
@@ -313,7 +328,9 @@ export function Header({
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
+            onClick={() => setMenuOpen(false)}
           >
+            <div className="flex min-h-0 flex-1 flex-col">
             <div className="flex items-center justify-end px-4 py-4">
               <button
                 type="button"
@@ -328,6 +345,7 @@ export function Header({
             <nav
               className="flex min-h-0 flex-1 flex-col overflow-y-auto overscroll-y-contain px-6 py-4"
               aria-label="Mobile navigation"
+              onClick={(e) => e.stopPropagation()}
             >
               <div className="mx-auto w-full max-w-md">
                 <NavMenuItem
@@ -406,6 +424,7 @@ export function Header({
                 Get in touch
               </motion.a>
             </motion.div>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>

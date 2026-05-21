@@ -502,11 +502,11 @@ export function HeroWithCollage({
   return (
     <section
       ref={ref}
-      className="relative flex min-h-[100dvh] min-h-[100svh] flex-col items-center justify-center overflow-x-clip overflow-y-hidden pb-12 pt-[calc(11rem+env(safe-area-inset-top,0px))] sm:pb-20 sm:pt-[calc(12.5rem+env(safe-area-inset-top,0px))] lg:pt-[calc(14.5rem+env(safe-area-inset-top,0px))] lg:pb-24"
+      className="relative flex min-h-[100dvh] min-h-[100svh] flex-col items-center justify-center overflow-x-clip overflow-y-hidden pb-12 pt-[calc(11.75rem+env(safe-area-inset-top,0px))] sm:pb-20 sm:pt-[calc(13.25rem+env(safe-area-inset-top,0px))] lg:pt-[calc(15.25rem+env(safe-area-inset-top,0px))] lg:pb-24"
       aria-label="Intro"
     >
       <div
-        className="pointer-events-none absolute inset-x-0 bottom-0 top-[2.5rem] z-0 max-md:origin-[50%_48%] sm:top-[2.75rem] lg:top-[3.25rem]"
+        className="pointer-events-none absolute inset-x-0 bottom-0 top-[3rem] z-0 max-md:origin-[50%_49%] sm:top-[3.25rem] lg:top-[3.75rem]"
         style={
           collageScale < 1
             ? { transform: `scale(${collageScale})`, transformOrigin: "50% 44%" }

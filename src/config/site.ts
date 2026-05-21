@@ -79,6 +79,12 @@ export const NAV_MENU_GROUPS: NavMenuGroup[] = [
         href: "/projects/taj-mahal-waterfall-kitchen",
         internal: true,
       },
+      {
+        id: "panda-white-kitchen",
+        label: "Panda White Kitchen",
+        href: "/projects/panda-white-kitchen",
+        internal: true,
+      },
     ],
   },
 ];

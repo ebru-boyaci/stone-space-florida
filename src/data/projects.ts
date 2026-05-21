@@ -8,6 +8,8 @@ import imgKitchen3FarmhouseSink from "@assets/projects/TajMahalKitchen/kitchen-f
 import imgKitchen3IslandWaterfall from "@assets/projects/TajMahalKitchen/kitchen-island-waterfall-portrait.jpeg";
 import imgKitchen3GlassPantry from "@assets/projects/TajMahalKitchen/kitchen-glass-pantry-wall.jpeg";
 import imgKitchen3IslandWood from "@assets/projects/TajMahalKitchen/kitchen-island-wood-base.jpeg";
+import coverPandaHero from "@assets/projects/PandaWhiteKitchen/hero-panda-white-island-waterfall.jpeg";
+import imgPandaWide from "@assets/projects/PandaWhiteKitchen/kitchen-island-panda-white-wide.jpeg";
 import coverPalmCoast from "@assets/projects/PalmCoast1/hero-kitchen-navy-island.jpeg";
 import imgKitchenWide from "@assets/projects/PalmCoast1/kitchen-wide-white-shaker.jpeg";
 import imgKitchenRangeHood from "@assets/projects/PalmCoast1/kitchen-range-hood-navy.jpeg";
@@ -210,6 +212,37 @@ export const PROJECTS: Project[] = [
         alt: "Wood-base island with farmhouse sink and smart stainless refrigerator",
         caption: "Island — wood cabinetry & appliances",
         orientation: "portrait",
+      },
+    ],
+  },
+  {
+    slug: "panda-white-kitchen",
+    title: "Panda White Kitchen",
+    location: "Florida",
+    kicker: "Kitchen renovation",
+    summary:
+      "Calacatta Panda quartz on a waterfall island—bold black veining on a bright white field with charcoal shaker cabinetry.",
+    coverImage: coverPandaHero,
+    materials: [{ category: "Quartz", name: "Panda" }],
+    paragraphs: [
+      "This island centers on Calacatta Panda quartz: a crisp white surface with dramatic black movement that reads from the countertop through a full waterfall edge to the floor.",
+      "Charcoal shaker bases ground the stone and pick up the veining, while the rectangular sink cutout and clean slab lines keep the install tailored for the open plan beyond.",
+      "With protective flooring still down and cabinetry going in around the island, the photos document the stone layout before final appliances and trim—a clear look at the panda slab run in place.",
+    ],
+    gallery: [
+      {
+        id: "island-waterfall",
+        src: coverPandaHero,
+        alt: "Calacatta Panda quartz kitchen island with black veining and waterfall edge on charcoal shaker cabinets",
+        caption: "Island — Calacatta Panda waterfall & charcoal shaker",
+        orientation: "landscape",
+      },
+      {
+        id: "island-wide",
+        src: imgPandaWide,
+        alt: "Wide view of Calacatta Panda waterfall island during kitchen installation",
+        caption: "Kitchen — Calacatta Panda island, wide view",
+        orientation: "landscape",
       },
     ],
   },

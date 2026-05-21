@@ -3,6 +3,7 @@ import imgNavyBlue from "@assets/cabinets/navy-blue.jpg";
 import imgOakShade from "@assets/cabinets/oak-shade.jpg";
 import imgShakerWhite from "@assets/cabinets/shaker-white.jpg";
 import imgCrystalLuxor from "@assets/porcelain/crystal-luxor.jpg";
+import imgCalacattaPanda from "@assets/quartz/calacatta-panda.avif";
 import imgSylviaGold from "@assets/quartz/calacatta-sylvia-gold.avif";
 import imgTajMahal from "@assets/quartz/taj-mahal.avif";
 
@@ -21,6 +22,8 @@ type SwatchEntry = {
 const SWATCH_BY_KEY: Record<string, SwatchEntry> = {
   "sylvia gold": { image: imgSylviaGold, catalogHref: "/catalog/quartz" },
   "taj mahal": { image: imgTajMahal, catalogHref: "/catalog/quartz" },
+  "calacatta panda": { image: imgCalacattaPanda, catalogHref: "/catalog/quartz" },
+  panda: { image: imgCalacattaPanda, catalogHref: "/catalog/quartz" },
   "crystal luxor": { image: imgCrystalLuxor, catalogHref: "/catalog/porcelain" },
   "white shaker": { image: imgShakerWhite, catalogHref: "/catalog/cabinets" },
   "green shaker": { image: imgAstonGreen, catalogHref: "/catalog/cabinets" },
